@@ -1,6 +1,6 @@
 baseURL = 'https://nicoloboschi.com/'
 languageCode = 'en-us'
-title = 'Thinking out loud'
+title = 'Yet Another Blog Post Website'
 theme = 'chicago7'
 pagination.pagerSize = 10
 
@@ -20,7 +20,7 @@ url = "/"
 weight = 10
 
 [[menu.header]]
-name = "Posts"
+name = "Blog Posts"
 url = "posts"
 weight = 20
 

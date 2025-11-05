@@ -3,16 +3,17 @@ title = 'Nicolò Boschi'
 draft = false
 +++
 
+Hi, I'm Nicolò (with the accent).
+I'll be honest.
+I write the initial draft of the blog posts myself, and Claude Code refines them for me. 
+Not because I'm lazy, but because I suck at writing, and it's not fun as doing software, but I feel I have something to say sometimes.
+
+
 <p align="center">
   <a href="https://github.com/nicoloboschi"><img alt="GitHub" src="https://img.shields.io/badge/-GitHub-1f1f1f?style=for-the-badge&logo=github&logoColor=white"></a>
   <a href="https://twitter.com/nicoloboschi"><img alt="Twitter" src="https://img.shields.io/twitter/follow/nicoloboschi?style=for-the-badge&logo=twitter&labelColor=1f1f1f&color=1f1f1f"></a>
   <a href="https://www.linkedin.com/in/nicol%C3%B3-boschi-621a1a158/"><img alt="LinkedIn" src="https://img.shields.io/badge/-LinkedIn-1f1f1f?style=for-the-badge&logo=linkedin&logoColor=white"></a>
 </p>
-
----
-### Vectorize
-
-Currently building [Vectorize.io](https://vectorize.io)
 
 ---
 
@@ -55,9 +56,3 @@ A few tools I've built for speed, automation, and dev experience:
 - [Transactions in Pulsar](https://youtu.be/eNaKKui1-cE?si=1KYepiEzw8DUZFUN)
 - [Pulsar + ElasticSearch](https://youtu.be/CyZwpvw9F6I?si=mUdtxxHbmO4bOuRh)
 - [Pulsar Shell Demo](https://youtu.be/NPP5ZJ1raek?si=xyRSbE4TwOOGllf-)
-
----
-
-<p align="center">
-  <img src="https://hit.yhype.me/github/profile?user_id=23314389" alt="profile views" />
-</p>
