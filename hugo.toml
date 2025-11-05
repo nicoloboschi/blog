@@ -1,0 +1,34 @@
+baseURL = 'https://nicoloboschi.github.io/blog/'
+languageCode = 'en-us'
+title = 'My Blog'
+theme = 'chicago7'
+pagination.pagerSize = 10
+
+[permalinks]
+posts = "/posts/:year:month:day"
+
+[markup]
+[markup.highlight]
+style = "bw"
+
+[menu]
+[[menu.header]]
+name = "Home"
+url = "/"
+weight = 10
+
+[[menu.header]]
+name = "Posts"
+url = "posts"
+weight = 20
+
+[[menu.header]]
+name = "About"
+url = "about"
+weight = 30
+
+[params]
+author = "Nicolo Boschi"
+
+[params.social]
+feed = "/index.xml"
