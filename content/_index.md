@@ -1,7 +1,6 @@
 +++
-date = '2025-11-05T14:29:44+01:00'
+title = 'Nicolò Boschi'
 draft = false
-title = 'About'
 +++
 
 <p align="center">
@@ -34,7 +33,7 @@ I'm an active contributor and maintainer in the open source ecosystem, including
 
 ### Personal Projects
 
-A few tools I’ve built for speed, automation, and dev experience:
+A few tools I've built for speed, automation, and dev experience:
 
 - [`dockerpyze`](https://github.com/nicoloboschi/dockerpyze) – Automatically Dockerize Python apps 🐳
 - [`asap`](https://github.com/nicoloboschi/asap) – Blazing fast local Maven installs 🚀

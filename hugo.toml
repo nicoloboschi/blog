@@ -1,6 +1,6 @@
 baseURL = 'https://nicoloboschi.com/'
 languageCode = 'en-us'
-title = 'My Blog'
+title = 'Thinking out loud'
 theme = 'chicago7'
 pagination.pagerSize = 10
 
@@ -10,6 +10,8 @@ posts = "/posts/:year:month:day"
 [markup]
 [markup.highlight]
 style = "bw"
+[markup.goldmark.renderer]
+unsafe = true
 
 [menu]
 [[menu.header]]
@@ -21,11 +23,6 @@ weight = 10
 name = "Posts"
 url = "posts"
 weight = 20
-
-[[menu.header]]
-name = "About"
-url = "about"
-weight = 30
 
 [params]
 author = "Nicolo Boschi"

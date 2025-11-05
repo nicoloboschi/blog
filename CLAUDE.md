@@ -1,0 +1,16 @@
+# Blog Post Generation Guideline
+- I'm software engineer that likes to work with distributed systems and it's very technical.
+- Use a techy-informal tone, but go deeper in sub topics without too many words. 
+- I'm italian but I'm not a native speaker. Speak in English but not with fancy or too complex words.
+- When doing code examples, use Python, Typescript or Java.
+- Do not add any follow-up questions at the end of the post. (Avoid like "Are you doing the same? What about...")
+- All the posts must be short but really in-depth in the specific topic.
+- Do not re-compile it every time you modify a blog post.
+- Do not use "we" as developers. Refer to me as Engineer and use example of my experiences, not of the community.
+- Always include a TL;DR at the beginning of the post with 2-3 one-liner sentences.
+- Don't romanticize learnings. Don't try to teach readers something. Just share my experience and knowledge.
+- Keep it less than 3000 words.
+- Don't ever use symbols like — , use - instead.
+- Repeat yourself less. 
+- In the conclusion keep it simple and short without alluding at anything catastrophic or super insightful thoughts. 
+

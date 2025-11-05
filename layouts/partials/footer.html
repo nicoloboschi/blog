@@ -1,0 +1,36 @@
+<footer class="footer">
+    {{ $icons := dict
+      "behance" "behance.svg"
+      "dribbble" "dribbble.svg"
+      "facebook" "facebook.svg"
+      "feed" "feed.svg"
+      "gplus" "gplus.svg"
+      "instagram" "instagram.svg"
+      "linkedin" "linkedin.svg"
+      "pinterest" "pinterest.svg"
+      "soundcloud" "soundcloud.svg"
+      "vimeo" "vimeo.svg"
+      "twitter" "twitter.svg"
+      "youtube" "youtube.svg"
+    }}
+    {{ with site.Params.social }}
+    <nav class="social">
+    <ul>
+    {{ range $key, $icon := $icons }}
+    {{ $url := index site.Params.social $key }}
+      {{ with $url }}
+        <li>
+          <a href="{{ . }}" target="_blank" rel="noopener noreferrer">
+            {{ $svgPath := printf "static/icons/%s" $icon }}
+            {{ readFile $svgPath | safeHTML }}
+          </a>
+        </li>
+      {{ end }}
+    {{ end }}
+    </ul>
+    </nav>
+    {{ end }}
+    <p>
+        &copy; {{ now.Year }} {{ .Site.Params.author }}
+    </p>
+</footer>
