@@ -74,5 +74,5 @@
 <!-- GoatCounter Analytics -->
 {{ if not hugo.IsDevelopment }}
 <script data-goatcounter="https://nicoloboschi.goatcounter.com/count"
-        async src="//nicoloboschi.goatcounter.com/count.js"></script>
+        async src="{{ "count.js" | relURL }}"></script>
 {{ end }}

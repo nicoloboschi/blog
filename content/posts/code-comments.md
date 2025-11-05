@@ -1,7 +1,7 @@
 +++
 date = '2025-11-05T15:05:30+01:00'
 draft = false
-title = 'The Code Comments Renaissance: How AI Agents Rehabilitated What We Once Despised'
+title = 'Code Comments: Humans vs Agentic Code'
 tags = ["AI", "coding-agents", "best-practices"]
 +++
 
