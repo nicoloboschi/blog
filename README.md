@@ -47,7 +47,7 @@ Start the Hugo development server:
 hugo server -D
 ```
 
-The site will be available at `http://localhost:1313/blog/`
+The site will be available at `http://localhost:1313/`
 
 ### Creating New Posts
 
@@ -70,7 +70,7 @@ The site automatically deploys to GitHub Pages when you push to the `main` branc
 3. Push your changes to the `main` branch
 4. The GitHub Actions workflow will build and deploy your site
 
-Your site will be available at `https://nicoloboschi.github.io/blog/`
+Your site will be available at `https://nicoloboschi.com/`
 
 ## Configuration
 

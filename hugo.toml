@@ -1,4 +1,4 @@
-baseURL = 'https://nicoloboschi.github.io/blog/'
+baseURL = 'https://nicoloboschi.com/'
 languageCode = 'en-us'
 title = 'My Blog'
 theme = 'chicago7'
