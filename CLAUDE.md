@@ -10,7 +10,6 @@
 - Always include a TL;DR at the beginning of the post with 2-3 one-liner sentences.
 - Don't romanticize learnings. Don't try to teach readers something. Just share my experience and knowledge.
 - Keep it less than 3000 words.
-- Don't ever use symbols like — , use - instead.
-- Repeat yourself less. 
+- Do not repeat the concept again and again. 
 - In the conclusion keep it simple and short without alluding at anything catastrophic or super insightful thoughts. 
-
+- Make explicit mention that this is my opinion (not directly, but use the word "In my opinion" or "I think" or similar).

@@ -26,6 +26,7 @@ weight = 20
 
 [params]
 author = "Nicolo Boschi"
+favicon = "cover.jpg"
 
 [params.social]
 feed = "/index.xml"
