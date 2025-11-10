@@ -1,7 +1,7 @@
 +++
 date = '2025-11-10T10:00:00+01:00'
 draft = false
-title = 'Debugging 300MB JSON Files: A LongMemEval Visualizer'
+title = 'LongMemEval: debugging 300MB JSON File Dataset'
 tags = ["AI", "memory", "debugging", "benchmarking"]
 +++
 
