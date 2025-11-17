@@ -1,5 +1,5 @@
 +++
-date = '2025-11-17T14:30:00+01:00'
+date = '2025-11-18T14:30:00+01:00'
 draft = false
 title = 'Building Reasoning Agents: Memory, Queries, and Execution (Part 2)'
 tags = ["AI", "agents", "llm", "implementation"]
