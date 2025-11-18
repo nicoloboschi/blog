@@ -4,9 +4,7 @@ draft = false
 +++
 
 Hi, I'm Nicolò (with the accent).
-I'll be honest.
-I write the initial draft of the blog posts myself, and Claude Code refines them for me. 
-Not because I'm lazy, but because I suck at writing, and it's not fun as doing software, but I feel I have something to say sometimes.
+I feel I have something to say sometimes, so here you can find my blog posts, talks, and open source contributions.
 
 
 <p align="center">
