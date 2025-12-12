@@ -1,11 +1,11 @@
 +++
 date = '2025-12-12T10:00:00+01:00'
 draft = false
-title = 'Drop SQLite: Ship Postgres with Zero External Dependencies'
+title = 'Drop SQLite: Zero-Dependency Quick Starts with pg0'
 tags = ["database", "postgresql", "python", "asyncpg", "developer-experience"]
 +++
 
-**TL;DR**: Your users can run your Postgres-backed Python app without installing anything. pg0-embedded bundles Postgres - no Docker, no brew, no "install Postgres first" in your README. Same database in dev, test, and prod.
+**TL;DR**: Your users can clone your project, run `pip install`, and have Postgres running automatically. No "install Postgres first" in your README, no Docker, no SQLite fallbacks. pg0-embedded bundles Postgres for zero-friction onboarding.
 
 ---
 
@@ -61,7 +61,7 @@ with Pg0() as pg:
     pg.execute("CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
-First run downloads Postgres 16 **with pgvector included**. No extension compilation, no manual loading. Subsequent runs use the cached binaries.
+First run downloads Postgres 18 **with pgvector included**. No extension compilation, no manual loading. Subsequent runs use the cached binaries.
 
 **Cross-platform**: Works on macOS (Intel + Apple Silicon), Linux (x86_64), and Windows. The binary auto-detects your platform and downloads the right build.
 
@@ -260,7 +260,7 @@ def get_database_url():
 Your README goes from:
 ```
 ## Prerequisites
-- PostgreSQL 16
+- PostgreSQL 18
 - pgvector extension
 ```
 
