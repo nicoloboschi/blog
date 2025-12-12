@@ -53,16 +53,15 @@ pip install pg0-embedded
 ```
 
 ```python
-from pg0_embedded import Pg0
+from pg0 import Pg0
 
-pg = Pg0()
-pg.start()
-
-url = pg.get_connection_url()
-# postgresql://postgres:postgres@localhost:5432/postgres
+# Context manager handles start/stop
+with Pg0() as pg:
+    print(pg.uri)  # postgresql://postgres:postgres@localhost:5432/postgres
+    pg.execute("CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
-First run downloads Postgres 16 **with pgvector included**. No extension compilation, no manual loading - just `CREATE EXTENSION vector;` and you're done. Subsequent runs use the cached binaries.
+First run downloads Postgres 16 **with pgvector included**. No extension compilation, no manual loading. Subsequent runs use the cached binaries.
 
 **Cross-platform**: Works on macOS (Intel + Apple Silicon), Linux (x86_64), and Windows. The binary auto-detects your platform and downloads the right build.
 
@@ -86,13 +85,13 @@ engine = create_engine(DATABASE_URL)
 
 ```python
 import asyncpg
-from pg0_embedded import Pg0
+from pg0 import Pg0
 
 # Dev: start local Postgres
 if os.getenv("ENV") != "production":
     pg = Pg0()
     pg.start()
-    DATABASE_URL = pg.get_connection_url()
+    DATABASE_URL = pg.uri
 else:
     DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -105,11 +104,13 @@ pool = await asyncpg.create_pool(DATABASE_URL)
 ### Auto port assignment
 
 ```python
+from pg0 import Pg0
+
 pg = Pg0()
 pg.start()
 
 # Port is auto-assigned to a free one if not specified
-print(pg.get_connection_url())
+print(pg.uri)
 # postgresql://postgres:postgres@localhost:54832/postgres
 ```
 
@@ -118,6 +119,8 @@ No port conflicts. Spin up multiple instances without worrying about what's alre
 ### Named instances for isolation
 
 ```python
+from pg0 import Pg0
+
 # Run dev and test databases simultaneously
 pg_dev = Pg0(name="dev")
 pg_test = Pg0(name="test")
@@ -126,8 +129,24 @@ pg_dev.start()
 pg_test.start()
 
 # Each instance gets its own port and data directory
-print(pg_dev.get_connection_url())
-print(pg_test.get_connection_url())
+print(pg_dev.uri)
+print(pg_test.uri)
+```
+
+### Custom configuration
+
+```python
+from pg0 import Pg0
+
+pg = Pg0(
+    name="myapp",
+    port=5433,
+    username="myuser",
+    password="mypass",
+    database="mydb",
+    config={"shared_buffers": "512MB"}
+)
+pg.start()
 ```
 
 ### Pytest fixture
@@ -135,14 +154,14 @@ print(pg_test.get_connection_url())
 ```python
 import pytest
 import asyncpg
-from pg0_embedded import Pg0
+from pg0 import Pg0
 
 @pytest.fixture
 async def db():
-    pg = Pg0(name="test", port=5433)
+    pg = Pg0(name="test")
     pg.start()
 
-    pool = await asyncpg.create_pool(pg.get_connection_url())
+    pool = await asyncpg.create_pool(pg.uri)
     yield pool
 
     await pool.close()
@@ -154,7 +173,7 @@ async def db():
 ```python
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from pg0_embedded import Pg0
+from pg0 import Pg0
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -162,7 +181,7 @@ async def lifespan(app: FastAPI):
     pg = Pg0()
     pg.start()
 
-    app.state.pool = await asyncpg.create_pool(pg.get_connection_url())
+    app.state.pool = await asyncpg.create_pool(pg.uri)
     yield
 
     await app.state.pool.close()
@@ -171,15 +190,14 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 ```
 
-### Run migrations on startup
+### Run SQL directly
 
 ```python
-pg = Pg0()
-pg.start()
+from pg0 import Pg0
 
-# pg0 bundles psql - run SQL files directly
-pg.psql("-f", "schema.sql")
-pg.psql("-f", "migrations/001_initial.sql")
+with Pg0() as pg:
+    pg.execute("CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT)")
+    pg.execute("INSERT INTO users (name) VALUES ('test')")
 ```
 
 ## What You Unlock
@@ -222,7 +240,8 @@ If you maintain an OSS project, this is in my opinion the killer feature. Your u
 
 ```python
 # your_package/db.py
-from pg0_embedded import Pg0
+from pg0 import Pg0
+import os
 
 _pg = None
 
@@ -235,7 +254,7 @@ def get_database_url():
     if _pg is None:
         _pg = Pg0(name="myapp")
         _pg.start()
-    return _pg.get_connection_url()
+    return _pg.uri
 ```
 
 Your README goes from:
@@ -259,12 +278,13 @@ No Docker Compose files. No "works on my machine." No contributor friction.
 | Task | Code |
 |------|------|
 | Start (auto port) | `Pg0().start()` |
+| Context manager | `with Pg0() as pg:` |
 | Fixed port | `Pg0(port=5433).start()` |
 | Named instance | `Pg0(name="test").start()` |
-| Get URL | `pg.get_connection_url()` |
-| Run SQL file | `pg.psql("-f", "schema.sql")` |
+| Get URI | `pg.uri` |
+| Run SQL | `pg.execute("SELECT 1")` |
 | Stop | `pg.stop()` |
-| Data location | `~/.pg0/instances/<name>/` |
+| Stop and delete data | `pg.drop()` |
 
 ---
 

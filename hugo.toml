@@ -1,7 +1,10 @@
 baseURL = 'https://nicoloboschi.com/'
 languageCode = 'en-us'
-title = 'Yet Another Blog Post Website'
-theme = 'chicago7'
+title = 'Some tech stuff'
+theme = 'hugo-bearcub'
+copyright = "Nicolò Boschi"
+
+enableRobotsTXT = true
 pagination.pagerSize = 10
 
 [permalinks]
@@ -9,24 +12,24 @@ posts = "/posts/:year:month:day"
 
 [markup]
 [markup.highlight]
-style = "bw"
+lineNos = true
+lineNumbersInTable = false
+noClasses = false
 [markup.goldmark.renderer]
 unsafe = true
 
-[menu]
-[[menu.header]]
-name = "Home"
-url = "/"
-weight = 10
-
-[[menu.header]]
-name = "Blog Posts"
-url = "posts"
-weight = 20
+[taxonomies]
+category = "categories"
+tag = "tags"
 
 [params]
-author = "Nicolò Boschi"
+description = "Software Engineer. Distributed Systems. AI Agents. Open Source."
 favicon = "favicon.jpg"
+dateFormat = "2006-01-02"
+themeStyle = "original"
+madeWith = ""
 
-[params.social]
-feed = "/index.xml"
+[params.author]
+email = "boschi1997@gmail.com"
+name = "Nicolò Boschi"
+
