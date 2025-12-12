@@ -28,6 +28,8 @@ favicon = "favicon.jpg"
 dateFormat = "2006-01-02"
 themeStyle = "original"
 madeWith = ""
+images = ["cover.jpg"]
+generateSocialCard = true
 
 [params.author]
 email = "boschi1997@gmail.com"
