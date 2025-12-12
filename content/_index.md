@@ -15,10 +15,19 @@ I feel I have something to say sometimes, so here you can find my blog posts, ta
 
 ---
 
+### Blog Posts
+
+I write about distributed systems, AI agents, and developer tools. Check out [all posts](/posts/).
+
+---
+
+
 ### Open Source Contributions
 
 I'm an active contributor and maintainer in the open source ecosystem, including:
 
+- [Hindsight](https://github.com/vectorize-io/hindsight) (co-creator)
+- [pg0](https://github.com/vectorize-io/pg0) (creator)
 - [Apache Pulsar](https://github.com/apache/pulsar) (PMC Member)
 - [Apache BookKeeper](https://github.com/apache/bookkeeper) (Committer)
 - [KAAP](https://github.com/datastax/kaap) – Kubernetes Operator for Apache Pulsar (creator)
@@ -32,11 +41,12 @@ I'm an active contributor and maintainer in the open source ecosystem, including
 
 ### Personal Projects
 
-A few tools I've built for speed, automation, and dev experience:
+A few tools I’ve built for speed, automation, and dev experience:
 
 - [`dockerpyze`](https://github.com/nicoloboschi/dockerpyze) – Automatically Dockerize Python apps 🐳
 - [`asap`](https://github.com/nicoloboschi/asap) – Blazing fast local Maven installs 🚀
 - [`lkr`](https://github.com/nicoloboschi/local-kubernetes-runner) – Spin up K8s clusters in 10 seconds
+- [`longmemeval-inspector`](https://github.com/nicoloboschi/longmemeval-inspector) - Visual inspector for LongMemEval dataset
 - [`setup-astradb`](https://github.com/nicoloboschi/setup-astradb) – GH Action to provision AstraDB
 - [`cleanup-astradb`](https://github.com/nicoloboschi/cleanup-astradb) – Delete AstraDB instances
 - [`cleanup-astradb-env`](https://github.com/nicoloboschi/cleanup-astradb-env) – Clean up old unused AstraDB environments
@@ -54,3 +64,5 @@ A few tools I've built for speed, automation, and dev experience:
 - [Transactions in Pulsar](https://youtu.be/eNaKKui1-cE?si=1KYepiEzw8DUZFUN)
 - [Pulsar + ElasticSearch](https://youtu.be/CyZwpvw9F6I?si=mUdtxxHbmO4bOuRh)
 - [Pulsar Shell Demo](https://youtu.be/NPP5ZJ1raek?si=xyRSbE4TwOOGllf-)
+
+---
