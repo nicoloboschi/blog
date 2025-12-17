@@ -1,5 +1,5 @@
 +++
-date = '2025-12-17T11:00:00+01:00'
+date = '2025-12-16T11:00:00+01:00'
 draft = false
 title = 'Beyond Vector Search: How TEMPR Combines 4 Retrieval Strategies'
 tags = ["AI", "agents", "memory", "hindsight", "retrieval", "RAG"]
