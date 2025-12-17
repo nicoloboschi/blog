@@ -1,5 +1,5 @@
 +++
-date = '2025-12-17T15:00:00+01:00'
+date = '2025-12-10T15:00:00+01:00'
 draft = false
 title = 'Token Budgets vs Top-K: A Better Way to Fill Context Windows'
 tags = ["AI", "agents", "memory", "hindsight", "LLM", "RAG"]
