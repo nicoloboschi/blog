@@ -1,6 +1,6 @@
 baseURL = 'https://nicoloboschi.com/'
 languageCode = 'en-us'
-title = 'Some tech stuff'
+title = 'Getting stuff done'
 theme = 'hugo-bearcub'
 copyright = "Nicolò Boschi"
 
