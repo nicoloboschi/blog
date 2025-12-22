@@ -25,7 +25,7 @@ Instructions:
 - [ ] **Disposition Traits: Tuning Skepticism, Literalism, and Empathy** - Practical effects of each trait on agent behavior
 
 ## Comparisons
-- [ ] **Hindsight vs Traditional RAG: What You Actually Get** - Multi-hop reasoning, temporal filtering, entity understanding vs pure vector similarity
+- [x] **Hindsight vs Traditional RAG: What You Actually Get** - Multi-hop reasoning, temporal filtering, entity understanding vs pure vector similarity → `hindsight-vs-traditional-rag.md`
 - [ ] **When Vector Search Falls Short** - Concrete examples where semantic-only retrieval fails
 
 ---
