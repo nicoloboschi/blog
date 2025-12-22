@@ -71,6 +71,51 @@
 {{ if isset .Params "date" }}
   <meta property="article:published_time" content="{{ time .Date }}" />
 {{ end }}
+
+<!-- JSON-LD Structured Data -->
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ $.Site.Title }}",
+  "description": "{{ $.Site.Params.description }}",
+  "url": "{{ $.Site.BaseURL }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ $.Site.Params.author.name }}"
+  }
+}
+</script>
+{{ else if .IsPage }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title }}",
+  "description": "{{ with .Description }}{{ . | plainify }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}",
+  "url": "{{ .Permalink }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  {{ if .Lastmod }}"dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",{{ end }}
+  "author": {
+    "@type": "Person",
+    "name": "{{ $.Site.Params.author.name }}",
+    "url": "{{ $.Site.BaseURL }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ $.Site.Params.author.name }}",
+    "url": "{{ $.Site.BaseURL }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  }
+  {{ with .Params.tags }},"keywords": "{{ delimit . ", " }}"{{ end }}
+}
+</script>
+{{ end }}
+
 <!-- RSS -->
 {{ with .OutputFormats.Get "RSS" }}
   <link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
@@ -81,8 +126,13 @@
   <link href="{{ .RelPermalink }}" rel="alternate" type="application/json" title="{{ $.Site.Title }}" />
 {{ end }}
 
-<!-- GoatCounter Analytics -->
+<!-- Google Analytics -->
 {{ if not hugo.IsDevelopment }}
-<script data-goatcounter="https://nicoloboschi.goatcounter.com/count"
-        async src="{{ "count.js" | relURL }}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PMLLQRTLS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8PMLLQRTLS');
+</script>
 {{ end }}

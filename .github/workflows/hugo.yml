@@ -50,6 +50,8 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Generate llms.txt
+        run: bash scripts/generate-llms-txt.sh
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
