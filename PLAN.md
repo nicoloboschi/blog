@@ -28,6 +28,23 @@ Instructions:
 - [x] **Hindsight vs Traditional RAG: What You Actually Get** - Multi-hop reasoning, temporal filtering, entity understanding vs pure vector similarity → `hindsight-vs-traditional-rag.md`
 - [ ] **When Vector Search Falls Short** - Concrete examples where semantic-only retrieval fails
 
+## Integrations
+- [ ] **MCP Server: Memory for Claude and Other LLMs** - Using Model Context Protocol to give any LLM persistent memory, setup walkthrough
+- [ ] **LiteLLM + Hindsight: Transparent Memory Injection** - Automatic memory storage/retrieval via callbacks, zero manual plumbing
+- [ ] **Adding Memory to LangChain Agents** - Integration pattern with code examples
+
+## Advanced Topics
+- [ ] **Knowledge Graph Construction: How Hindsight Builds Entity Relationships** - Automatic entity, temporal, semantic, and causal connection extraction
+- [ ] **Background Operations: What Happens After retain()** - batch_retain, form_opinion, reinforce_opinion, observation regeneration
+- [x] **Temporal Reasoning: "When It Happened" vs "When You Learned It"** - Two temporal dimensions and why they matter for queries → `hindsight-temporal-reasoning.md`
+- [ ] **Opinion Evolution Case Study: The Redis to Valkey Migration** - Tracking how agent beliefs change as new evidence arrives
+- [ ] **Document Upserting: Keeping Evolving Conversations Fresh** - How document_id enables memory updates without duplication
+
+## Production & Deployment
+- [ ] **TEI for Production Embeddings** - Setting up Text Embeddings Inference for scale
+- [ ] **Helm Charts and Kubernetes Deployment** - Production infrastructure patterns
+- [ ] **Scaling Hindsight: Kafka Integration for Background Operations** - Horizontal scaling with external streaming
+
 ---
 
 ## Notes
