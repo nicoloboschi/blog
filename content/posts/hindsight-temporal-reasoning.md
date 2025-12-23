@@ -5,7 +5,7 @@ title = 'Temporal Reasoning: "When It Happened" vs "When You Learned It"'
 tags = ["AI", "agents", "memory", "hindsight", "retrieval"]
 +++
 
-**TL;DR**: Most memory systems track only when information was stored. Hindsight tracks two temporal dimensions - when events occurred and when you learned about them. This enables queries like "what did I learn last week about events from last month?" and improves temporal reasoning accuracy from 31.6% to 79.7% on LongMemEval.
+**TL;DR**: Most memory systems track only when information was stored. Hindsight tracks two temporal dimensions - when events occurred and when you learned about them. This enables queries like "what did I learn last week about events from last month?".
 
 ---
 
@@ -84,19 +84,6 @@ The dual-timestamp approach solves several real problems I've encountered buildi
 **Time-scoped knowledge bases**: In a support agent scenario, you might retain documentation updates with their publish dates (occurrence) while tracking when each was ingested (mention). "What changed in v2.3?" uses occurrence; "What docs did we add this week?" uses mention.
 
 **Temporal consistency in multi-hop queries**: For "What was Bob working on when Alice joined?", the system needs to find Alice's join date, then retrieve Bob's activities from that period. Without occurrence tracking, this requires the LLM to do temporal math on free-text dates - unreliable at best.
-
-## Benchmark Results
-
-From the Hindsight paper on LongMemEval's temporal reasoning category:
-
-| Approach | Accuracy |
-|----------|----------|
-| Full-context baseline | 31.6% |
-| Hindsight memory | 79.7% |
-
-That's a 48-point improvement. Temporal queries are where traditional retrieval fails hardest - vector similarity doesn't understand dates, and single-timestamp systems can't distinguish occurrence from mention.
-
-The improvement comes from the combination: dual timestamps enable correct filtering, temporal graph links enable proximity-based retrieval, and TEMPR fuses temporal results with semantic/keyword/graph strategies via Reciprocal Rank Fusion.
 
 ## Code Example
 
