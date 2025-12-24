@@ -37,9 +37,9 @@ An opinion isn't just what the agent thinks - it's what the agent thinks *and ho
 Opinions emerge during `reflect()` operations. When the agent reasons about a query, it may generate conclusions that get stored as opinions.
 
 ```python
-from hindsight import Hindsight
+from hindsight_client import Hindsight
 
-client = Hindsight(api_url="http://localhost:8080")
+client = Hindsight(base_url="http://localhost:8888")
 
 # Store some facts first
 client.retain(

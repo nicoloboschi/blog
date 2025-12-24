@@ -63,9 +63,9 @@ Each extracted fact includes temporal ranges, confidence scores (for opinions), 
 The `context` parameter isn't just metadata - it shapes what gets extracted.
 
 ```python
-from hindsight import Hindsight
+from hindsight_client import Hindsight
 
-client = Hindsight(api_url="http://localhost:8080")
+client = Hindsight(base_url="http://localhost:8888")
 
 # Same content, different contexts
 content = "Alice mentioned she's leaving Google. The team dynamics changed after the reorg."

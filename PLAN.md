@@ -41,7 +41,7 @@ Instructions:
 - [ ] **Document Upserting: Keeping Evolving Conversations Fresh** - How document_id enables memory updates without duplication
 
 ## Production & Deployment
-- [ ] **TEI for Production Embeddings** - Setting up Text Embeddings Inference for scale
+- [x] **TEI for Production Embeddings** - Setting up Text Embeddings Inference for scale → `hindsight-tei-production-embeddings.md`
 - [ ] **Helm Charts and Kubernetes Deployment** - Production infrastructure patterns
 - [ ] **Scaling Hindsight: Kafka Integration for Background Operations** - Horizontal scaling with external streaming
 

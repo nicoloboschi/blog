@@ -52,7 +52,7 @@ Enables queries like "What was happening around Alice's promotion?"
 ### Option 4 - Thread (Deep dive)
 ```
 1/5
-Every memory system I've seen makes the same mistake: one timestamp per memory.
+Your memory system must not do this mistake: one timestamp per memory.
 
 Here's why that breaks temporal queries 🧵
 
@@ -94,46 +94,38 @@ Technical breakdown: [link]
 ### Option 5 - Thread (Story format)
 ```
 1/4
-I kept hitting the same wall building agent memory.
+Running LongMemEval benchmarks on my memory system. Temporal reasoning category: 31%.
 
-User: "Alice got married last June" (said in January)
+Queries like "What was discussed last week about events from June?" kept failing.
 
-Me: *timestamps it January*
-
-Later: "What happened in June?" → nothing found
-
-🤦
+I started digging into why.
 
 2/4
-The fix seems obvious - timestamp it June instead.
+Found the root cause: single timestamp per memory.
 
-But then: "What did we discuss recently?" → nothing found
+User mentions in January that something happened in June. You pick one timestamp.
 
-The January conversation is now 6 months old according to my memory system.
+Pick January → "What happened in June?" fails
+Pick June → "What did we discuss recently?" fails
 
-Single timestamp = impossible trade-off.
+No winning choice.
 
 3/4
-Hindsight's solution:
+The fix: store both.
 
-Track both.
-• Occurrence: June 2024 (when it happened)
-• Mention: January 2025 (when you learned it)
+• Occurrence interval: when the event happened
+• Mention timestamp: when it was recorded
 
-Add temporal graph links between memories (exponential decay by distance).
-
-Now multi-hop temporal queries work too.
+Same memory, two temporal dimensions. Both query types now resolve.
 
 4/4
-"What was Bob working on when Alice got married?"
+Added temporal graph links (exponential decay by time distance) for multi-hop reasoning.
 
-→ Find Alice's marriage date
-→ Retrieve Bob's activities from that period
-→ Graph traversal respects temporal proximity
+"What was Bob doing when Alice got promoted?" now works.
 
-31.6% → 79.7% on temporal reasoning benchmarks.
+Result: 31.6% → 79.7% on temporal reasoning.
 
-[link]
+Technical breakdown: [link]
 ```
 
 ---
