@@ -1,0 +1,815 @@
+{{ define "main" }}
+<div class="terminal-container">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="terminal-buttons">
+        <span class="terminal-btn red"></span>
+        <span class="terminal-btn yellow"></span>
+        <span class="terminal-btn green"></span>
+      </div>
+      <div class="terminal-title">nicolo@localhost ~</div>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">whoami</span>
+      </div>
+      <div class="terminal-output whoami-section">
+        <img src="/face.jpeg" alt="Nicolò Boschi" class="profile-photo">
+        <div class="whoami-text">
+          <p><strong>Nicolò Boschi</strong> <span class="dim">(with the accent)</span></p>
+          <p class="dim">Software engineer working on distributed systems, AI agents, and developer tools.</p>
+          <div class="links-row">
+            <a href="/posts/" class="terminal-link">[blog]</a>
+            <a href="https://github.com/nicoloboschi" class="terminal-link">[github]</a>
+            <a href="https://x.com/nicoloboschi" class="terminal-link">[x]</a>
+            <a href="https://www.linkedin.com/in/nicoló-boschi-621a1a158/" class="terminal-link">[linkedin]</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">cat papers.bib</span>
+      </div>
+      <div class="terminal-output">
+        <a href="https://arxiv.org/abs/2512.12818" class="paper-card">
+          <div class="paper-venue">arXiv 2024</div>
+          <div class="paper-title">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</div>
+          <div class="paper-authors dim">Latimer, Boschi, Neeser, Bartholomew, Srivastava, Wang, Ramakrishnan</div>
+        </a>
+      </div>
+
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">cat opensource.md</span>
+      </div>
+      <div class="terminal-output oss-section">
+        <div class="oss-item">
+          <img src="https://github.com/vectorize-io.png" alt="vectorize-io" class="oss-avatar">
+          <a href="https://github.com/vectorize-io/hindsight">hindsight</a>
+          <span class="role-badge creator">co-creator</span>
+          <img src="https://img.shields.io/github/stars/vectorize-io/hindsight?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">Long-term memory for AI agents</span>
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/vectorize-io.png" alt="vectorize-io" class="oss-avatar">
+          <a href="https://github.com/vectorize-io/pg0">pg0</a>
+          <span class="role-badge creator">creator</span>
+          <img src="https://img.shields.io/github/stars/vectorize-io/pg0?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">Zero-dependency Postgres driver</span>
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/datastax.png" alt="datastax" class="oss-avatar">
+          <a href="https://github.com/datastax/kaap">kaap</a>
+          <span class="role-badge creator">creator</span>
+          <img src="https://img.shields.io/github/stars/datastax/kaap?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">K8s Operator for Apache Pulsar</span>
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/LangStream.png" alt="LangStream" class="oss-avatar">
+          <a href="https://github.com/LangStream/langstream">langstream</a>
+          <span class="role-badge creator">co-creator</span>
+          <img src="https://img.shields.io/github/stars/LangStream/langstream?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">Build GenAI apps with streaming</span>
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/apache.png" alt="apache" class="oss-avatar">
+          <a href="https://github.com/apache/pulsar">pulsar</a>
+          <span class="role-badge pmc">PMC Member</span>
+          <img src="https://img.shields.io/github/stars/apache/pulsar?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">Distributed pub-sub messaging</span>
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/apache.png" alt="apache" class="oss-avatar">
+          <a href="https://github.com/apache/bookkeeper">bookkeeper</a>
+          <span class="role-badge committer">Committer</span>
+          <img src="https://img.shields.io/github/stars/apache/bookkeeper?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">Distributed log storage</span>
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/run-llama.png" alt="run-llama" class="oss-avatar">
+          <a href="https://github.com/run-llama/llama_index">llama-index</a>
+          <span class="role-badge contrib">contributor</span>
+          <img src="https://img.shields.io/github/stars/run-llama/llama_index?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/langchain-ai.png" alt="langchain-ai" class="oss-avatar">
+          <a href="https://github.com/langchain-ai/langchain">langchain</a>
+          <span class="role-badge contrib">contributor</span>
+          <img src="https://img.shields.io/github/stars/langchain-ai/langchain?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/langchain-ai.png" alt="langchain-ai" class="oss-avatar">
+          <a href="https://github.com/langchain-ai/langchainjs">langchainjs</a>
+          <span class="role-badge contrib">contributor</span>
+          <img src="https://img.shields.io/github/stars/langchain-ai/langchainjs?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+        </div>
+        <div class="oss-item">
+          <img src="https://github.com/langflow-ai.png" alt="langflow-ai" class="oss-avatar">
+          <a href="https://github.com/langflow-ai/langflow">langflow</a>
+          <span class="role-badge contrib">contributor</span>
+          <img src="https://img.shields.io/github/stars/langflow-ai/langflow?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+        </div>
+      </div>
+
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">cat talks.md</span>
+      </div>
+      <div class="terminal-output talks-list">
+        <div class="talk-category"># Generative AI</div>
+        <div class="talk-item"><a href="https://youtu.be/aYAgTLlinaE">How Claude is Changing the Game for Private Data</a></div>
+        <div class="talk-item"><a href="https://www.youtube.com/watch?v=EWdZnb6MXog">RAG Pattern + AWS Suite</a></div>
+        <div class="talk-item"><a href="https://www.youtube.com/watch?v=EDQjWXzU-Ds">Scaling unstructured data indexing with Pulsar</a></div>
+        <div class="talk-category"># Streaming & Apache Pulsar</div>
+        <div class="talk-item"><a href="https://youtu.be/eNaKKui1-cE">Transactions in Pulsar</a></div>
+        <div class="talk-item"><a href="https://youtu.be/CyZwpvw9F6I">Pulsar + ElasticSearch</a></div>
+        <div class="talk-item"><a href="https://youtu.be/NPP5ZJ1raek">Pulsar Shell Demo</a></div>
+      </div>
+
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">cat personal-projects.md</span>
+      </div>
+      <div class="terminal-output tools-list">
+        <div class="tool-item">
+          <a href="https://github.com/nicoloboschi/dockerpyze"><span class="tool-name">dockerpyze</span></a>
+          <img src="https://img.shields.io/github/stars/nicoloboschi/dockerpyze?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">- Automatically Dockerize Python apps</span>
+        </div>
+        <div class="tool-item">
+          <a href="https://github.com/nicoloboschi/asap"><span class="tool-name">asap</span></a>
+          <img src="https://img.shields.io/github/stars/nicoloboschi/asap?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">- Blazing fast local Maven installs</span>
+        </div>
+        <div class="tool-item">
+          <a href="https://github.com/nicoloboschi/local-kubernetes-runner"><span class="tool-name">lkr</span></a>
+          <img src="https://img.shields.io/github/stars/nicoloboschi/local-kubernetes-runner?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">- Spin up K8s clusters in 10 seconds</span>
+        </div>
+        <div class="tool-item">
+          <a href="https://github.com/nicoloboschi/longmemeval-inspector"><span class="tool-name">longmemeval-inspector</span></a>
+          <img src="https://img.shields.io/github/stars/nicoloboschi/longmemeval-inspector?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">- Visual inspector for LongMemEval</span>
+        </div>
+        <div class="tool-item">
+          <a href="https://github.com/nicoloboschi/setup-astradb"><span class="tool-name">setup-astradb</span></a>
+          <img src="https://img.shields.io/github/stars/nicoloboschi/setup-astradb?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
+          <span class="dim">- GH Action to provision AstraDB</span>
+        </div>
+      </div>
+
+      <div id="terminal-response"></div>
+      <div class="terminal-line input-line">
+        <span class="prompt">$</span>
+        <div class="input-wrapper">
+          <input type="text" id="terminal-input" autocomplete="off" autofocus spellcheck="false" placeholder="type 'help' for commands...">
+          <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.terminal-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  position: relative;
+}
+
+.terminal-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/cover.jpg') center/cover no-repeat;
+  opacity: 0.08;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.terminal-window {
+  background: #1a1b26;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+}
+
+.terminal-header {
+  background: #24283b;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-btn.red { background: #f7768e; }
+.terminal-btn.yellow { background: #e0af68; }
+.terminal-btn.green { background: #9ece6a; }
+
+.terminal-title {
+  color: #787c99;
+  font-size: 13px;
+  flex: 1;
+  text-align: center;
+}
+
+.terminal-body {
+  padding: 20px 24px;
+  color: #a9b1d6;
+  line-height: 1.6;
+}
+
+.terminal-line {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.terminal-line:first-child {
+  margin-top: 0;
+}
+
+.prompt {
+  color: #9ece6a;
+  font-weight: bold;
+}
+
+.command {
+  color: #7dcfff;
+}
+
+.terminal-output {
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.terminal-output p {
+  margin: 4px 0;
+}
+
+.terminal-output strong {
+  color: #bb9af7;
+}
+
+.dim {
+  color: #565f89;
+}
+
+/* Whoami section with photo */
+.whoami-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #7aa2f7;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.whoami-text {
+  flex: 1;
+}
+
+.links-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.terminal-link {
+  color: #7aa2f7;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.terminal-link:hover {
+  color: #bb9af7;
+}
+
+/* Paper card */
+.paper-card {
+  display: block;
+  background: #24283b;
+  border-radius: 8px;
+  padding: 16px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 3px solid #bb9af7;
+}
+
+.paper-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.paper-venue {
+  color: #e0af68;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.paper-title {
+  color: #c0caf5;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.paper-authors {
+  font-size: 12px;
+}
+
+/* OSS section with avatars */
+.oss-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.oss-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.oss-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.oss-item a {
+  color: #7dcfff;
+  text-decoration: none;
+  min-width: 120px;
+}
+
+.oss-item a:hover {
+  color: #bb9af7;
+}
+
+.role-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.role-badge.creator {
+  background: #9ece6a22;
+  color: #9ece6a;
+}
+
+.role-badge.pmc {
+  background: #f7768e22;
+  color: #f7768e;
+}
+
+.role-badge.committer {
+  background: #e0af6822;
+  color: #e0af68;
+}
+
+.role-badge.contrib {
+  background: #7aa2f722;
+  color: #7aa2f7;
+}
+
+.star-badge {
+  height: 18px;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+
+/* Tools list */
+.tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tool-name {
+  color: #9ece6a;
+}
+
+.tools-list a {
+  text-decoration: none;
+}
+
+.tools-list a:hover .tool-name {
+  color: #bb9af7;
+}
+
+/* Talks list */
+.talks-list {
+  line-height: 1.8;
+}
+
+.talk-category {
+  color: #e0af68;
+  margin-top: 8px;
+}
+
+.talk-category:first-child {
+  margin-top: 0;
+}
+
+.talk-item a {
+  color: #7aa2f7;
+  text-decoration: none;
+}
+
+.talk-item a:hover {
+  color: #bb9af7;
+}
+
+/* Interactive input */
+.input-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.input-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+#terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #c0caf5;
+  font-family: inherit;
+  font-size: inherit;
+  caret-color: transparent;
+  width: 10px;
+}
+
+#terminal-input::placeholder {
+  color: #565f89;
+}
+
+#terminal-input:placeholder-shown {
+  width: 200px;
+}
+
+#terminal-input:focus {
+  width: auto;
+}
+
+#terminal-input:focus::placeholder {
+  color: transparent;
+}
+
+/* Block cursor */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background: #c0caf5;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+#terminal-response {
+  margin-top: 8px;
+}
+
+#terminal-response .cmd-block {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid #24283b;
+}
+
+#terminal-response .cmd-block:first-child {
+  margin-top: 12px;
+  border-top: none;
+  padding-top: 0;
+}
+
+#terminal-response .cmd-echo {
+  color: #a9b1d6;
+  margin-bottom: 8px;
+}
+
+#terminal-response .cmd-output {
+  padding-left: 20px;
+  color: #a9b1d6;
+}
+
+#terminal-response .response-error {
+  color: #f7768e;
+}
+
+#terminal-response .response-success {
+  color: #9ece6a;
+}
+
+#terminal-response .response-cmd {
+  color: #7dcfff;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 600px) {
+  .terminal-container {
+    padding: 10px;
+  }
+
+  .terminal-window {
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .terminal-body {
+    padding: 16px;
+  }
+
+  .terminal-output {
+    padding-left: 12px;
+  }
+
+  .whoami-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .links-row {
+    justify-content: center;
+  }
+
+  .oss-item {
+    flex-wrap: wrap;
+  }
+
+  .oss-item a {
+    min-width: auto;
+  }
+
+  .oss-item .dim {
+    width: 100%;
+    padding-left: 34px;
+    font-size: 11px;
+  }
+
+  .tool-item {
+    flex-wrap: wrap;
+  }
+
+  .tool-item .dim {
+    width: 100%;
+    font-size: 11px;
+  }
+}
+</style>
+
+<script>
+(function() {
+  const input = document.getElementById('terminal-input');
+  const response = document.getElementById('terminal-response');
+  const body = document.querySelector('.terminal-body');
+
+  const commands = {
+    help: () => [
+      'Available commands:',
+      '  <span class="response-cmd">help</span>        - Show this help message',
+      '  <span class="response-cmd">ls</span>          - List available destinations',
+      '  <span class="response-cmd">cd [path]</span>   - Navigate (posts, github, x, linkedin, paper...)',
+      '  <span class="response-cmd">whoami</span>      - About me',
+      '  <span class="response-cmd">cat [file]</span>  - Show content (papers.bib, opensource.md, talks.md, personal-projects.md)',
+      '  <span class="response-cmd">clear</span>       - Clear terminal output',
+      '  <span class="response-cmd">pwd</span>         - Print working directory'
+    ].join('<br>'),
+
+    ls: () => [
+      '<span class="response-cmd">posts/</span>      - Blog posts',
+      '<span class="response-cmd">github</span>      - GitHub profile',
+      '<span class="response-cmd">x</span>           - X/Twitter',
+      '<span class="response-cmd">linkedin</span>    - LinkedIn',
+      '<span class="response-cmd">paper</span>       - arXiv paper',
+      '<span class="response-cmd">hindsight</span>   - Hindsight repo',
+      '<span class="response-cmd">pg0</span>         - pg0 repo',
+      '<span class="response-cmd">pulsar</span>      - Apache Pulsar',
+      '<span class="response-cmd">langstream</span>  - LangStream repo',
+      '<span class="response-cmd">kaap</span>        - KAAP repo'
+    ].join('<br>'),
+
+    pwd: () => '<span class="response-success">~</span> (home)',
+
+    whoami: () => {
+      const section = document.querySelector('.whoami-section');
+      return section ? section.innerHTML : 'Nicolò Boschi';
+    },
+
+    cat: (args) => {
+      const file = args[0]?.toLowerCase().replace(/\.md$|\.bib$/, '');
+      const sections = {
+        'papers': '.paper-card',
+        'paper': '.paper-card',
+        'opensource': '.oss-section',
+        'talks': '.talks-list',
+        'personal-projects': '.tools-list',
+        'projects': '.tools-list'
+      };
+
+      if (sections[file]) {
+        const el = document.querySelector(sections[file]);
+        return el ? el.innerHTML : `<span class="response-error">cat: ${args[0]}: empty</span>`;
+      }
+      return [
+        `<span class="response-error">cat: ${args[0] || '(none)'}: No such file</span>`,
+        'Try: papers.bib, opensource.md, talks.md, personal-projects.md'
+      ].join('<br>');
+    },
+
+    clear: () => {
+      response.innerHTML = '';
+      return null;
+    },
+
+    cd: (args) => {
+      const path = args[0]?.toLowerCase().replace(/^\/|\/$/g, '');
+
+      // Internal routes
+      const internal = {
+        'posts': '/posts/',
+        'blog': '/posts/',
+        '~': '/',
+        '': '/',
+        'home': '/'
+      };
+
+      // External links
+      const external = {
+        'github': 'https://github.com/nicoloboschi',
+        'gh': 'https://github.com/nicoloboschi',
+        'x': 'https://x.com/nicoloboschi',
+        'twitter': 'https://x.com/nicoloboschi',
+        'linkedin': 'https://www.linkedin.com/in/nicoló-boschi-621a1a158/',
+        'li': 'https://www.linkedin.com/in/nicoló-boschi-621a1a158/',
+        'paper': 'https://arxiv.org/abs/2512.12818',
+        'arxiv': 'https://arxiv.org/abs/2512.12818',
+        'hindsight': 'https://github.com/vectorize-io/hindsight',
+        'pg0': 'https://github.com/vectorize-io/pg0',
+        'pulsar': 'https://github.com/apache/pulsar',
+        'bookkeeper': 'https://github.com/apache/bookkeeper',
+        'langstream': 'https://github.com/LangStream/langstream',
+        'kaap': 'https://github.com/datastax/kaap',
+        'llama-index': 'https://github.com/run-llama/llama_index',
+        'langchain': 'https://github.com/langchain-ai/langchain',
+        'langflow': 'https://github.com/langflow-ai/langflow'
+      };
+
+      if (internal.hasOwnProperty(path)) {
+        const url = internal[path];
+        if (url === '/') {
+          return '<span class="response-success">Already at home (~)</span>';
+        }
+        setTimeout(() => window.location.href = url, 300);
+        return `<span class="response-success">Navigating to ${path}...</span>`;
+      }
+
+      if (external[path]) {
+        window.open(external[path], '_blank');
+        return `<span class="response-success">Opening ${path}...</span>`;
+      }
+
+      return [
+        `<span class="response-error">cd: no such directory: ${args[0] || '(none)'}</span>`,
+        'Type <span class="response-cmd">ls</span> to see available destinations'
+      ].join('<br>');
+    }
+  };
+
+  // Easter eggs
+  commands.sudo = () => '<span class="response-error">Nice try.</span>';
+  commands.rm = () => '<span class="response-error">I don\'t think so.</span>';
+  commands.vim = () => '<span class="response-cmd">:q</span> to exit... just kidding, use <span class="response-cmd">cd posts</span>';
+  commands.emacs = () => 'C-x C-c';
+  commands.exit = () => {
+    setTimeout(() => window.location.href = '/posts/', 300);
+    return '<span class="response-success">Goodbye! Redirecting to blog...</span>';
+  };
+  commands.neofetch = () => [
+    '<span class="response-success">nicoloboschi@web</span>',
+    'OS: Internet',
+    'Host: nicoloboschi.com',
+    'Uptime: since 1997',
+    'Shell: custom bash-like',
+    'Theme: Tokyo Night'
+  ].join('<br>');
+
+  function executeCommand(cmd) {
+    const parts = cmd.trim().split(/\s+/);
+    const command = parts[0].toLowerCase();
+    const args = parts.slice(1);
+
+    if (!command) return null;
+
+    if (commands[command]) {
+      return commands[command](args);
+    }
+
+    return [
+      `<span class="response-error">Command not found: ${command}</span>`,
+      'Type <span class="response-cmd">help</span> for available commands'
+    ].join('<br>');
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const cmd = input.value;
+      input.value = '';
+
+      if (cmd.trim()) {
+        // Create command block
+        const cmdBlock = document.createElement('div');
+        cmdBlock.className = 'cmd-block';
+
+        // Show the command that was typed
+        const cmdEcho = document.createElement('div');
+        cmdEcho.className = 'cmd-echo';
+        cmdEcho.innerHTML = `<span style="color: #9ece6a;">$</span> <span style="color: #7dcfff;">${cmd}</span>`;
+        cmdBlock.appendChild(cmdEcho);
+
+        // Execute and show result
+        const result = executeCommand(cmd);
+        if (result) {
+          const cmdOutput = document.createElement('div');
+          cmdOutput.className = 'cmd-output';
+          cmdOutput.innerHTML = result;
+          cmdBlock.appendChild(cmdOutput);
+        }
+
+        response.appendChild(cmdBlock);
+
+        // Reset input width and scroll
+        resizeInput();
+        input.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }
+  });
+
+  // Auto-resize input to fit content
+  function resizeInput() {
+    const temp = document.createElement('span');
+    temp.style.font = getComputedStyle(input).font;
+    temp.style.visibility = 'hidden';
+    temp.style.position = 'absolute';
+    temp.style.whiteSpace = 'pre';
+    temp.textContent = input.value || '';
+    document.body.appendChild(temp);
+    input.style.width = Math.max(10, temp.offsetWidth + 2) + 'px';
+    document.body.removeChild(temp);
+  }
+
+  input.addEventListener('input', resizeInput);
+  input.addEventListener('focus', () => {
+    if (!input.value) resizeInput();
+  });
+  resizeInput();
+
+  // Focus input when clicking anywhere in terminal
+  document.querySelector('.terminal-window').addEventListener('click', () => {
+    input.focus();
+  });
+})();
+</script>
+{{ end }}
