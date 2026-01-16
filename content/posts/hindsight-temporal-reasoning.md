@@ -1,7 +1,7 @@
 +++
 date = '2025-12-23T10:00:00+01:00'
 draft = false
-title = 'Temporal Reasoning: "When It Happened" vs "When You Learned It"'
+title = 'Temporal reasoning: "when it happened" vs "when you learned it"'
 tags = ["AI", "agents", "memory", "hindsight", "retrieval"]
 +++
 

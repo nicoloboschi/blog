@@ -1,7 +1,7 @@
 +++
 date = '2025-12-15T15:00:00+01:00'
 draft = false
-title = 'Rich Fact Extraction: Preserving Narrative, Not Just Statements'
+title = 'Rich fact extraction: preserving narrative, not just statements'
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

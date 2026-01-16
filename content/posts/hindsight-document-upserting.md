@@ -1,7 +1,7 @@
 +++
 date = '2025-12-22T18:00:00+01:00'
 draft = false
-title = 'Document Upserting: Keeping Evolving Conversations Fresh'
+title = 'Document upserting: keeping evolving conversations fresh'
 tags = ["AI", "agents", "memory", "hindsight", "retrieval"]
 +++
 

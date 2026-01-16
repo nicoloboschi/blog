@@ -1,7 +1,7 @@
 +++
 date = '2025-12-14T10:00:00+01:00'
 draft = false
-title = 'Retain, Recall, Reflect: The Three Operations of Agent Memory'
+title = 'Retain, recall, reflect: the three operations of agent memory'
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

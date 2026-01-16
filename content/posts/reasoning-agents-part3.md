@@ -1,7 +1,7 @@
 +++
 date = '2025-11-19T14:30:00+01:00'
 draft = true
-title = 'Building Reasoning Agents: The Execution Layer (Part 3)'
+title = 'Building reasoning agents: the execution layer (part 3)'
 tags = ["AI", "agents", "llm", "implementation"]
 +++
 

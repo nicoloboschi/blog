@@ -1,7 +1,7 @@
 +++
 date = '2025-12-13T14:00:00+01:00'
 draft = false
-title = 'Opinions with Confidence Scores: How Agents Form Beliefs'
+title = 'Opinions with confidence scores: how agents form beliefs'
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

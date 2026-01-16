@@ -1,7 +1,7 @@
 +++
 date = '2025-12-12T12:00:00+01:00'
 draft = false
-title = 'Memory Types in Hindsight: World, Experience, Opinion, Observation'
+title = 'Memory types in Hindsight: world, experience, opinion, observation'
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

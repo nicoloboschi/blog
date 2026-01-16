@@ -1,7 +1,7 @@
 +++
 date = '2025-12-12T10:00:00+01:00'
 draft = false
-title = 'Drop SQLite: Zero-Dependency Quick Starts with pg0'
+title = 'Drop SQLite: zero-dependency quick starts with pg0'
 tags = ["database", "postgresql", "python", "asyncpg", "developer-experience"]
 +++
 

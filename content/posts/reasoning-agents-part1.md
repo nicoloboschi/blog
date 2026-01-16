@@ -1,7 +1,7 @@
 +++
 date = '2025-11-16T14:30:00+01:00'
 draft = false
-title = 'The Reasoning Agent: A Different Architecture for AI Systems (Part 1)'
+title = 'The reasoning agent: a different architecture for AI systems (part 1)'
 tags = ["AI", "agents", "llm", "architecture"]
 +++
 

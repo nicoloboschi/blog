@@ -1,7 +1,7 @@
 +++
 date = '2025-12-21T10:00:00+01:00'
 draft = false
-title = 'TEI for Production: Embeddings and Cross-Encoder Reranking'
+title = 'TEI for production: embeddings and cross-encoder reranking'
 tags = ["AI", "agents", "memory", "hindsight", "embeddings", "reranking", "production", "infrastructure"]
 +++
 

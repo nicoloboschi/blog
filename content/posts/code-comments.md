@@ -1,7 +1,7 @@
 +++
 date = '2025-11-05T15:05:30+01:00'
 draft = false
-title = 'Code Comments: Humans vs Agentic Code'
+title = 'Code comments: humans vs agentic code'
 tags = ["AI", "coding-agents", "best-practices"]
 +++
 

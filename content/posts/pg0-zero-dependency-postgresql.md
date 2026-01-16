@@ -1,7 +1,7 @@
 +++
 date = '2025-11-26T15:00:00+01:00'
 draft = false
-title = 'pg0: Zero-Dependency PostgreSQL for Development'
+title = 'pg0: zero-dependency PostgreSQL for development'
 tags = ["database", "postgresql", "tools", "developer-experience"]
 +++
 
