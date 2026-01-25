@@ -35,3 +35,7 @@ generateSocialCard = true
 email = "boschi1997@gmail.com"
 name = "Nicolò Boschi"
 
+[params.newsletter]
+enabled = true
+buttondownUsername = "nicoloboschi"
+

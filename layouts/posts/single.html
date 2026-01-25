@@ -52,12 +52,37 @@
           </a>
           {{ end }}
         </nav>
+
       </div>
 
+      {{ if .Site.Params.newsletter.enabled }}
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">subscribe --notify-new-posts</span>
+      </div>
+      <div class="terminal-output newsletter-output">
+        <span class="output-text">Enter your email to get notified when I publish something new:</span>
+      </div>
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+      >
+        <div class="terminal-line input-line">
+          <span class="prompt">$</span>
+          <div class="input-wrapper">
+            <input type="email" name="email" placeholder="your@email.com" required class="newsletter-input" autofocus />
+            <span class="cursor"></span>
+          </div>
+          <button type="submit" class="newsletter-btn">↵</button>
+        </div>
+      </form>
+      {{ else }}
       <div class="terminal-line input-line">
         <span class="prompt">$</span>
         <span class="cursor"></span>
       </div>
+      {{ end }}
     </div>
   </div>
 </article>
@@ -364,6 +389,69 @@
   50% { opacity: 0; }
 }
 
+/* Newsletter */
+.newsletter-output {
+  color: #787c99;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.output-text {
+  color: #e0af68;
+}
+
+.newsletter-form {
+  margin: 0;
+}
+
+.newsletter-form .input-line {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.newsletter-form .input-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.newsletter-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #c0caf5;
+  font-family: inherit;
+  font-size: inherit;
+  caret-color: transparent;
+  width: 10px;
+}
+
+.newsletter-input::placeholder {
+  color: #565f89;
+}
+
+.newsletter-input:placeholder-shown {
+  width: 180px;
+}
+
+.newsletter-input:focus::placeholder {
+  color: transparent;
+}
+
+.newsletter-btn {
+  background: transparent;
+  color: #565f89;
+  border: none;
+  padding: 0 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.newsletter-btn:hover {
+  color: #9ece6a;
+}
+
 /* Mobile responsive */
 @media screen and (max-width: 600px) {
   .posts-container {
@@ -394,6 +482,33 @@
   .post-nav {
     flex-direction: column;
   }
+
 }
 </style>
+
+{{ if .Site.Params.newsletter.enabled }}
+<script>
+(function() {
+  const input = document.querySelector('.newsletter-input');
+  if (!input) return;
+
+  function resizeInput() {
+    const temp = document.createElement('span');
+    temp.style.font = getComputedStyle(input).font;
+    temp.style.visibility = 'hidden';
+    temp.style.position = 'absolute';
+    temp.style.whiteSpace = 'pre';
+    temp.textContent = input.value || '';
+    document.body.appendChild(temp);
+    input.style.width = Math.max(10, temp.offsetWidth + 2) + 'px';
+    document.body.removeChild(temp);
+  }
+
+  input.addEventListener('input', resizeInput);
+  input.addEventListener('focus', () => {
+    if (!input.value) resizeInput();
+  });
+})();
+</script>
+{{ end }}
 {{ end }}

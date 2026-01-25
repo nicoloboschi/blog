@@ -1,0 +1,47 @@
+name: Send Newsletter
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/posts/**'
+  workflow_dispatch:
+    inputs:
+      post_path:
+        description: 'Path to post file (e.g., content/posts/my-post.md)'
+        required: false
+      dry_run:
+        description: 'Dry run (show payload without sending)'
+        type: boolean
+        default: false
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scripts/python
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Detect new post and send newsletter
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          SITE_URL: "https://nicoloboschi.com"
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          REPO_ROOT: ${{ github.workspace }}
+        run: |
+          uv run python send_newsletter.py "${{ github.event.inputs.post_path || '' }}"

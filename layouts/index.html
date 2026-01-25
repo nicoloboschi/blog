@@ -27,12 +27,37 @@
         </div>
       </div>
 
+      {{ if .Site.Params.newsletter.enabled }}
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">subscribe --notify-new-posts</span>
+      </div>
+      <div class="terminal-output newsletter-output">
+        <span class="output-text">Enter your email to get notified when I publish something new:</span>
+      </div>
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+        id="newsletter-form"
+      >
+        <div class="terminal-line input-line">
+          <span class="prompt">$</span>
+          <div class="input-wrapper">
+            <input type="email" name="email" id="newsletter-input" required class="newsletter-input" autofocus />
+            <span class="cursor newsletter-cursor"></span>
+          </div>
+          <button type="submit" class="newsletter-btn">↵</button>
+        </div>
+      </form>
+      {{ end }}
+
       <div class="terminal-line">
         <span class="prompt">$</span> <span class="command">cat papers.bib</span>
       </div>
       <div class="terminal-output">
         <a href="https://arxiv.org/abs/2512.12818" class="paper-card">
-          <div class="paper-venue">arXiv 2024</div>
+          <div class="paper-venue">arXiv 2025</div>
           <div class="paper-title">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</div>
           <div class="paper-authors dim">Latimer, Boschi, Neeser, Bartholomew, Srivastava, Wang, Ramakrishnan</div>
         </a>
@@ -159,7 +184,7 @@
       <div class="terminal-line input-line">
         <span class="prompt">$</span>
         <div class="input-wrapper">
-          <input type="text" id="terminal-input" autocomplete="off" autofocus spellcheck="false" placeholder="type 'help' for commands...">
+          <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="type 'help' for commands...">
           <span class="cursor"></span>
         </div>
       </div>
@@ -541,6 +566,66 @@
   color: #7dcfff;
 }
 
+/* Newsletter */
+.newsletter-output {
+  color: #787c99;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.newsletter-output .output-text {
+  color: #e0af68;
+}
+
+.newsletter-form {
+  margin: 0;
+}
+
+.newsletter-form .input-line {
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.newsletter-form .input-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.newsletter-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #c0caf5;
+  font-family: inherit;
+  font-size: inherit;
+  caret-color: transparent;
+  width: auto;
+}
+
+.newsletter-input::placeholder {
+  color: #565f89;
+}
+
+.newsletter-input:focus::placeholder {
+  color: transparent;
+}
+
+
+.newsletter-btn {
+  background: transparent;
+  color: #565f89;
+  border: none;
+  padding: 0 4px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.newsletter-btn:hover {
+  color: #9ece6a;
+}
+
 /* Mobile responsive */
 @media screen and (max-width: 600px) {
   .terminal-container {
@@ -806,10 +891,47 @@
   });
   resizeInput();
 
-  // Focus input when clicking anywhere in terminal
-  document.querySelector('.terminal-window').addEventListener('click', () => {
-    input.focus();
+  // Focus input when clicking anywhere in terminal (but not on newsletter form)
+  document.querySelector('.terminal-window').addEventListener('click', (e) => {
+    if (!e.target.closest('.newsletter-form')) {
+      input.focus();
+    }
   });
+
+  // Newsletter input auto-resize and focus
+  const newsletterInput = document.getElementById('newsletter-input');
+  if (newsletterInput) {
+    function resizeNewsletterInput() {
+      const temp = document.createElement('span');
+      temp.style.font = getComputedStyle(newsletterInput).font;
+      temp.style.visibility = 'hidden';
+      temp.style.position = 'absolute';
+      temp.style.whiteSpace = 'pre';
+      temp.textContent = newsletterInput.value || '';
+      document.body.appendChild(temp);
+      newsletterInput.style.width = Math.max(10, temp.offsetWidth + 2) + 'px';
+      document.body.removeChild(temp);
+    }
+
+    const newsletterCursor = document.querySelector('.newsletter-cursor');
+
+    function updateNewsletterCursor() {
+      if (newsletterCursor) {
+        newsletterCursor.style.display = newsletterInput.value ? 'none' : 'inline-block';
+      }
+    }
+
+    newsletterInput.addEventListener('input', () => {
+      resizeNewsletterInput();
+      updateNewsletterCursor();
+    });
+    newsletterInput.addEventListener('focus', () => {
+      if (!newsletterInput.value) resizeNewsletterInput();
+    });
+
+    // Focus newsletter input on page load
+    newsletterInput.focus();
+  }
 })();
 </script>
 {{ end }}
