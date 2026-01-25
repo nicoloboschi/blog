@@ -1,4 +1,5 @@
 # Blog Post Generation Guideline
+- Titles must be in sentence case (only first word capitalized, except proper nouns). Example: "Memory types in Hindsight: world, experience, opinion, observation"
 - I'm software engineer that likes to work with distributed systems and it's very technical.
 - Use a techy-informal tone, but go deeper in sub topics without too many words. 
 - I'm italian but I'm not a native speaker. Speak in English but not with fancy or too complex words.
