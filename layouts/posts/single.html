@@ -15,6 +15,30 @@
         <a href="/posts/" class="exec-link">↵</a>
       </div>
 
+      {{ if .Site.Params.newsletter.enabled }}
+      <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">subscribe --notify-new-posts</span>
+      </div>
+      <div class="terminal-output newsletter-output">
+        <span class="output-text">Enter your email to get notified when I publish something new:</span>
+      </div>
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+      >
+        <div class="terminal-line input-line newsletter-input-line">
+          <span class="prompt">$</span>
+          <div class="input-wrapper">
+            <input type="email" name="email" id="newsletter-input" required class="newsletter-input" autofocus />
+            <span class="cursor newsletter-cursor"></span>
+          </div>
+          <button type="submit" class="newsletter-btn">↵</button>
+        </div>
+      </form>
+      {{ end }}
+
       <div class="terminal-line">
         <span class="prompt">$</span> <span class="command">cat {{ .File.Path }}</span>
       </div>
@@ -55,34 +79,10 @@
 
       </div>
 
-      {{ if .Site.Params.newsletter.enabled }}
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">subscribe --notify-new-posts</span>
-      </div>
-      <div class="terminal-output newsletter-output">
-        <span class="output-text">Enter your email to get notified when I publish something new:</span>
-      </div>
-      <form
-        action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}"
-        method="post"
-        target="popupwindow"
-        class="newsletter-form"
-      >
-        <div class="terminal-line input-line">
-          <span class="prompt">$</span>
-          <div class="input-wrapper">
-            <input type="email" name="email" placeholder="your@email.com" required class="newsletter-input" autofocus />
-            <span class="cursor"></span>
-          </div>
-          <button type="submit" class="newsletter-btn">↵</button>
-        </div>
-      </form>
-      {{ else }}
       <div class="terminal-line input-line">
         <span class="prompt">$</span>
         <span class="cursor"></span>
       </div>
-      {{ end }}
     </div>
   </div>
 </article>
@@ -404,9 +404,9 @@
   margin: 0;
 }
 
-.newsletter-form .input-line {
+.newsletter-input-line {
   margin-top: 8px;
-  margin-bottom: 0;
+  margin-bottom: 16px;
 }
 
 .newsletter-form .input-wrapper {
@@ -425,17 +425,10 @@
   width: 10px;
 }
 
-.newsletter-input::placeholder {
-  color: #565f89;
+.newsletter-cursor {
+  animation: blink 1s step-end infinite;
 }
 
-.newsletter-input:placeholder-shown {
-  width: 180px;
-}
-
-.newsletter-input:focus::placeholder {
-  color: transparent;
-}
 
 .newsletter-btn {
   background: transparent;
@@ -490,6 +483,7 @@
 <script>
 (function() {
   const input = document.querySelector('.newsletter-input');
+  const cursor = document.querySelector('.newsletter-cursor');
   if (!input) return;
 
   function resizeInput() {
@@ -504,7 +498,16 @@
     document.body.removeChild(temp);
   }
 
-  input.addEventListener('input', resizeInput);
+  function updateCursor() {
+    if (cursor) {
+      cursor.style.display = input.value ? 'none' : 'inline-block';
+    }
+  }
+
+  input.addEventListener('input', () => {
+    resizeInput();
+    updateCursor();
+  });
   input.addEventListener('focus', () => {
     if (!input.value) resizeInput();
   });
