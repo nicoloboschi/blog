@@ -89,13 +89,9 @@ def build_post_url(frontmatter: dict, site_url: str) -> str:
     return f"{site_url}/posts/{date_path}"
 
 
-def build_email_body(body: str, post_url: str, max_length: int = 1500) -> str:
-    """Build email body with truncation and link to full post."""
-    truncated = body[:max_length]
-    if len(body) > max_length:
-        truncated += "..."
-
-    return f"""{truncated}
+def build_email_body(body: str, post_url: str) -> str:
+    """Build email body with link to full post."""
+    return f"""{body}
 
 ---
 
