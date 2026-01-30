@@ -1,11 +1,11 @@
-# OpenClawd Hindsight Integration - Social Media Distribution
+# OpenClaw Hindsight Integration - Social Media Distribution
 
 ## Twitter Tweet Options
 
 ### Option 1: Local-First Angle
 Tired of paying for yet another memory-as-a-service?
 
-Hindsight for OpenClawd:
+Hindsight for OpenClaw:
 - Runs entirely on your machine
 - Reuses your existing LLM (OpenAI/Anthropic/Ollama/etc)
 - All data stays local
@@ -14,12 +14,12 @@ Hindsight for OpenClawd:
 
 One command:
 ```bash
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 ```
 
 Auto-captures conversations, auto-injects relevant context. No third-party services, no vendor lock-in.
 
-https://hindsight.vectorize.io/sdks/integrations/openclawd
+https://hindsight.vectorize.io/sdks/integrations/openclaw
 
 ---
 
@@ -28,26 +28,26 @@ Agent memory shouldn't cost extra.
 
 Most memory services charge per API call or per GB. You're already paying for LLM access - why pay twice?
 
-Hindsight for OpenClawd:
+Hindsight for OpenClaw:
 - Free and open source
 - Reuses whatever LLM you're using with clawdbot
 - Runs on your machine (embedded PostgreSQL)
 - No usage limits, no upsells
 
 ```bash
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 ```
 
 Your data, your machine, zero additional cost.
 
-https://hindsight.vectorize.io/sdks/integrations/openclawd
+https://hindsight.vectorize.io/sdks/integrations/openclaw
 
 ---
 
 ### Option 3: Privacy Angle
 Your conversations shouldn't go to another third-party service.
 
-Hindsight for OpenClawd runs 100% locally:
+Hindsight for OpenClaw runs 100% locally:
 - Embedded PostgreSQL on your machine
 - All data stays local
 - Works offline with Ollama
@@ -56,10 +56,10 @@ Hindsight for OpenClawd runs 100% locally:
 Free, open source, no vendor lock-in.
 
 ```bash
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 ```
 
-https://hindsight.vectorize.io/sdks/integrations/openclawd
+https://hindsight.vectorize.io/sdks/integrations/openclaw
 
 ---
 
@@ -76,10 +76,10 @@ I'm tired of this model.
 
 **The fix:** local-first memory that reuses your existing LLM.
 
-We built this for OpenClawd with Hindsight. The integration runs entirely on your machine:
+We built this for OpenClaw with Hindsight. The integration runs entirely on your machine:
 
 ```bash
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 clawdbot gateway
 ```
 
@@ -94,7 +94,7 @@ After each conversation turn, facts are extracted and stored locally. Before pro
 
 If you're running Ollama, the entire stack runs offline.
 
-https://hindsight.vectorize.io/sdks/integrations/openclawd
+https://hindsight.vectorize.io/sdks/integrations/openclaw
 
 ---
 
@@ -113,10 +113,10 @@ Not the technical problem - there are plenty of vector databases and RAG systems
 
 **Solution:** local-first architecture.
 
-We built this for OpenClawd with Hindsight:
+We built this for OpenClaw with Hindsight:
 
 ```bash
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 clawdbot gateway
 ```
 
@@ -131,7 +131,7 @@ The technical implementation: after each conversation turn, facts are extracted 
 
 Zero additional costs. Zero vendor lock-in. Your data, your machine.
 
-https://hindsight.vectorize.io/sdks/integrations/openclawd
+https://hindsight.vectorize.io/sdks/integrations/openclaw
 
 ---
 
@@ -153,10 +153,10 @@ You're already paying for LLM access. Why pay again?
 
 **The fix:** reuse the LLM you already have.
 
-We built this for OpenClawd with Hindsight:
+We built this for OpenClaw with Hindsight:
 
 ```bash
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 clawdbot gateway
 ```
 
@@ -173,4 +173,4 @@ Free and open source (MIT). No usage limits, no per-call pricing, no upsells. Ex
 
 Zero additional cost beyond what you're already paying for LLM access.
 
-https://hindsight.vectorize.io/sdks/integrations/openclawd
+https://hindsight.vectorize.io/sdks/integrations/openclaw

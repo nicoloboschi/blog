@@ -1,11 +1,11 @@
 +++
 date = '2026-01-30T10:00:00+01:00'
 draft = false
-title = 'Local-first memory for OpenClawd agents'
-tags = ["AI", "agents", "memory", "hindsight", "openclawd", "LLM"]
+title = 'Local, long term memory for OpenClaw agents'
+tags = ["AI", "agents", "memory", "hindsight", "openclaw", "LLM"]
 +++
 
-**TL;DR**: Hindsight's OpenClawd integration gives your agents persistent memory that runs entirely on your machine, reuses the LLMs you're already paying for, and costs nothing extra. All data stays local - no third-party services, no additional API calls, no vendor lock-in.
+**TL;DR**: Hindsight's OpenClaw integration gives your agents persistent memory that runs entirely on your machine, reuses the LLMs you're already paying for, and costs nothing extra. All data stays local - no third-party services, no additional API calls, no vendor lock-in.
 
 ---
 
@@ -45,22 +45,22 @@ The tradeoff: you're injecting context on every turn, which consumes tokens. But
 
 I think this is similar to how human memory works - you don't consciously decide "let me search my memories about this person" before talking to them. Relevant memories surface automatically as context for the conversation.
 
-## Hindsight's OpenClawd Integration: Local, Free, and Zero Additional Cost
+## Hindsight's OpenClaw Integration: Local, Free, and Zero Additional Cost
 
-We released [Hindsight's OpenClawd integration](https://hindsight.vectorize.io/sdks/integrations/openclawd) today. OpenClawd (CLI: `clawdbot`) is an agent framework for building conversational bots across multiple platforms - Telegram, WhatsApp, Slack. The integration implements auto-recall with an embedded daemon approach.
+We released [Hindsight's OpenClaw integration](https://hindsight.vectorize.io/sdks/integrations/openclaw) today. OpenClaw (CLI: `clawdbot`) is an agent framework for building conversational bots across multiple platforms - Telegram, WhatsApp, Slack. The integration implements auto-recall with an embedded daemon approach.
 
 The setup:
 
 ```bash
 export OPENAI_API_KEY="sk-your-key"  # Your existing LLM key
 clawdbot config set 'agents.defaults.models."openai/gpt-4o-mini"' '{}'
-clawdbot plugins install @vectorize-io/hindsight-openclawd
+clawdbot plugins install @vectorize-io/hindsight-openclaw
 clawdbot gateway
 ```
 
 That's it. On first run, the plugin downloads `hindsight-embed` via `uvx`, starts a daemon, and initializes an embedded PostgreSQL instance. The plugin is free and open source (MIT licensed).
 
-For full installation instructions and configuration options, see the [OpenClawd integration documentation](https://hindsight.vectorize.io/sdks/integrations/openclawd). If you're using an AI coding assistant, you can ask it to install the plugin for you.
+For full installation instructions and configuration options, see the [OpenClaw integration documentation](https://hindsight.vectorize.io/sdks/integrations/openclaw). If you're using an AI coding assistant, you can ask it to install the plugin for you.
 
 **Auto-capture**: After each agent turn, the conversation is stored in your local PostgreSQL instance and processed asynchronously. Facts, entities, and relationships are extracted in the background without blocking the response.
 
@@ -72,12 +72,16 @@ The memories are injected as JSON with full metadata:
 <hindsight_memories>
 [
   {
-    "content": "User prefers JSON responses for technical data",
-    "score": 0.95,
-    "metadata": {
-      "document_id": "session-abc123",
-      "chunk_id": "chunk-1"
-    }
+    "chunk_id": "openclaw_default-session_12",
+    "context": "",
+    "document_id": "default-session",
+    "id": "5f55f684-e6f5-46e3-9f5c-043bdf005511",
+    "mentioned_at": "2026-01-30T11:07:33.211396+00:00",
+    "occurred_end": "2025-01-29T23:14:30+00:00",
+    "occurred_start": "2025-01-29T23:14:30+00:00",
+    "tags": [],
+    "text": "User prefers JSON responses for technical data. | When: 2026-01-30 | Involving: User",
+    "type": "world"
   }
 ]
 </hindsight_memories>
@@ -89,13 +93,13 @@ The memories are injected as JSON with full metadata:
 
 The technical design uses a standalone daemon process that manages memory infrastructure on your machine:
 
-**Single daemon, multiple agents**: All memory banks share one PostgreSQL instance running inside `hindsight-embed`. Isolation is handled through separate tables per bank ID. The 'openclawd' bank is created automatically when you start using it.
+**Single daemon, multiple agents**: All memory banks share one PostgreSQL instance running inside `hindsight-embed`. Isolation is handled through separate tables per bank ID. The 'openclaw' bank is created automatically when you start using it.
 
 **Auto-managed lifecycle**: The daemon runs on port 8889. It can be configured to shut down after idle timeout or run indefinitely. The plugin handles start/stop automatically - you never interact with the daemon directly.
 
 **Zero external dependencies**: PostgreSQL is embedded via [pg0](https://github.com/vectorize-io/pg0), a single-binary PostgreSQL distribution. No separate database installation, no cloud database, no connection strings, no credential management. Everything runs locally.
 
-**Reuses your LLM provider**: The embed daemon works with whatever LLM you're already using with clawdbot - OpenAI, Anthropic, Gemini, Groq, or Ollama. It reads from the same environment variables:
+**Reuses your LLM provider**: The embed daemon works with whatever LLM you're already using with OpenClaw - OpenAI, Anthropic, Gemini, Groq, or Ollama. It reads from the same environment variables:
 
 ```bash
 export OPENAI_API_KEY="sk-your-key"
@@ -107,73 +111,6 @@ export GEMINI_API_KEY="your-key"
 ```
 
 The daemon uses these for fact extraction and memory operations. You're not signing up for a separate memory service or paying for additional API access. If you're running Ollama, the entire stack - agent, memory, LLM - runs on your machine with zero external calls.
-
-## Configuration Options
-
-The plugin is zero-config by default, but you can tune behavior in `~/.clawdbot/clawdbot.json`:
-
-**Daemon lifecycle**:
-```json
-{
-  "daemonIdleTimeout": 300
-}
-```
-
-Shutdown after 5 minutes idle (default: 0 = never). For development, you probably want `daemonIdleTimeout: 0` to keep the daemon running. For CI or testing, set a timeout to cleanup automatically.
-
-**Memory bank mission**:
-```json
-{
-  "bankMission": "Personal assistant that tracks my preferences and work context"
-}
-```
-
-This provides context for the memory bank about what it's storing. The mission is used during fact extraction to guide what's relevant. If not specified, the default mission explains the agent assists users across multiple communication channels (Telegram, Slack, Discord, etc.).
-
-**Version pinning**:
-```json
-{
-  "embedVersion": "0.4.0"
-}
-```
-
-Pin specific version (default: "latest"). For production deployments, pin a specific `hindsight-embed` version to avoid automatic updates.
-
-## Inspection and Debugging
-
-The daemon logs to `~/.hindsight/daemon.log`. Check it when debugging:
-
-```bash
-tail -f ~/.hindsight/daemon.log
-```
-
-Query memories directly via CLI:
-
-```bash
-uvx hindsight-embed@latest memory recall openclawd "search-term" --output json
-```
-
-This bypasses the agent and queries the memory bank directly. Useful for validating what's stored.
-
-Web UI for browsing:
-
-```bash
-uvx hindsight-embed@latest ui
-```
-
-Opens a web interface where you can inspect memories, facts, entities, and relationships visually.
-
-List all memory banks:
-
-```bash
-uvx hindsight-embed@latest bank list
-```
-
-Export memories:
-
-```bash
-uvx hindsight-embed@latest memory export openclawd --output memories.json
-```
 
 ## Why Local-First Matters
 
@@ -211,7 +148,7 @@ Agent: [Stores preference]
 User: Give me the weather
 Agent sees:
 <hindsight_memories>
-[{"content": "User prefers JSON responses", "score": 0.95, ...}]
+[{"text": "User prefers JSON responses. | When: 2026-01-30 | Involving: User", "type": "world", ...}]
 </hindsight_memories>
 Agent: {"location": "San Francisco", "condition": "sunny", "temp": 72}
   (preference automatically injected, model uses it)
@@ -223,4 +160,4 @@ The tool-based approach requires the model to realize "I should check preference
 
 Agent memory doesn't need to be another SaaS dependency. The shift to automatic recall solves the reliability problem, while the local-first architecture solves the cost and privacy problems. Everything runs on your machine, reuses the LLM you're already paying for, and gives you full control over your data. Free, open source, and zero vendor lock-in.
 
-[Hindsight documentation](https://hindsight.vectorize.io) | [GitHub](https://github.com/vectorize-io/hindsight) | [OpenClawd integration docs](https://hindsight.vectorize.io/sdks/integrations/openclawd)
+[Hindsight documentation](https://hindsight.vectorize.io) | [GitHub](https://github.com/vectorize-io/hindsight) | [OpenClaw integration docs](https://hindsight.vectorize.io/sdks/integrations/openclaw)
