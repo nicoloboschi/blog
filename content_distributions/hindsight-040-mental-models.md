@@ -1,80 +1,79 @@
-# Social Media - Hindsight 0.4.0: Mental Models
+# Social Media - Cache the reasoning, not the answer
 
 ## Twitter/X
 
-### Option 1 (The consistency problem)
+### Option 1 (480k tokens/day)
 ```
-Your agent answers "What's our refund policy?" today → one answer
-Tomorrow, same facts → slightly different phrasing
+480,000 tokens per day.
 
-For recurring questions where consistency matters, this variability is a problem.
+Same questions. Same reasoning. Same answers.
 
-Mental models in Hindsight 0.4.0: pre-computed, user-curated answers that bypass LLM processing.
+That's what we found running evals on a support agent in December.
 
-Same query = exact same response. Every time.
+The agent had memory. It just kept re-deriving the same knowledge on every query.
 
 [link]
 ```
 
-### Option 2 (The cost problem)
+### Option 2 (Synthesis tax)
 ```
-Recurring questions burn tokens every time.
+Your agent learned Alice prefers async through 40 interactions.
 
-Agent gets asked about Redis vs Memcached → full reflect, LLM call, token cost
-Same question tomorrow → same reasoning, same cost
+Every time you ask "How does Alice work?" it reasons over those 40 facts again.
 
-Multiply by hundreds of queries per day. It adds up.
+50 queries/week = 50x the synthesis cost.
 
-Mental models: compute once, serve forever. Zero LLM calls after creation.
+You're not paying for retrieval. You're paying for repeated reasoning.
 
 [link]
 ```
 
-### Option 3 (Priority hierarchy)
+### Option 3 (The cache problem)
 ```
-Hindsight 0.4.0 memory hierarchy:
+Semantic caching doesn't solve the agent memory problem.
 
-Mental Models (pre-computed, curated)
-    ↓
-Observations (auto-synthesized patterns)
-    ↓
-Raw Facts (full reasoning)
+When Alice changes her communication style, the cache doesn't know what's stale.
 
-Curate the 20% of queries that are 80% of traffic.
-Let observations handle the long tail.
+When the agent says "Alice avoids meetings," you can't trace which memories produced that.
+
+TTLs are blind. Evidence chains don't exist.
 
 [link]
 ```
 
-### Option 4 (Auto-refresh)
+### Option 4 (O(n) every query)
 ```
-Mental models can get stale as new facts come in.
+CAG/RAG optimize retrieval to O(log n).
 
-"What are our Redis practices?" was answered before you learned about SSPL licensing concerns.
+But synthesis is still O(n).
 
-Solution: auto-refresh triggers.
+Every query: reason over memories, synthesize response.
 
-Set `refresh_after_consolidation: true` and the mental model updates in the background when observations change.
+For recurring questions about stable patterns, you're paying O(n) when you want O(1).
 
 [link]
 ```
 
-### Option 5 (When to use)
+### Option 5 (Prompt caching)
 ```
-Mental models vs observations:
+"Use prompt caching"
 
-Use mental models when:
-• Recurring questions (asked 100+ times)
-• Stable answers (policies, FAQs)
-• Need manual review (compliance, legal)
-• Consistency critical
+That caches the input (retrieved memories).
 
-Let observations handle:
-• Emerging patterns
-• Long-tail queries
-• Contextual reasoning
+You still synthesize the output.
+You still burn LLM tokens.
+You still wait seconds.
 
-Control vs automation.
+Cache the reasoning, not the answer.
+
+[link]
+```
+
+### Option 6 (The punchline)
+```
+Caching solves yesterday's answers.
+
+What you need: tomorrow's questions answered with yesterday's reasoning.
 
 [link]
 ```
@@ -83,96 +82,102 @@ Control vs automation.
 
 ## LinkedIn
 
-### Option 1 (Support agent scenario)
+### Option 1 (The Vectorize eval story)
 ```
-I was debugging a customer support agent that was burning through tokens on recurring questions.
+In December, we were running internal evals at Vectorize for a customer support agent built on Hindsight.
 
-"What's your refund policy?"
-"How do I return something?"
-"What's the return process?"
+The agent had memory of company policies, past support interactions, resolution patterns. We ran it through a week of simulated support tickets to test recall quality and latency.
 
-Same question, different phrasing. Each time: full reflect operation, LLM call, token cost. Asked hundreds of times per day.
+Eval results looked good - accurate answers, relevant retrieval. But when I checked token costs, something was wrong.
 
-The answer should be curated and consistent. You don't want variability in compliance-sensitive responses. But the agent was reasoning to the same conclusion every time, with slight differences in phrasing.
+480,000 tokens per day reasoning to the same conclusions:
+- "What's your refund policy?" - 400+ times/day
+- "How do I return something?" - 300+ times/day
+- "Can I get my money back?" - 200+ times/day
 
-Standard solution: cache by query string. But that breaks immediately. "What's the return process?" and "How do I return something?" won't match.
+Each query: full reflect operation. Retrieve policy facts from memory, reason over conditions, generate natural language. 1,200+ tokens, 2+ seconds. Same answer every time.
 
-In Hindsight 0.4.0, we added mental models - pre-computed, user-curated summaries that sit at the top of the memory hierarchy.
+We were testing for quality, but uncovered a cost problem.
 
-You define a source query: "What is our refund and return policy?"
-The system runs reflect once, stores the result.
-Future queries that semantically match retrieve the pre-computed content instantly. No LLM call. No variability. No per-query token cost.
+Then I realized: this isn't specific to support agents. It's any agent with long-term memory.
 
-Mental Models → Observations → Raw Facts
+An AI assistant with months of accumulated memories about Alice - meeting patterns, communication preferences, project context. Every query about "How does Alice work?" triggers full reasoning over dozens of observations. Tens of thousands of tokens per week re-deriving knowledge that was already synthesized.
 
-Mental models for high-traffic, curated knowledge. Observations for automatic pattern consolidation. Raw facts for everything else.
+That's the synthesis tax. Agents pay it every time they reason to the same answer.
 
-You can enable auto-refresh triggers so mental models update in the background when new facts arrive. Or keep them static for compliance-reviewed content that needs manual approval.
+Mental models solve this: consolidate once, serve at O(1), with automatic refresh when memory evolves.
 
-For the support agent, we curated 15 mental models covering ~80% of query traffic. Token costs dropped significantly. Latency improved. Consistency was guaranteed.
-
-Pre-compute the knowledge you serve repeatedly. Let the system reason over the long tail.
-
-[link]
-```
-
-### Option 2 (Technical advisor scenario)
-```
-A technical advisor agent that fields questions about infrastructure decisions.
-
-"Should we use Redis or Memcached?"
-"What's the Redis story?"
-"Is Redis good for caching?"
-
-Gets asked 3-4 times per week. Each time, the agent reasons through facts about Redis performance, licensing, operational complexity. Burns tokens. Takes seconds.
-
-The problem: for frequently asked questions with relatively stable answers, you're paying repeatedly for the same reasoning.
-
-Caching by query string doesn't work - semantic variation is too high. Returning stale answers when facts update is worse. You need something that's pre-computed but stays current.
-
-Hindsight 0.4.0 introduces mental models.
-
-Create a mental model with a source query: "What are best practices for Redis in production?"
-The system runs reflect once, stores the response.
-Future queries retrieve the pre-computed content instantly - no LLM processing.
-
-Set `refresh_after_consolidation: true` to auto-refresh when observations update. New fact arrives about SSPL licensing concerns? The mental model regenerates in the background.
-
-Mental models sit at the top of Hindsight's hierarchy:
-Mental Models (curated, instant) → Observations (auto-synthesized) → Raw Facts (full reasoning)
-
-Use mental models for the 20% of queries that account for 80% of traffic. Let observations handle long-tail questions automatically.
-
-For the technical advisor, we curated ~10 mental models covering common topics. Queries that used to take 2-3 seconds now return in milliseconds. Token usage dropped by 60% on those paths.
-
-In my opinion, the mental model vs observation decision comes down to control vs automation. If you need to review the answer, use a mental model. If the system can synthesize reliably, let observations handle it.
-
-[link]
-```
-
-### Option 3 (Shorter, cost-focused)
-```
-Recurring questions in agent systems burn tokens unnecessarily.
-
-I was tracking costs for an internal AI PM that answers questions about team processes, project status, common blockers. Same ~20 questions account for 70% of traffic.
-
-Each query: full reflect operation, LLM synthesis, token cost. Answers vary slightly between calls - same facts, different phrasing.
-
-For policies, FAQs, curated knowledge - this variability isn't acceptable. You want consistent responses. But caching by query string doesn't work with semantic variation.
-
-Hindsight 0.4.0 adds mental models: user-curated, pre-computed summaries that bypass LLM processing during reflect.
-
-Define a source query, system runs reflect once, stores the result. Future queries retrieve instantly - no LLM call, no tokens, no variability.
-
-Hierarchy: Mental Models → Observations → Raw Facts
-
-Mental models for high-traffic, curated topics. Observations for automatic consolidation. Raw facts for long-tail reasoning.
+You define a source query. System runs reflect over accumulated memories once, stores the synthesized knowledge. Future queries retrieve instantly - no LLM call, no re-synthesis, no variability.
 
 Auto-refresh triggers keep them current: when observations update, mental models regenerate in the background.
 
-For the AI PM, curating 18 mental models covered ~70% of query volume. Token costs dropped significantly. Latency improved. Responses became deterministic.
+For our support agent: mental models for ~15 recurring questions. Token costs dropped significantly. Latency went from seconds to milliseconds. Responses became deterministic.
 
-Compute once, serve forever. Use mental models for the queries you answer repeatedly.
+Caching solves yesterday's answers. Mental models solve tomorrow's questions with yesterday's reasoning.
+
+[link]
+```
+
+### Option 2 (Semantic caching critique)
+```
+"Why not just use semantic caching?"
+
+Redis semantic cache, Momento, LangChain - these solve semantic variation with embedding-based matching. That's useful.
+
+But agent memory introduces problems they can't handle:
+
+Staleness with no semantics: When Alice starts managing a distributed team and her communication preferences change, the cache doesn't know which entries are now stale. TTLs are blind to actual knowledge changes.
+
+No evidence chain: Cached response is just text. You can't audit which memories produced it or when they were observed. Black box.
+
+Manual invalidation: When the memory bank consolidates new observations, there's no automatic refresh trigger. You need external logic to detect related cache entries. Or accept stale answers.
+
+These aren't cache problems. They're synthesis problems.
+
+Mental models solve this by tying pre-computed consolidations to the memory consolidation pipeline. Auto-refresh when observations update. Full evidence chains to source memories with timestamps. Semantic matching without manual threshold tuning.
+
+We tested this at Vectorize. Support agent with recurring policy questions, AI assistant with learned user preferences, AI PM with team patterns.
+
+Token costs dropped 70-85% on high-frequency memory queries. Latency: seconds to milliseconds. Responses: consistent and auditable.
+
+The pattern is clear: pre-compute consolidated knowledge for the 20% of memory queries that are 80% of your traffic. Let observations handle long-tail reasoning over raw memories.
+
+Cache the reasoning, not the answer.
+
+[link]
+```
+
+### Option 3 (Shorter, O(n) vs O(1))
+```
+Agent memory has a synthesis tax.
+
+Query: "How does Alice prefer to communicate?"
+
+With CAG/RAG:
+1. Retrieve relevant memories (O(log n) - fast)
+2. Reason over them (O(n) - scales with memory count)
+3. Synthesize response (O(n))
+
+Retrieval is optimized. Synthesis still happens every query.
+
+Ask 50 times per week about Alice's learned preferences? You're paying to re-derive the same knowledge 50 times.
+
+Mental models: O(1) lookup for recurring memory queries.
+
+Define source query → reflect over memories once → store consolidation → serve instantly
+
+Auto-refresh when observations update. Evidence chains to source memories. No per-query synthesis cost.
+
+Tested at Vectorize:
+- Support agent with policy memory
+- AI assistant with user preference patterns
+- AI PM with team dynamics
+
+Token costs dropped 70-85% on high-traffic paths. Latency: seconds to milliseconds.
+
+Pre-compute the 20% of memory queries that are 80% of traffic. Let observations handle the long tail.
+
+Caching solves yesterday's answers. Mental models solve tomorrow's questions with yesterday's reasoning.
 
 [link]
 ```
@@ -182,19 +187,27 @@ Compute once, serve forever. Use mental models for the queries you answer repeat
 ## Notes
 
 **Key angles:**
-- Consistency problem (variability in responses for recurring questions)
-- Cost problem (token burn on repeated reasoning)
-- Performance problem (latency for high-traffic queries)
-- Control (curated answers vs automatic synthesis)
+- Synthesis tax (repeated reasoning over same memories)
+- Dogfooding story (December evals at Vectorize)
+- Semantic caching limitations (staleness, no evidence chains, manual invalidation)
+- Complexity argument (O(n) synthesis vs O(1) lookup)
+- Strong punchline (caching vs mental models)
 
 **Technical hooks:**
-- Priority hierarchy (Mental Models → Observations → Facts)
-- Auto-refresh mechanisms
-- Zero LLM calls after creation
-- Semantic matching (not string caching)
+- Tied to memory consolidation pipeline
+- Auto-refresh when observations update
+- Evidence chains with timestamps
+- O(1) retrieval complexity
+- Semantic matching without threshold tuning
+
+**What to dismiss:**
+- Semantic caching (Redis, Momento, LangChain) - can't handle evolving memory
+- Prompt caching - saves input tokens, not synthesis cost
+- Distillation - requires continuous retraining, loses evidence chains
+- CAG/RAG - optimizes retrieval, not synthesis
 
 **Use cases to emphasize:**
-- Customer support (policies, FAQs)
-- Technical advisors (recurring infrastructure questions)
-- Internal AI PM (team processes, common questions)
-- Compliance/legal (reviewed content that must be consistent)
+- Agent memory (learned user preferences, team patterns)
+- Support agents (policy memory, not just static FAQs)
+- AI assistants (accumulated observations about users)
+- AI PM (engineering team dynamics, decision patterns)

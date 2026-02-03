@@ -18,11 +18,25 @@
         <div class="whoami-text">
           <p><strong>Nicolò Boschi</strong> <span class="dim">(with the accent)</span></p>
           <p class="dim">Software engineer working on distributed systems, AI agents, and developer tools.</p>
-          <div class="links-row">
-            <a href="/posts/" class="terminal-link">[blog]</a>
-            <a href="https://github.com/nicoloboschi" class="terminal-link">[github]</a>
-            <a href="https://x.com/nicoloboschi" class="terminal-link">[x]</a>
-            <a href="https://www.linkedin.com/in/nicoló-boschi-621a1a158/" class="terminal-link">[linkedin]</a>
+          <div class="social-links">
+            <a href="https://github.com/nicoloboschi" class="social-link github">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="https://x.com/nicoloboschi" class="social-link x">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              X
+            </a>
+            <a href="https://www.linkedin.com/in/nicoló-boschi-621a1a158/" class="social-link linkedin">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>
@@ -53,13 +67,35 @@
       {{ end }}
 
       <div class="terminal-line">
+        <span class="prompt">$</span> <span class="command">ls posts/</span>
+      </div>
+      <div class="terminal-output posts-list">
+        {{ range first 10 (where .Site.RegularPages "Type" "posts") }}
+        <div class="post-item">
+          <a href="{{ .RelPermalink }}" class="post-link">
+            <span class="post-date dim">{{ .Date.Format "2006-01-02" }}</span>
+            <span class="post-title">{{ .Title }}</span>
+          </a>
+        </div>
+        {{ end }}
+        <div class="post-item view-all">
+          <a href="/posts/" class="post-link all-posts">
+            <span class="post-title">→ View all posts</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="terminal-line">
         <span class="prompt">$</span> <span class="command">cat papers.bib</span>
       </div>
       <div class="terminal-output">
         <a href="https://arxiv.org/abs/2512.12818" class="paper-card">
-          <div class="paper-venue">arXiv 2025</div>
+          <div class="paper-header">
+            <div class="paper-venue">arXiv 2025</div>
+            <div class="paper-id">2512.12818</div>
+          </div>
           <div class="paper-title">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</div>
-          <div class="paper-authors dim">Latimer, Boschi, Neeser, Bartholomew, Srivastava, Wang, Ramakrishnan</div>
+          <div class="paper-authors">Latimer, Boschi, Neeser, Bartholomew, Srivastava, Wang, Ramakrishnan</div>
         </a>
       </div>
 
@@ -313,53 +349,198 @@
   flex: 1;
 }
 
-.links-row {
+.social-links {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
-.terminal-link {
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #24283b;
+  border-radius: 6px;
   color: #7aa2f7;
   text-decoration: none;
-  transition: color 0.2s;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid #414868;
 }
 
-.terminal-link:hover {
+.social-link:hover {
+  background: #2f3549;
+  color: #bb9af7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #e0af68;
+}
+
+/* Posts list */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-item {
+  line-height: 1.6;
+}
+
+.post-link {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.post-link:hover {
+  background: #24283b;
+  transform: translateX(4px);
+}
+
+.post-date {
+  font-size: 13px;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.post-title {
+  color: #7dcfff;
+  flex: 1;
+}
+
+.post-link:hover .post-title {
+  color: #bb9af7;
+}
+
+.post-item.view-all {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #24283b;
+}
+
+.post-link.all-posts .post-title {
+  color: #9ece6a;
+  font-weight: 500;
+}
+
+.post-link.all-posts:hover .post-title {
   color: #bb9af7;
 }
 
 /* Paper card */
 .paper-card {
+  position: relative;
   display: block;
-  background: #24283b;
-  border-radius: 8px;
-  padding: 16px;
+  background: linear-gradient(135deg, #2f3549 0%, #24283b 100%);
+  padding: 20px 24px;
   text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-  border-left: 3px solid #bb9af7;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    4px 4px 8px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(187, 154, 247, 0.1);
+  border-left: 4px solid #bb9af7;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  overflow: hidden;
+}
+
+.paper-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 24px 24px 0;
+  border-color: transparent #1a1b26 transparent transparent;
+  transition: all 0.3s;
+}
+
+.paper-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 24px 24px 0;
+  border-color: transparent #3b3f54 transparent transparent;
+  filter: drop-shadow(-1px 1px 1px rgba(0, 0, 0, 0.3));
 }
 
 .paper-card:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px) rotate(-0.5deg);
+  box-shadow:
+    3px 3px 6px rgba(187, 154, 247, 0.2),
+    6px 6px 12px rgba(187, 154, 247, 0.1),
+    inset 0 0 0 1px rgba(187, 154, 247, 0.2);
+}
+
+.paper-card:hover::before {
+  border-width: 0 28px 28px 0;
+}
+
+.paper-card:hover::after {
+  border-width: 0 28px 28px 0;
+}
+
+.paper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
 }
 
 .paper-venue {
-  color: #e0af68;
-  font-size: 12px;
-  margin-bottom: 4px;
+  color: #f7768e;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: rgba(247, 118, 142, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.paper-id {
+  color: #7dcfff;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(125, 207, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .paper-title {
   color: #c0caf5;
-  font-size: 14px;
-  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 10px;
 }
 
 .paper-authors {
+  color: #787c99;
   font-size: 12px;
+  line-height: 1.5;
 }
 
 /* OSS section with avatars */
@@ -374,6 +555,14 @@
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.oss-item:hover {
+  background: #24283b;
+  transform: translateX(4px);
 }
 
 .oss-avatar {
@@ -437,6 +626,14 @@
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.tool-item:hover {
+  background: #24283b;
+  transform: translateX(4px);
 }
 
 .tool-name {
@@ -463,6 +660,17 @@
 
 .talk-category:first-child {
   margin-top: 0;
+}
+
+.talk-item {
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.talk-item:hover {
+  background: #24283b;
+  transform: translateX(4px);
 }
 
 .talk-item a {
@@ -656,8 +864,17 @@
     height: 100px;
   }
 
-  .links-row {
+  .social-links {
     justify-content: center;
+    width: 100%;
+  }
+
+  .social-link {
+    flex: 1;
+    min-width: 100px;
+    justify-content: center;
+    padding: 10px 12px;
+    font-size: 14px;
   }
 
   .oss-item {
@@ -731,7 +948,9 @@
         'opensource': '.oss-section',
         'talks': '.talks-list',
         'personal-projects': '.tools-list',
-        'projects': '.tools-list'
+        'projects': '.tools-list',
+        'posts': '.posts-list',
+        'recent-posts': '.posts-list'
       };
 
       if (sections[file]) {
@@ -740,7 +959,7 @@
       }
       return [
         `<span class="response-error">cat: ${args[0] || '(none)'}: No such file</span>`,
-        'Try: papers.bib, opensource.md, talks.md, personal-projects.md'
+        'Try: papers.bib, opensource.md, talks.md, personal-projects.md, posts'
       ].join('<br>');
     },
 
