@@ -1,288 +1,155 @@
-# Social Media - Hierarchical Context in Hindsight
+# Social Media - Not all context is equal: hierarchical memory for AI agents
 
-## Twitter/X
+## Twitter/X (2-liners)
 
-### Option 1 (Problem → Hierarchy)
+### Option 1 (Structural problem)
 ```
-RAG treats all context the same. Everything's just "similar embeddings."
+Flat context is why agents repeat themselves inconsistently. Every query re-synthesizes from scratch.
 
-A curated company policy and a random fact from 3 months ago? Same priority.
-
-Hindsight uses a knowledge hierarchy:
-
-Mental Models (curated summaries)
-→ Observations (auto-consolidated patterns)
-→ Raw Facts (foundation)
-
-reflect() checks in that order.
-
-Consistency where you need it. Freshness everywhere else.
-
-[link]
+Hierarchical context: check curated knowledge first, consolidated patterns second, raw facts last. [link]
 ```
 
-### Option 2 (Technical breakdown)
+### Option 2 (The gap)
 ```
-How Hindsight organizes knowledge:
+LangChain weights by recency. LlamaIndex merges chunks. MemGPT pages context.
 
-Level 1: Mental Models
-- User-created summaries
-- "What's our API policy?" → always same answer
-- Curated, consistent
-
-Level 2: Observations
-- Auto-generated entity profiles
-- Emerge from accumulated facts
-- Update as evidence grows
-
-Level 3: Raw Facts
-- World facts, experiences
-- Foundation for everything
-
-reflect() traverses top to bottom. RAG doesn't have this structure.
-
-[link]
+None solve the canonical knowledge problem: which facts are authoritative vs which are just noise. [link]
 ```
 
-### Option 3 (Consistency problem)
+### Option 3 (Scale problem)
 ```
-Ask your RAG system "What's our hiring policy?" twice.
+RAG works fine for 100 documents. Breaks at 10,000 when your agent can't tell the difference between official policies and random observations.
 
-First: "Prioritize senior engineers with distributed systems experience"
-Second: "We prefer candidates with distributed systems background"
+Not all context deserves equal priority. [link]
+```
 
-Same meaning. Different phrasing. Inconsistent.
+### Option 4 (Belief formation)
+```
+Retrieval returns facts. Reasoning forms beliefs. Beliefs should evolve with evidence.
 
-Hindsight solves this with mental models. Create once, reflect uses it consistently.
+Most agent memory stops at retrieval. That's why they feel stateless. [link]
+```
 
-Still fresh for new queries without predefined models.
+### Option 5 (Production reality)
+```
+Production agents need canonical answers for canonical questions and fresh synthesis for new queries.
 
-[link]
+Flat context gives you one or the other. Hierarchical context gives you both. [link]
 ```
 
 ---
 
-## LinkedIn
+## LinkedIn (2-liners)
 
-### Option 1 (Problem-solution story)
+### Option 1 (Canonical knowledge problem)
 ```
-I was building a technical advisor agent and hit the consistency problem hard.
+At 10,000+ memories, agents can't distinguish between official policies and random observations. Everything is just "similar embeddings."
 
-Ask the same question twice → slightly different answers. The LLM re-synthesizes from raw facts every time. Not ideal when users expect your agent to be consistent.
+Hierarchical context solves this: curated knowledge checks first, consolidated patterns second, raw facts last. [link]
+```
 
-This is the fundamental trade-off with RAG: flexibility vs consistency. You can have fresh answers or predictable answers, pick one.
+### Option 2 (Consistency vs freshness)
+```
+Production agents need canonical answers for repeated questions and fresh synthesis for new queries. Flat context gives you one or the other.
 
-Hindsight 0.4.0 solves this with a knowledge hierarchy.
+Hierarchical memory gives you both. That's the difference between demos and production. [link]
+```
 
-Three levels:
+### Option 3 (Belief formation)
+```
+Most agent memory stops at retrieval. Find relevant chunks, stuff into context, generate response. Stateless.
 
-Mental Models → User-curated summaries for common queries
-Observations → Auto-generated entity profiles from accumulated facts
-Raw Facts → World facts and experiences (foundation)
+Hierarchical context enables persistent beliefs with evolving confidence. That's closer to learning than anything that just retrieves. [link]
+```
+
+### Option 4 (Scale breaks flat context)
+```
+RAG works fine at 100 documents. At scale, your agent re-synthesizes company policy from scattered meeting notes every time someone asks.
+
+Not all context is equal. Hierarchy enforces that structurally. [link]
+```
+
+### Option 5 (What frameworks miss)
+```
+LangChain weights by recency. LlamaIndex merges chunks. MemGPT pages context. All valuable, none solve the canonical knowledge problem.
+
+Which facts are authoritative vs which are just observations? That's where hierarchy matters. [link]
+```
+
+### Option 6 (Production requirement)
+```
+Agents that can't maintain consistent reasoning across queries get screenshot and called out. "Wait, you said something different yesterday."
+
+Hierarchical context: mental models for canonical answers, observations for patterns, facts for freshness. [link]
+```
+
+---
+
+## LinkedIn (Full version - if you want longer form)
+
+```
+I was building an AI project manager for Vectorize that answered planning and process questions.
+
+Team member asks: "What's our sprint planning process?"
+
+First answer: "We do two-week sprints with planning on Mondays and retros on Fridays"
+
+Two hours later, same question.
+
+Second answer: "Sprint planning happens at the start of each two-week cycle, typically Monday mornings, with retrospectives on Friday afternoons"
+
+Same meaning. Different phrasing. The user notices. "Wait, which one is it?"
+
+This isn't a hallucination. The facts are correct. But the LLM re-synthesizes from raw chunks every time, and synthesis isn't deterministic. You get variations.
+
+For internal tools where users ask the same questions repeatedly, this breaks trust. For customer-facing agents, it's worse - users share screenshots showing your agent contradicting itself.
+
+The fundamental issue: **RAG treats all context equally.** A carefully curated policy document and a casual Slack message from three months ago have the same priority. Just "similar embeddings."
+
+You can't solve this with better prompts. "Be consistent" doesn't work when the agent has no memory of previous answers. You can't solve it with better retrieval - semantic search doesn't know which facts are canonical.
+
+**Hindsight 0.4.0 solves this with a knowledge hierarchy:**
+
+**Mental Models** (curated summaries) → **Observations** (auto-consolidated patterns) → **Raw Facts** (foundation)
 
 When reflect runs, it checks sources in that priority order.
 
-For "What's our API versioning policy?", I create a mental model:
-- Versioning via URL path (/v1/, /v2/)
-- OAuth2 for authentication
-- Pagination required for list endpoints
+For "sprint planning process," I create a mental model with the canonical answer. Every query checks it first. Same answer every time. Consistency.
 
-Every reflect query that touches this topic gets the same canonical answer. Consistency.
+But ask about a new feature request that just came in? No mental model exists, so reflect uses recent facts. Freshness.
 
-But ask about a new API endpoint I just discussed? No mental model exists, so reflect uses recent facts. Freshness.
+**The hierarchy gives you both.**
 
-The hierarchy gives you both:
-- Mental models for established knowledge (policies, standards, settled decisions)
-- Observations for emerging patterns (entity profiles that consolidate as facts accumulate)
-- Raw facts for everything else (detail preservation)
+Mental models are curated - you create them when you need consistency. Observations are automatic - they emerge from accumulated facts about team members, patterns, entities.
 
-Mental models are curated - you create them explicitly. Observations are automatic - they emerge from evidence. Different creation paths, both are summaries.
+Example from the Vectorize PM agent:
 
-Example: hiring criteria.
+I created a mental model for "Feature Prioritization Framework" (user demand, technical complexity, strategic value). Every planning decision checks this first.
 
-Mental model approach: Define "Senior Backend Engineer Criteria" explicitly
-- 5+ years distributed systems
-- Python or Go
-- Production PostgreSQL
-- Team leadership preferred
+But I let observations handle team member work patterns. Store facts about how Sarah works, her strengths, blockers she hits, and Hindsight auto-generates observations. These update as sprints progress.
 
-Observation approach: Store facts about successful hires, let Hindsight discover the pattern
-- "John had 7 years distributed systems experience"
-- "Sarah came from Python background"
-- "Mike had deep PostgreSQL expertise"
-
-System generates "successful backend hire patterns" observation automatically.
-
-I use mental models for established criteria where I want consistency. I use observations when I want the system to discover patterns from evidence.
-
-The hierarchy also enables multi-hop reasoning. Complex query: "Which contacts would be good for a DevOps role at a Series A startup?"
-
-reflect():
-1. Checks mental model for hiring criteria (if defined)
-2. Finds observations about contacts with DevOps experience
-3. Cross-references facts about their team size preferences
-4. Considers experiences from career conversations
-5. Synthesizes recommendations
-
-The answer doesn't exist in the memory bank. The agent constructs it by connecting knowledge across hierarchy levels.
-
-Disposition traits (skepticism, literalism, empathy) shape how the hierarchy gets interpreted. Same knowledge structure, different reasoning styles based on personality.
-
-This is what production agents need: structured knowledge that provides consistency without rigidity.
-
-Full breakdown with code examples: [link]
-```
-
-### Option 2 (Technical deep dive)
-```
-Most RAG systems flatten knowledge into "similar chunks." No distinction between:
-- A carefully curated summary
-- An auto-consolidated pattern
-- A random fact from three months ago
-
-Hindsight organizes context hierarchically:
-
-Mental Models (curated summaries)
-→ Observations (auto-consolidated patterns)
-→ Raw Facts (foundation)
-
-When reflect reasons, it checks sources in priority order.
-
-Mental Models: User-created summaries for common queries
-
-You create these explicitly when you need consistency. "What's our hiring policy?" should return the same answer every time, not LLM variations.
-
-Example: Create a mental model for "Technology Evaluation Criteria"
-1. Team expertise match
-2. Operational complexity vs benefit
-3. Production track record
-4. Timeline constraints
-
-Every reflect that touches tech decisions checks this first. Consistent reasoning principles.
-
-Observations: Auto-generated entity profiles
-
-You don't create observations. They emerge from accumulated facts.
-
-Store five+ facts about Alice:
-- Works at Google
-- Specializes in ML infrastructure
-- Planning to join a startup
-- Prefers smaller teams
-- Python and TensorFlow experience
-
-Hindsight auto-generates observation: "Alice is a software engineer at Google specializing in ML infrastructure. Joined 2020, planning to move to startup. Prefers smaller teams, experienced with Python and TensorFlow."
-
-Observations sit below mental models, above raw facts. If no mental model matches your query, check observations next.
-
-Raw Facts: The foundation
-
-World facts ("Alice works at Google") and experiences ("I discussed Python with Alice") extracted during retain().
-
-These don't get auto-summarized. They're just facts. Detail preservation.
-
-The hierarchy solves the consistency problem:
-
-Without hierarchy:
-- Ask "What's our API policy?" twice
-- Get slightly different phrasings each time
-- Same meaning, inconsistent output
-
-With hierarchy:
-- Create mental model for API policy
-- Every query gets same canonical answer
-- But new questions without models still use fresh facts
-
-You become predictable without becoming rigid.
-
-How reflect traverses the hierarchy:
-
-1. Memory Retrieval - TEMPR searches (semantic + keyword + graph + temporal)
-2. Hierarchy Check - Prioritize by level (mental models → observations → facts)
-3. Profile Integration - Apply mission, directives, disposition traits
-4. Multi-Stage Reasoning - LLM reasons through evidence with personality
-5. Opinion Formation - Store conclusions with confidence scores
-6. Belief Evolution - Update confidence as new evidence arrives
-
-The budget parameter ("low", "mid", "high") controls how thoroughly reflect searches each level. Use low for simple queries where a mental model likely exists. Use high for complex multi-hop reasoning.
-
-Mission, directives, and disposition shape how the hierarchy gets interpreted:
-- Mission: what knowledge to prioritize
-- Directives: hard rules (never violate)
-- Disposition: interpretation style (skepticism, literalism, empathy on 1-5 scales)
-
-Same hierarchy, different disposition → different reasoning. High skepticism emphasizes risks. Low skepticism emphasizes opportunities.
-
-This is structured knowledge reasoning, not flat context retrieval.
-
-Technical breakdown with examples: [link]
-```
-
-### Option 3 (Practical use case)
-```
-Building a technical advisor agent that needs consistent reasoning patterns but fresh details.
-
-Challenge: standard RAG re-synthesizes from raw facts every time. Ask the same question twice, get slightly different answers.
-
-Solution: Hindsight's hierarchical context.
-
-I created three knowledge levels:
-
-Level 1 - Mental Model: "Technology Evaluation Criteria"
-- Team expertise match
-- Operational complexity vs benefit
-- Production track record
-- Timeline constraints
-
-This is curated knowledge I want applied consistently to all tech decisions.
-
-Level 2 - Observations: Auto-generated from facts
-After retaining facts about team composition and past projects, Hindsight generates observations about patterns. These update as new evidence arrives.
-
-Level 3 - Raw Facts: Foundation
-- "Team has 3 backend engineers, Python and PostgreSQL experience"
-- "No Kubernetes experience"
-- "Project: 100k users, standard CRUD, 3-month deadline"
-
-Now when I ask: "Should we deploy on Kubernetes or use a simpler platform?"
-
-reflect():
-1. Checks mental model (Technology Evaluation Criteria) - finds it
-2. Checks observations about Kubernetes decisions - finds patterns from past projects
-3. Retrieves raw facts about current team and project
-4. Applies mission ("prioritize operational simplicity") and disposition (skepticism: 4)
+When asked "Should we prioritize the batch operations API or improved documentation next sprint?" the agent:
+1. Checks mental model for prioritization criteria
+2. Reviews observations about past feature launches and team capacity
+3. Retrieves raw facts: 15 users asking for batch API, 8 for docs, team at 80% capacity
+4. Applies mission ("ship what users need, balance speed with debt") and disposition (empathy: 4)
 5. Synthesizes recommendation
 
-Output: recommend against Kubernetes
-Reasoning:
-- Mental model prioritizes team expertise match
-- Facts show no K8s experience
-- Mission emphasizes operational simplicity
-- High skepticism disposition questions complex solutions
+The agent recommended documentation first - not because docs had more requests (they didn't), but because the hierarchy enabled reasoning across levels: team capacity, past patterns showing docs reduce support load, and empathy for both user frustration and team bandwidth.
 
-Same hierarchy, different team expertise → different recommendation. Adaptive reasoning grounded in consistent principles.
+**The provocative claim:** we're obsessed with retrieval quality when we should focus on belief formation.
 
-The hierarchy enables:
-- Consistency for established knowledge (mental models)
-- Automatic consolidation of patterns (observations)
-- Fresh detail when needed (raw facts)
-- Personality-driven interpretation (mission + disposition)
+Every RAG system talks about better embeddings, hybrid search, reranking. That's table stakes. The hard problem isn't finding relevant facts - it's deciding which facts are canonical, how they relate to accumulated beliefs, and how the agent's reasoning evolves over time.
 
-Mental models vs observations decision:
+Hindsight's hierarchical context with persistent opinions is closer to actual learning than anything that just retrieves and returns. When an agent can say "My confidence in this recommendation increased from 0.6 to 0.8 over three weeks because of these five new pieces of evidence," that's not retrieval. That's belief formation.
 
-Use mental models when:
-- Need consistency across queries
-- Established policy/standards
-- Want human review before use
+The benchmark numbers back this up: 91.4% on LongMemEval, outperforming full-context GPT-4o. But more interesting than the accuracy is the mechanism - the agent isn't just remembering better, it's reasoning with accumulated beliefs.
 
-Use observations when:
-- Knowledge accumulates naturally
-- Want automatic consolidation
-- Pattern should update with new facts
+**The trade-offs:**
 
-I use mental models for criteria that shouldn't drift. I use observations for entity profiles that should evolve with evidence.
+Mental models can go stale - you need to maintain them like documentation. Observations sometimes consolidate incorrectly (LLMs have opinions about what matters). The hierarchy adds indirection for simple queries.
 
-This is what production agents need: structured knowledge that provides guardrails without rigidity.
+But for production agents where users expect consistent answers and reasoning that matures over time, that's worth it.
 
-Full technical breakdown: [link]
+Full breakdown with code examples, comparisons to LangChain/LlamaIndex/Letta, and the opinion evolution system: [link]
 ```
