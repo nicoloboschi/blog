@@ -1,7 +1,7 @@
 +++
 date = '2026-02-28T10:00:00+01:00'
 draft = false
-title = 'AI won't replace engineers, it will replace project managers'
+title = "AI won't replace engineers, it will replace project managers"
 tags = ["engineering", "AI", "career", "product"]
 +++
 
