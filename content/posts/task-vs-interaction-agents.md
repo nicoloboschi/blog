@@ -67,7 +67,7 @@ The tradeoff is real. Write-time structure forces you to make inferences early, 
 
 ## Error tolerance
 
-Task agents fail loudly. Code doesn't compile, tests fail, dashboards 500. The agent sees the error and retries. Memory mistakes are often recoverable within the same session.
+Task agents fail loudly - at least in the common case. Code doesn't compile, tests fail, dashboards 500. The agent sees the error and retries. Memory mistakes are often recoverable within the same session. (The exception is high-stakes task agents - trading systems, medical workflows - where silent failure is just as brutal. But that's a different problem domain with different tooling requirements.)
 
 Interaction agents fail silently. Wrong context about a user still produces a coherent response. There's no built-in signal - the agent doesn't know it misfired, and the user often can't tell *why* it feels off until trust is already damaged.
 

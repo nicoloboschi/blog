@@ -1,49 +1,74 @@
-# Social media distribution: Not all agents are the same
+# Social media: Not all agents are the same
 
-## Twitter
+---
 
-Every agent framework treats a style preference and a file diff identically.
+## Twitter — versions
 
-That's the bug.
+**V1**
+Task agents and interaction agents look the same from the outside. They're not.
 
-Real agents need two memory layers:
-- Task context → expires when the task ends
-- User knowledge → accumulates over months, has to stay accurate
+Latency, retrieval quality, and even knowing *what* to retrieve work completely differently.
 
-The hard part isn't storing user knowledge.
-It's knowing when it silently became wrong.
-
-Two failure modes depending on how you store it:
-
-→ Time-decay on raw observations: can't tell if a preference changed or just aged out
-→ Consolidated beliefs: handles contradictions, but wrong summaries are authoritative and untraceable
-
-The harder problem: "context drift"
-A user led a 3-person team. 4 months later they ran a 20-person org.
-Nothing contradicted anything. Memory was confidently wrong for months.
-
-That's not contradiction detection. That's entity state reasoning — and almost no system does it at write-time.
-
-The unsolved part: a memory system that can say "I think this is still true, but I'm not sure."
+Using the same stack for both is a mistake that fails silently.
 
 [link]
 
 ---
 
-## LinkedIn
+**V2**
+"Retrieve broadly and let the model sort it out" works for task agents.
 
-I spent time debugging why an AI assistant kept giving subtly wrong advice to a user.
+For personalization agents it quietly breaks — wrong context, no feedback signal, trust eroding one response at a time.
 
-The memory said they led a three-person team. They'd been running a twenty-person org for four months.
+Wrote about the three things that actually differ: [link]
 
-Nothing in the new conversations contradicted anything old. Team size just never came up again. Every response was calibrated to a context that had stopped existing.
+---
 
-WTF moment: this isn't a storage problem. It's a reasoning problem. And almost no agent framework is built to handle it.
+**V3**
+For a task agent, retrieval misses are loud — tests fail, code breaks.
 
-The real issue: most agents treat a style preference and a file diff identically — same vector store, same retrieval, same injection. But these are two different memory layers with completely different quality bars.
+For an interaction agent, retrieval misses are silent — the response looks fine, the user just slowly stops trusting it.
 
-Task context expires. User knowledge has to stay accurate over months. Conflating them is the root cause of most interaction agent failures.
+Same stack, very different failure modes. [link]
 
-I wrote about the actual failure modes — time-decay vs. consolidation, why "contradiction detection" is the wrong frame for context drift, the write-time vs. query-time tradeoff, and what it would actually mean for a memory system to express uncertainty about its own beliefs.
+---
+
+**V4**
+"Fix this bug" → obvious retrieval query.
+
+"Recommend something for dinner" → dietary restrictions? past orders? time of day? budget signals?
+
+The query itself is the hard part for interaction agents. [link]
+
+---
+
+## LinkedIn — versions
+
+**V1**
+Most agent stacks are designed for task agents — do a job, return a result.
+
+When teams reuse the same stack for personalization or assistants, the system doesn't break. It just works noticeably worse, and the gap is hard to pin on memory.
+
+Three things that behave differently: latency budgets, retrieval quality standards, and knowing what to retrieve at all.
+
+[link]
+
+---
+
+**V2**
+Task agents fail loudly. Code doesn't compile, tests fail, the agent retries.
+
+Interaction agents fail silently. Wrong context produces a plausible response. No signal. The user just stops trusting the product.
+
+That asymmetry alone should change how you build memory for each.
+
+[link]
+
+---
+
+**V3**
+The hardest part of building personalization agents isn't storing user knowledge.
+
+It's knowing which slice of it matters for *this specific request, right now* — and retrieving it fast, with no feedback loop to tell you when you got it wrong.
 
 [link]
