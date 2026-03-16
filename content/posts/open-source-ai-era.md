@@ -76,7 +76,7 @@ If the problem is contributing without understanding, then most proposed solutio
 
 ## Conclusion
 
-I spent years reviewing PRs in Apache PMC projects. Now I build AI agents full time. The tension between those two experiences isn't theoretical for me.
+I spent years reviewing PRs in open source projects. Now I build AI agents full time. The tension between those two experiences isn't theoretical for me.
 
 In my opinion, drive-by contributions - AI-generated or not - should require human attestation of understanding before they consume maintainer review bandwidth. Not "the tests pass." Not "the agent says it's correct." A human who has read the code, understands what invariant the change touches, and is willing to own the outcome if it breaks. Projects that don't enforce something like this will lose their best maintainers first - because those are the ones doing the hardest reviews, and they'll burn out before anyone else notices the queue is growing.
 
