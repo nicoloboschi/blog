@@ -77,4 +77,8 @@ No ensemble tricks. No 8-variant best-of scoring. Single-query mode, one retriev
 
 Running 12 agents to score 99% on an outdated benchmark and then calling it a "social experiment" when the backlash hits - that's not how you do business. In my opinion, the bar is simple: submit your system to a benchmark you don't control, publish numbers you can't cherry-pick, and let engineers compare for themselves. Everything else is noise.
 
+Oh, and for the record - Supermemory blocked me on X. Make of that what you will.
+
+![Supermemory blocked me on X](/images/supermemory-blocked.png)
+
 AMB is live at [agentmemorybenchmark.ai](https://agentmemorybenchmark.ai). The repo is at [github.com/vectorize-io/agent-memory-benchmark](https://github.com/vectorize-io/agent-memory-benchmark). Run it against your own system. If something is broken, open an issue.
