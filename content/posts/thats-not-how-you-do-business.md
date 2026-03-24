@@ -10,6 +10,8 @@ tags = ["AI", "memory", "benchmarks", "engineering"]
 > - Gaming benchmarks erodes trust in an industry that already has a credibility problem. Calling it a social experiment doesn't fix that.
 > - The same week, we launched Agent Memory Benchmark - open methodology, reproducible results, multi-dimensional scoring. Hindsight v0.4.19 posts its all-time best results on it.
 
+![Supermemory blocked me on X](/images/supermemory-blocked.png)
+
 ---
 
 On March 22nd, Supermemory published a blog post claiming they "broke the frontier in agent memory" with a ~99% score on LongMemEval. The post had all the ingredients: a cool acronym (ASMR - Agentic Search and Memory Retrieval), diagrams, multi-agent orchestration, and the bold claim that "agent memory is now (probably) a solved problem."
@@ -76,9 +78,5 @@ Hindsight v0.4.19 posts its all-time best results on AMB:
 No ensemble tricks. No 8-variant best-of scoring. Single-query mode, one retrieval call, production-realistic latency. We run the same harness, against the same datasets, with the same methodology that anyone else can use. That's the point - if your system is real, you should have no problem submitting to a benchmark you didn't design and can't control.
 
 Running 12 agents to score 99% on an outdated benchmark and then calling it a "social experiment" when the backlash hits - that's not how you do business. In my opinion, the bar is simple: submit your system to a benchmark you don't control, publish numbers you can't cherry-pick, and let engineers compare for themselves. Everything else is noise.
-
-Oh, and for the record - Supermemory blocked me on X. Make of that what you will.
-
-![Supermemory blocked me on X](/images/supermemory-blocked.png)
 
 AMB is live at [agentmemorybenchmark.ai](https://agentmemorybenchmark.ai). The repo is at [github.com/vectorize-io/agent-memory-benchmark](https://github.com/vectorize-io/agent-memory-benchmark). Run it against your own system. If something is broken, open an issue.
