@@ -22,8 +22,21 @@ unsafe = true
 category = "categories"
 tag = "tags"
 
+[related]
+includeNewer = true
+threshold = 50
+toLower = true
+
+[[related.indices]]
+name = "tags"
+weight = 100
+
+[[related.indices]]
+name = "date"
+weight = 10
+
 [params]
-description = "Software Engineer. Distributed Systems. AI Agents. Open Source."
+description = "Nicolò Boschi - Software Engineer building AI agent memory systems, distributed systems, and developer tools. Creator of Hindsight and pg0."
 favicon = "favicon.jpg"
 dateFormat = "2006-01-02"
 themeStyle = "original"

@@ -2,6 +2,7 @@
 date = '2026-02-13T10:00:00+01:00'
 draft = false
 title = 'Human attention defragmentation: flow, fatigue, and AI coding'
+description = "AI coding tools boost output but fragment attention. Running multiple agents in parallel erodes deep understanding and ownership of your own codebase."
 tags = ["AI", "career", "personal", "productivity"]
 +++
 

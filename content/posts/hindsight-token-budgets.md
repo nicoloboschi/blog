@@ -2,6 +2,7 @@
 date = '2025-12-10T15:00:00+01:00'
 draft = false
 title = 'Token budgets vs top-k: a better way to fill context windows'
+description = "Top-k retrieval returns unpredictable context sizes. Token budgets fill your LLM context window by actual token count for predictable, maximum-density results."
 tags = ["AI", "agents", "memory", "hindsight", "LLM", "RAG"]
 +++
 

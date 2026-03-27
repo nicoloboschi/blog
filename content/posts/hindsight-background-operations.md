@@ -2,6 +2,7 @@
 date = '2025-12-24T10:00:00+01:00'
 draft = false
 title = 'Background operations: what happens after retain()'
+description = "How Hindsight processes memories after retain() - from fact extraction and opinion formation to observation regeneration. Sync by default, async for bulk."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

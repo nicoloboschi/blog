@@ -2,6 +2,7 @@
 date = '2026-02-03T10:00:00+01:00'
 draft = false
 title = 'Cache the reasoning, not the answer'
+description = "Agents pay a synthesis tax re-deriving the same answers repeatedly. Mental models pre-compute consolidated knowledge for O(1) retrieval as memory evolves."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

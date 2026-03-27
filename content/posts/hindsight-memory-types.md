@@ -2,6 +2,8 @@
 date = '2025-12-12T12:00:00+01:00'
 draft = false
 title = 'Memory types in Hindsight: world, experience, opinion, observation'
+url = "/posts/20251212-memory-types/"
+description = "Hindsight organizes agent memory into four cognitive types: world facts, experiences, opinions with confidence scores, and auto-synthesized observations."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

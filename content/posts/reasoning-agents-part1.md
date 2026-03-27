@@ -2,6 +2,7 @@
 date = '2025-11-16T14:30:00+01:00'
 draft = false
 title = 'The reasoning agent: a different architecture for AI systems (part 1)'
+description = "Why AI agents should split into two layers: a read-only reasoning agent that gathers context and decides, and an execution agent that validates and acts."
 tags = ["AI", "agents", "llm", "architecture"]
 +++
 

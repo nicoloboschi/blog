@@ -2,6 +2,7 @@
 date = '2026-03-24T13:00:00+01:00'
 draft = false
 title = "That's not how you do business"
+description = "Supermemory gamed a memory benchmark for viral reach, then called it a social experiment. Why stunts erode trust and what real benchmarking looks like."
 tags = ["AI", "memory", "benchmarks", "engineering"]
 +++
 

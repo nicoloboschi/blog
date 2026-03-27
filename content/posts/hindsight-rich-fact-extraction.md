@@ -2,6 +2,7 @@
 date = '2025-12-15T15:00:00+01:00'
 draft = false
 title = 'Rich fact extraction: preserving narrative, not just statements'
+description = "Why sentence-level RAG chunks lose context. Hindsight extracts 2-5 narrative facts per conversation, preserving reasoning chains and causal relationships."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

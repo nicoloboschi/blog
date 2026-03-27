@@ -2,6 +2,7 @@
 date = '2025-12-08T10:00:00+01:00'
 draft = false
 title = 'Hindsight vs traditional RAG: what you actually get'
+description = "Traditional RAG does semantic search over chunks. Hindsight adds keyword, graph, and temporal retrieval plus entity tracking and persistent opinions."
 tags = ["AI", "agents", "memory", "hindsight", "LLM", "RAG"]
 +++
 

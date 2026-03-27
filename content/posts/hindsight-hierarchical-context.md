@@ -2,6 +2,7 @@
 date = '2026-02-05T10:00:00+01:00'
 draft = false
 title = 'Not all context is equal: hierarchical memory for AI agents'
+description = "Not all context is equal. A three-tier hierarchy of mental models, observations, and raw facts solves RAG consistency by prioritizing canonical knowledge."
 tags = ["AI", "agents", "memory", "hindsight", "LLM", "reflect"]
 +++
 

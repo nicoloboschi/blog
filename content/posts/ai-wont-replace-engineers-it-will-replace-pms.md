@@ -2,6 +2,7 @@
 date = '2026-02-28T10:00:00+01:00'
 draft = false
 title = "AI won't replace engineers, it will replace project managers"
+description = "AI coding agents eliminate the translation layer between users and code - the exact role PMs fill. Engineers who own the full product loop will thrive."
 tags = ["engineering", "AI", "career", "product"]
 +++
 

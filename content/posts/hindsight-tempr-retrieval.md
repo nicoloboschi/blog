@@ -2,6 +2,7 @@
 date = '2025-12-16T11:00:00+01:00'
 draft = false
 title = 'Beyond vector search: how TEMPR combines 4 retrieval strategies'
+description = "TEMPR runs semantic, keyword, graph, and temporal search in parallel, fuses results with RRF, and reranks with a cross-encoder. 44.6 points over baselines."
 tags = ["AI", "agents", "memory", "hindsight", "retrieval", "RAG"]
 +++
 

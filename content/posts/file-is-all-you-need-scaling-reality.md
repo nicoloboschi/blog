@@ -2,6 +2,7 @@
 date = '2026-01-16T10:00:00+01:00'
 draft = false
 title = 'File-based agent memory: great demo, good luck in prod'
+description = "File-based agent memory benchmarks well on small datasets but hits context rot, multi-hop failures, and temporal query problems in production."
 tags = ["AI", "agents", "memory", "LLM", "RAG", "context-window"]
 +++
 

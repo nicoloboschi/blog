@@ -2,6 +2,7 @@
 date = '2025-12-21T10:00:00+01:00'
 draft = false
 title = 'TEI for production: embeddings and cross-encoder reranking'
+description = "How to offload Hindsight embeddings and cross-encoder reranking to HuggingFace TEI for production. Setup, tuning, and Kubernetes deployment guide."
 tags = ["AI", "agents", "memory", "hindsight", "embeddings", "reranking", "production", "infrastructure"]
 +++
 

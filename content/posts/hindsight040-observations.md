@@ -2,6 +2,7 @@
 date = '2026-01-27T18:00:00+01:00'
 draft = false
 title = 'From facts to insights: how observations work in Hindsight'
+description = "Observations consolidate scattered facts into synthesized patterns via async LLM processing, with traceable evidence chains and mission-driven consolidation."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

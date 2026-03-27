@@ -2,6 +2,7 @@
 date = '2026-03-16T10:00:00+01:00'
 draft = false
 title = 'Open source is a trust system. AI is breaking the contract.'
+description = "AI lets people contribute to open source without understanding what they change. The OSS trust model needs human attestation, not just AI disclosure."
 tags = ["AI", "open-source", "engineering"]
 +++
 

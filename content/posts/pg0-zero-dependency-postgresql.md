@@ -2,6 +2,7 @@
 date = '2025-11-26T15:00:00+01:00'
 draft = false
 title = 'pg0: zero-dependency PostgreSQL for development'
+description = "pg0 is a single-binary CLI that downloads and runs PostgreSQL 16 with pgvector locally. No Docker, no brew, no system dependencies."
 tags = ["database", "postgresql", "tools", "developer-experience"]
 +++
 

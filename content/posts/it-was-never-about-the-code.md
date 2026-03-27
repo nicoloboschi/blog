@@ -2,6 +2,7 @@
 date = '2026-02-16T10:00:00+01:00'
 draft = false
 title = 'It was never about the code'
+description = "A coworker rebuilt my two weeks of UI work with Claude in one weekend. The grief was real, but it revealed: the code was never the point."
 tags = ["AI", "career", "personal"]
 +++
 

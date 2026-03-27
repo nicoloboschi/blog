@@ -2,6 +2,7 @@
 date = '2026-01-25T12:00:00+01:00'
 draft = false
 title = 'What learning actually means for AI agents'
+description = "Raw fact retrieval breaks down when agents need to learn from experience, adapt to change, and infer conclusions from scattered signals across time."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

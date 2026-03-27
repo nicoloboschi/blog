@@ -2,6 +2,7 @@
 date = '2026-02-09T10:00:00+01:00'
 draft = false
 title = 'RLM is half a paradigm'
+description = "RLM solves within-session context rot for massive inputs but ignores cross-session memory. Production agents need both RLM and external memory systems."
 tags = ["AI", "agents", "memory", "LLM", "RLM"]
 +++
 

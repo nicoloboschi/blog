@@ -2,6 +2,7 @@
 date = '2025-11-05T15:05:30+01:00'
 draft = false
 title = 'Code comments: humans vs agentic code'
+description = "Code comments went from anti-pattern to optimization technique. AI-generated docstrings act as prompt boosters, cutting agentic coding iterations from 5-6 to 1-2."
 tags = ["AI", "coding-agents", "best-practices"]
 +++
 

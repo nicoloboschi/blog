@@ -2,6 +2,7 @@
 date = '2025-12-23T10:00:00+01:00'
 draft = false
 title = 'Temporal reasoning: "when it happened" vs "when you learned it"'
+description = "Most memory systems track one timestamp. Hindsight tracks when events occurred and when you learned about them, enabling temporal queries RAG cannot handle."
 tags = ["AI", "agents", "memory", "hindsight", "retrieval"]
 +++
 

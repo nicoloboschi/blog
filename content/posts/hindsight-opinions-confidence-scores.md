@@ -2,6 +2,7 @@
 date = '2025-12-13T14:00:00+01:00'
 draft = false
 title = 'Opinions with confidence scores: how agents form beliefs'
+description = "How AI agents form persistent beliefs with confidence scores that evolve as evidence accumulates. Disposition traits shape how facts become opinions."
 tags = ["AI", "agents", "memory", "hindsight", "LLM"]
 +++
 

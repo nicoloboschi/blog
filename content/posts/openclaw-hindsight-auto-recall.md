@@ -2,6 +2,7 @@
 date = '2026-01-30T10:00:00+01:00'
 draft = false
 title = 'Local, long term memory for OpenClaw agents'
+description = "Hindsight's OpenClaw integration adds local, free long-term memory to your agents using auto-recall instead of unreliable tool-based retrieval."
 tags = ["AI", "agents", "memory", "hindsight", "openclaw", "LLM"]
 +++
 

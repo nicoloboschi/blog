@@ -1,3 +1,4 @@
+{{ define "title" }}{{ with .Title }}{{ if gt (len .) 40 }}{{ . }}{{ else }}{{ . }} | {{ $.Site.Title }}{{ end }}{{ else }}{{ .Site.Title }}{{ end }}{{ end }}
 {{ define "main" }}
 <article class="posts-container">
   <div class="terminal-window">
@@ -61,6 +62,23 @@
         <div class="post-body">
           {{ .Content }}
         </div>
+
+        {{ $related := .Site.RegularPages.Related . | first 3 }}
+        {{ with $related }}
+        <div class="related-posts">
+          <div class="terminal-line">
+            <span class="prompt">$</span> <span class="command">ls --related</span>
+          </div>
+          <div class="related-list">
+            {{ range . }}
+            <a href="{{ .RelPermalink }}" class="related-item">
+              <span class="related-date">{{ .Date.Format "2006-01-02" }}</span>
+              <span class="related-title">{{ .Title }}</span>
+            </a>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
 
         <nav class="post-nav">
           {{ with .PrevInSection }}
@@ -318,6 +336,56 @@
   border: none;
   border-top: 1px solid #24283b;
   margin: 2em 0;
+}
+
+/* Related posts */
+.related-posts {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #24283b;
+}
+
+.related-posts .terminal-line {
+  margin-top: 0;
+}
+
+.related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.related-item {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.related-item:hover {
+  background: #24283b;
+  transform: translateX(4px);
+}
+
+.related-date {
+  font-size: 13px;
+  color: #e0af68;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.related-title {
+  color: #7dcfff;
+  flex: 1;
+}
+
+.related-item:hover .related-title {
+  color: #bb9af7;
 }
 
 /* Post navigation */

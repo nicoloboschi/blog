@@ -2,6 +2,7 @@
 date = '2025-12-22T18:00:00+01:00'
 draft = false
 title = 'Document upserting: keeping evolving conversations fresh'
+description = "Append-only memory creates duplicates when information changes. Document upserting with document_id enables clean replacement of outdated memories."
 tags = ["AI", "agents", "memory", "hindsight", "retrieval"]
 +++
 

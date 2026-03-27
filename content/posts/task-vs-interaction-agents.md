@@ -2,6 +2,7 @@
 date = '2026-03-04T10:00:00+01:00'
 draft = false
 title = 'Not all agents are the same: task agents vs interaction agents'
+description = "Task agents and interaction agents need different memory stacks. Latency, retrieval quality, and error tolerance diverge in ways most frameworks ignore."
 tags = ["AI", "agents", "memory", "LLM", "personalization"]
 +++
 
