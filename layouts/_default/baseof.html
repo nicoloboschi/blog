@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  {{- partial "favicon.html" . -}}
+  <title>{{- block "title" . }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{- end }}</title>
+  {{- partial "head.html" . -}}
+  {{- partial "custom_head.html" . -}}
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  {{- block "main" . }}{{- end }}
+  {{- partial "plexus.html" . -}}
+</body>
+</html>

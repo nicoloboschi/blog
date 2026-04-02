@@ -43,6 +43,7 @@ A few tools I've built:
 ### Talks
 
 **Generative AI**
+- [How AI Systems Break at Scale and Why Memory Matters](https://www.youtube.com/watch?v=vpqLL-2X21A)
 - [How Claude is Changing the Game for Private Data](https://youtu.be/aYAgTLlinaE)
 - [RAG Pattern + AWS Suite](https://www.youtube.com/watch?v=EWdZnb6MXog)
 - [Scaling unstructured data indexing with Pulsar](https://www.youtube.com/watch?v=EDQjWXzU-Ds)

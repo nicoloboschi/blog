@@ -1,1157 +1,511 @@
 {{ define "main" }}
-<h1 class="sr-only">Nicolò Boschi — Software Engineer, Distributed Systems, AI Agents</h1>
-<div class="terminal-container">
-  <div class="terminal-window">
-    <div class="terminal-header">
-      <div class="terminal-buttons">
-        <span class="terminal-btn red"></span>
-        <span class="terminal-btn yellow"></span>
-        <span class="terminal-btn green"></span>
-      </div>
-      <div class="terminal-title">nicolo@localhost ~</div>
-    </div>
-    <div class="terminal-body">
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">whoami</span>
-      </div>
-      <div class="terminal-output whoami-section">
-        <img src="/face.jpeg" alt="Nicolò Boschi" class="profile-photo">
-        <div class="whoami-text">
-          <p><strong>Nicolò Boschi</strong> <span class="dim">(with the accent)</span></p>
-          <p class="dim">Software engineer working on distributed systems, AI agents, and developer tools.</p>
-          <div class="social-links">
-            <a href="https://github.com/nicoloboschi" class="social-link github">
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-              </svg>
-              GitHub
-            </a>
-            <a href="https://x.com/nicoloboschi" class="social-link x">
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-              X
-            </a>
-            <a href="https://www.linkedin.com/in/nicoló-boschi-621a1a158/" class="social-link linkedin">
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-              </svg>
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {{ if .Site.Params.newsletter.enabled }}
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">subscribe --notify-new-posts</span>
-      </div>
-      <div class="terminal-output newsletter-output">
-        <span class="output-text">Enter your email to get notified when I publish something new:</span>
-      </div>
-      <form
-        action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}"
-        method="post"
-        target="popupwindow"
-        class="newsletter-form"
-        id="newsletter-form"
-      >
-        <div class="terminal-line input-line">
-          <span class="prompt">$</span>
-          <div class="input-wrapper">
-            <input type="email" name="email" id="newsletter-input" required class="newsletter-input" autofocus />
-            <span class="cursor newsletter-cursor"></span>
-          </div>
-          <button type="submit" class="newsletter-btn">↵</button>
-        </div>
-      </form>
-      {{ end }}
-
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">ls posts/</span>
-      </div>
-      <div class="terminal-output posts-list">
-        {{ range first 10 (where .Site.RegularPages "Type" "posts") }}
-        <div class="post-item">
-          <a href="{{ .RelPermalink }}" class="post-link">
-            <span class="post-date dim">{{ .Date.Format "2006-01-02" }}</span>
-            <span class="post-title">{{ .Title }}</span>
-          </a>
-        </div>
-        {{ end }}
-        <div class="post-item view-all">
-          <a href="/posts/" class="post-link all-posts">
-            <span class="post-title">→ View all posts</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">cat papers.bib</span>
-      </div>
-      <div class="terminal-output">
-        <a href="https://arxiv.org/abs/2512.12818" class="paper-card">
-          <div class="paper-header">
-            <div class="paper-venue">arXiv 2025</div>
-            <div class="paper-id">2512.12818</div>
-          </div>
-          <div class="paper-title">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</div>
-          <div class="paper-authors">Latimer, Boschi, Neeser, Bartholomew, Srivastava, Wang, Ramakrishnan</div>
-        </a>
-      </div>
-
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">cat opensource.md</span>
-      </div>
-      <div class="terminal-output oss-section">
-        <div class="oss-item">
-          <img src="https://github.com/vectorize-io.png" alt="vectorize-io" class="oss-avatar">
-          <a href="https://github.com/vectorize-io/hindsight">hindsight</a>
-          <span class="role-badge creator">co-creator</span>
-          <img src="https://img.shields.io/github/stars/vectorize-io/hindsight?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">Long-term memory for AI agents</span>
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/vectorize-io.png" alt="vectorize-io" class="oss-avatar">
-          <a href="https://github.com/vectorize-io/pg0">pg0</a>
-          <span class="role-badge creator">creator</span>
-          <img src="https://img.shields.io/github/stars/vectorize-io/pg0?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">Zero-dependency Postgres driver</span>
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/datastax.png" alt="datastax" class="oss-avatar">
-          <a href="https://github.com/datastax/kaap">kaap</a>
-          <span class="role-badge creator">creator</span>
-          <img src="https://img.shields.io/github/stars/datastax/kaap?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">K8s Operator for Apache Pulsar</span>
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/LangStream.png" alt="LangStream" class="oss-avatar">
-          <a href="https://github.com/LangStream/langstream">langstream</a>
-          <span class="role-badge creator">co-creator</span>
-          <img src="https://img.shields.io/github/stars/LangStream/langstream?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">Build GenAI apps with streaming</span>
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/apache.png" alt="apache" class="oss-avatar">
-          <a href="https://github.com/apache/pulsar">pulsar</a>
-          <span class="role-badge pmc">PMC Member</span>
-          <img src="https://img.shields.io/github/stars/apache/pulsar?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">Distributed pub-sub messaging</span>
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/apache.png" alt="apache" class="oss-avatar">
-          <a href="https://github.com/apache/bookkeeper">bookkeeper</a>
-          <span class="role-badge committer">Committer</span>
-          <img src="https://img.shields.io/github/stars/apache/bookkeeper?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">Distributed log storage</span>
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/run-llama.png" alt="run-llama" class="oss-avatar">
-          <a href="https://github.com/run-llama/llama_index">llama-index</a>
-          <span class="role-badge contrib">contributor</span>
-          <img src="https://img.shields.io/github/stars/run-llama/llama_index?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/langchain-ai.png" alt="langchain-ai" class="oss-avatar">
-          <a href="https://github.com/langchain-ai/langchain">langchain</a>
-          <span class="role-badge contrib">contributor</span>
-          <img src="https://img.shields.io/github/stars/langchain-ai/langchain?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/langchain-ai.png" alt="langchain-ai" class="oss-avatar">
-          <a href="https://github.com/langchain-ai/langchainjs">langchainjs</a>
-          <span class="role-badge contrib">contributor</span>
-          <img src="https://img.shields.io/github/stars/langchain-ai/langchainjs?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-        </div>
-        <div class="oss-item">
-          <img src="https://github.com/langflow-ai.png" alt="langflow-ai" class="oss-avatar">
-          <a href="https://github.com/langflow-ai/langflow">langflow</a>
-          <span class="role-badge contrib">contributor</span>
-          <img src="https://img.shields.io/github/stars/langflow-ai/langflow?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-        </div>
-      </div>
-
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">cat talks.md</span>
-      </div>
-      <div class="terminal-output talks-list">
-        <div class="talk-category"># Generative AI</div>
-        <div class="talk-item"><a href="https://youtu.be/aYAgTLlinaE">How Claude is Changing the Game for Private Data</a></div>
-        <div class="talk-item"><a href="https://www.youtube.com/watch?v=EWdZnb6MXog">RAG Pattern + AWS Suite</a></div>
-        <div class="talk-item"><a href="https://www.youtube.com/watch?v=EDQjWXzU-Ds">Scaling unstructured data indexing with Pulsar</a></div>
-        <div class="talk-category"># Streaming & Apache Pulsar</div>
-        <div class="talk-item"><a href="https://youtu.be/eNaKKui1-cE">Transactions in Pulsar</a></div>
-        <div class="talk-item"><a href="https://youtu.be/CyZwpvw9F6I">Pulsar + ElasticSearch</a></div>
-        <div class="talk-item"><a href="https://youtu.be/NPP5ZJ1raek">Pulsar Shell Demo</a></div>
-      </div>
-
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">cat personal-projects.md</span>
-      </div>
-      <div class="terminal-output tools-list">
-        <div class="tool-item">
-          <a href="https://github.com/nicoloboschi/dockerpyze"><span class="tool-name">dockerpyze</span></a>
-          <img src="https://img.shields.io/github/stars/nicoloboschi/dockerpyze?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">- Automatically Dockerize Python apps</span>
-        </div>
-        <div class="tool-item">
-          <a href="https://github.com/nicoloboschi/asap"><span class="tool-name">asap</span></a>
-          <img src="https://img.shields.io/github/stars/nicoloboschi/asap?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">- Blazing fast local Maven installs</span>
-        </div>
-        <div class="tool-item">
-          <a href="https://github.com/nicoloboschi/local-kubernetes-runner"><span class="tool-name">lkr</span></a>
-          <img src="https://img.shields.io/github/stars/nicoloboschi/local-kubernetes-runner?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">- Spin up K8s clusters in 10 seconds</span>
-        </div>
-        <div class="tool-item">
-          <a href="https://github.com/nicoloboschi/longmemeval-inspector"><span class="tool-name">longmemeval-inspector</span></a>
-          <img src="https://img.shields.io/github/stars/nicoloboschi/longmemeval-inspector?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">- Visual inspector for LongMemEval</span>
-        </div>
-        <div class="tool-item">
-          <a href="https://github.com/nicoloboschi/setup-astradb"><span class="tool-name">setup-astradb</span></a>
-          <img src="https://img.shields.io/github/stars/nicoloboschi/setup-astradb?style=flat&label=%E2%98%85&color=e0af68&labelColor=1a1b26" alt="stars" class="star-badge">
-          <span class="dim">- GH Action to provision AstraDB</span>
-        </div>
-      </div>
-
-      <div id="terminal-response"></div>
-      <div class="terminal-line input-line">
-        <span class="prompt">$</span>
-        <div class="input-wrapper">
-          <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="type 'help' for commands...">
-          <span class="cursor"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <style>
-.terminal-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  position: relative;
+/* ---- Hero with face ---- */
+.hero { padding: 8vh 8vw 6vh; display: flex; align-items: center; gap: 40px; }
+.hero-face {
+  width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.1); flex-shrink: 0;
 }
-
-.terminal-container::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('/cover.jpg') center/cover no-repeat;
-  opacity: 0.08;
-  z-index: -1;
-  pointer-events: none;
+.hero-tagline {
+  font-size: clamp(24px, 3.5vw, 48px); font-weight: 300; line-height: 1.25;
+  color: var(--text-mid); max-width: 820px; letter-spacing: -0.02em;
 }
+.hero-tagline strong { color: var(--text); font-weight: 500; }
 
-.terminal-window {
-  background: #1a1b26;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 14px;
-}
-
-.terminal-header {
-  background: #24283b;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.terminal-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.terminal-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.terminal-btn.red { background: #f7768e; }
-.terminal-btn.yellow { background: #e0af68; }
-.terminal-btn.green { background: #9ece6a; }
-
-.terminal-title {
-  color: #787c99;
-  font-size: 13px;
-  flex: 1;
-  text-align: center;
-}
-
-.terminal-body {
-  padding: 20px 24px;
-  color: #a9b1d6;
-  line-height: 1.6;
-}
-
-.terminal-line {
-  margin-top: 24px;
-  margin-bottom: 8px;
-}
-
-.terminal-line:first-child {
-  margin-top: 0;
-}
-
-.prompt {
-  color: #9ece6a;
-  font-weight: bold;
-}
-
-.command {
-  color: #7dcfff;
-}
-
-.terminal-output {
-  padding-left: 20px;
-  margin-bottom: 8px;
-}
-
-.terminal-output p {
-  margin: 4px 0;
-}
-
-.terminal-output strong {
-  color: #bb9af7;
-}
-
-.dim {
-  color: #565f89;
-}
-
-/* Whoami section with photo */
-.whoami-section {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.profile-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid #7aa2f7;
-  flex-shrink: 0;
-  object-fit: cover;
-}
-
-.whoami-text {
-  flex: 1;
-}
-
-.social-links {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: #24283b;
-  border-radius: 6px;
-  color: #7aa2f7;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  transition: all 0.2s;
-  border: 1px solid #414868;
-}
-
-.social-link:hover {
-  background: #2f3549;
-  color: #bb9af7;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.social-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  color: #e0af68;
-}
-
-/* Posts list */
-.posts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.post-item {
-  line-height: 1.6;
-}
-
-.post-link {
-  display: flex;
-  gap: 16px;
-  align-items: baseline;
-  text-decoration: none;
-  padding: 6px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.post-link:hover {
-  background: #24283b;
-  transform: translateX(4px);
-}
-
-.post-date {
-  font-size: 13px;
-  min-width: 80px;
-  flex-shrink: 0;
-}
-
-.post-title {
-  color: #7dcfff;
-  flex: 1;
-}
-
-.post-link:hover .post-title {
-  color: #bb9af7;
-}
-
-.post-item.view-all {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #24283b;
-}
-
-.post-link.all-posts .post-title {
-  color: #9ece6a;
+.hero-gsd {
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sig-shimmer 3s ease infinite;
   font-weight: 500;
 }
 
-.post-link.all-posts:hover .post-title {
-  color: #bb9af7;
+/* ---- Timeline ---- */
+.timeline { padding: 4vh 8vw 8vh; }
+
+.tl-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  min-height: 120px;
 }
 
-/* Paper card */
-.paper-card {
+/* Left side: company info */
+.tl-left { text-align: right; padding: 0 32px 48px 0; }
+.tl-right { text-align: left; padding: 0 0 48px 32px; }
+
+/* Center: the magic line */
+.tl-center {
   position: relative;
-  display: block;
-  background: linear-gradient(135deg, #2f3549 0%, #24283b 100%);
-  padding: 20px 24px;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    2px 2px 4px rgba(0, 0, 0, 0.3),
-    4px 4px 8px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 1px rgba(187, 154, 247, 0.1);
-  border-left: 4px solid #bb9af7;
-  font-family: 'JetBrains Mono', 'Consolas', monospace;
-  overflow: hidden;
-}
-
-.paper-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 24px 24px 0;
-  border-color: transparent #1a1b26 transparent transparent;
-  transition: all 0.3s;
-}
-
-.paper-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 24px 24px 0;
-  border-color: transparent #3b3f54 transparent transparent;
-  filter: drop-shadow(-1px 1px 1px rgba(0, 0, 0, 0.3));
-}
-
-.paper-card:hover {
-  transform: translateY(-4px) rotate(-0.5deg);
-  box-shadow:
-    3px 3px 6px rgba(187, 154, 247, 0.2),
-    6px 6px 12px rgba(187, 154, 247, 0.1),
-    inset 0 0 0 1px rgba(187, 154, 247, 0.2);
-}
-
-.paper-card:hover::before {
-  border-width: 0 28px 28px 0;
-}
-
-.paper-card:hover::after {
-  border-width: 0 28px 28px 0;
-}
-
-.paper-header {
+  width: 28px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  gap: 12px;
+  justify-content: center;
 }
 
-.paper-venue {
-  color: #f7768e;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  background: rgba(247, 118, 142, 0.15);
-  padding: 4px 10px;
-  border-radius: 4px;
+/* The animated line segment */
+.tl-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+    rgba(100, 200, 255, 0.15),
+    rgba(200, 100, 255, 0.15),
+    rgba(255, 130, 80, 0.15)
+  );
 }
 
-.paper-id {
-  color: #7dcfff;
-  font-size: 11px;
-  font-weight: 600;
-  background: rgba(125, 207, 255, 0.15);
-  padding: 4px 10px;
-  border-radius: 4px;
+/* Glowing overlay that pulses */
+.tl-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -1px; right: -1px; bottom: 0;
+  background: linear-gradient(to bottom,
+    rgba(100, 200, 255, 0.4),
+    rgba(200, 100, 255, 0.3),
+    rgba(255, 130, 80, 0.4)
+  );
+  filter: blur(4px);
+  animation: tl-pulse 3s ease-in-out infinite;
+}
+
+@keyframes tl-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Dot */
+.tl-dot {
+  position: relative;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  z-index: 2;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.tl-dot--current {
+  background: #7eb8e0;
+  box-shadow:
+    0 0 8px rgba(100, 200, 255, 0.5),
+    0 0 24px rgba(100, 200, 255, 0.2);
+}
+
+.tl-dot--past {
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+
+/* Text styles */
+.tl-period {
   font-family: 'JetBrains Mono', monospace;
-}
-
-.paper-title {
-  color: #c0caf5;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-.paper-authors {
-  color: #787c99;
   font-size: 12px;
-  line-height: 1.5;
-}
-
-/* OSS section with avatars */
-.oss-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.oss-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 6px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.oss-item:hover {
-  background: #24283b;
-  transform: translateX(4px);
-}
-
-.oss-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.oss-item a {
-  color: #7dcfff;
-  text-decoration: none;
-  min-width: 120px;
-}
-
-.oss-item a:hover {
-  color: #bb9af7;
-}
-
-.role-badge {
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-
-.role-badge.creator {
-  background: #9ece6a22;
-  color: #9ece6a;
-}
-
-.role-badge.pmc {
-  background: #f7768e22;
-  color: #f7768e;
-}
-
-.role-badge.committer {
-  background: #e0af6822;
-  color: #e0af68;
-}
-
-.role-badge.contrib {
-  background: #7aa2f722;
-  color: #7aa2f7;
-}
-
-.star-badge {
-  height: 18px;
-  vertical-align: middle;
-  border-radius: 3px;
-}
-
-/* Tools list */
-.tools-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.tool-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding: 6px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.tool-item:hover {
-  background: #24283b;
-  transform: translateX(4px);
-}
-
-.tool-name {
-  color: #9ece6a;
-}
-
-.tools-list a {
-  text-decoration: none;
-}
-
-.tools-list a:hover .tool-name {
-  color: #bb9af7;
-}
-
-/* Talks list */
-.talks-list {
-  line-height: 1.8;
-}
-
-.talk-category {
-  color: #e0af68;
-  margin-top: 8px;
-}
-
-.talk-category:first-child {
-  margin-top: 0;
-}
-
-.talk-item {
-  padding: 6px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.talk-item:hover {
-  background: #24283b;
-  transform: translateX(4px);
-}
-
-.talk-item a {
-  color: #7aa2f7;
-  text-decoration: none;
-}
-
-.talk-item a:hover {
-  color: #bb9af7;
-}
-
-/* Interactive input */
-.input-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.input-wrapper {
-  display: inline-flex;
-  align-items: center;
-}
-
-#terminal-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #c0caf5;
-  font-family: inherit;
-  font-size: inherit;
-  caret-color: transparent;
-  width: 10px;
-}
-
-#terminal-input::placeholder {
-  color: #565f89;
-}
-
-#terminal-input:placeholder-shown {
-  width: 200px;
-}
-
-#terminal-input:focus {
-  width: auto;
-}
-
-#terminal-input:focus::placeholder {
-  color: transparent;
-}
-
-/* Block cursor */
-.cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1.2em;
-  background: #c0caf5;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-#terminal-response {
-  margin-top: 8px;
-}
-
-#terminal-response .cmd-block {
-  margin-top: 20px;
-  padding-top: 12px;
-  border-top: 1px solid #24283b;
-}
-
-#terminal-response .cmd-block:first-child {
-  margin-top: 12px;
-  border-top: none;
-  padding-top: 0;
-}
-
-#terminal-response .cmd-echo {
-  color: #a9b1d6;
-  margin-bottom: 8px;
-}
-
-#terminal-response .cmd-output {
-  padding-left: 20px;
-  color: #a9b1d6;
-}
-
-#terminal-response .response-error {
-  color: #f7768e;
-}
-
-#terminal-response .response-success {
-  color: #9ece6a;
-}
-
-#terminal-response .response-cmd {
-  color: #7dcfff;
-}
-
-/* Newsletter */
-.newsletter-output {
-  color: #787c99;
-  font-size: 13px;
+  color: #7eb8e0;
   margin-bottom: 4px;
 }
 
-.newsletter-output .output-text {
-  color: #e0af68;
+.tl-company {
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
-.newsletter-form {
-  margin: 0;
+.tl-company-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
-.newsletter-form .input-line {
-  margin-top: 8px;
+.tl-role {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* OSS projects on the right — clean text, no pills */
+.tl-oss {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.tl-oss-link {
+  font-size: 15px;
+  color: var(--text-mid);
+  line-height: 1.4;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+
+.tl-oss-link:hover {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
+}
+
+.tl-oss-role {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.tl-commits {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+/* Project stars/commits */
+.project-item-stats {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.project-item-stats .stat-stars { color: #7eb8e0; }
+
+/* Mobile-only company info inside right column */
+.tl-mobile-info { display: none; }
+
+/* Last row has no bottom padding */
+.tl-row:last-child .tl-left,
+.tl-row:last-child .tl-right { padding-bottom: 0; }
+
+@media (max-width: 700px) {
+  .tl-row {
+    grid-template-columns: auto 1fr;
+    gap: 0;
+  }
+  .tl-left { display: none; }
+  .tl-right { padding: 0 0 40px 24px; text-align: left; }
+  .tl-center { width: 20px; }
+  .tl-mobile-info { display: block; margin-bottom: 10px; }
+}
+
+/* ---- Newsletter — integrated ---- */
+.newsletter-inline { padding: 4vh 8vw 6vh; }
+.newsletter-inline-text {
+  font-size: clamp(16px, 1.5vw, 20px); color: var(--text-muted);
+  margin-bottom: 16px; line-height: 1.5;
+}
+.newsletter-inline-form { display: flex; gap: 10px; max-width: 440px; }
+.newsletter-inline-form input {
+  flex: 1; padding: 12px 16px; background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px;
+  outline: none; transition: border-color 0.3s;
+}
+.newsletter-inline-form input::placeholder { color: var(--text-muted); }
+.newsletter-inline-form input:focus { border-color: rgba(255,255,255,0.2); }
+.newsletter-inline-form button {
+  padding: 12px 24px; background: rgba(255,255,255,0.08); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px;
+  font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 14px;
+  cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+.newsletter-inline-form button:hover { background: rgba(255,255,255,0.12); }
+
+/* ---- Blog posts ---- */
+.post-item { display: block; margin-bottom: 44px; }
+.post-item-title {
+  font-size: clamp(22px, 2.8vw, 34px); font-weight: 400; color: var(--text);
+  line-height: 1.25; letter-spacing: -0.015em;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.post-item:hover .post-item-title {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
+}
+.post-item-meta { display: flex; align-items: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+.post-item-date { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7eb8e0; }
+.post-item-desc { font-size: 16px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; max-width: 660px; }
+
+.see-all-link {
+  display: inline-block;
+  font-size: 13px; font-weight: 400;
+  color: #7eb8e0; letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.see-all-link:hover {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
+}
+
+/* ---- Talks — grouped ---- */
+.talks-category { margin-bottom: 40px; }
+.talks-category-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;
   margin-bottom: 16px;
 }
-
-.newsletter-form .input-wrapper {
-  display: inline-flex;
-  align-items: center;
+.talk-item {
+  display: flex; align-items: center; gap: 10px; padding: 12px 0;
+  font-size: clamp(17px, 1.8vw, 24px); font-weight: 400;
+  color: var(--text-mid); line-height: 1.3;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.talk-yt { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s; }
+.talk-item:hover .talk-yt { opacity: 0.7; }
+.talk-item:hover {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
 }
 
-.newsletter-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #c0caf5;
-  font-family: inherit;
-  font-size: inherit;
-  caret-color: transparent;
-  width: auto;
+/* ---- Projects — clean list ---- */
+.project-item { margin-bottom: 28px; }
+.project-item-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(16px, 1.6vw, 22px); color: var(--text); font-weight: 400;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.project-item:hover .project-item-name {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
+}
+.project-item-desc { font-size: 15px; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
+
+/* ---- Cover color glow ---- */
+.cover-glow {
+  position: fixed; top: -30vh; left: -10vw; right: -10vw;
+  height: 70vh; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(100, 200, 255, 0.06), transparent),
+    radial-gradient(ellipse 50% 50% at 50% 20%, rgba(200, 100, 255, 0.04), transparent),
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(255, 130, 80, 0.05), transparent);
+  filter: blur(60px);
 }
 
-.newsletter-input::placeholder {
-  color: #565f89;
-}
-
-.newsletter-input:focus::placeholder {
-  color: transparent;
-}
-
-
-.newsletter-btn {
-  background: transparent;
-  color: #565f89;
-  border: none;
-  padding: 0 4px;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.newsletter-btn:hover {
-  color: #9ece6a;
-}
-
-/* Mobile responsive */
-@media screen and (max-width: 600px) {
-  .terminal-container {
-    padding: 10px;
-  }
-
-  .terminal-window {
-    font-size: 12px;
-    border-radius: 8px;
-  }
-
-  .terminal-body {
-    padding: 16px;
-  }
-
-  .terminal-output {
-    padding-left: 12px;
-  }
-
-  .whoami-section {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .profile-photo {
-    width: 100px;
-    height: 100px;
-  }
-
-  .social-links {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .social-link {
-    flex: 1;
-    min-width: 100px;
-    justify-content: center;
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  .oss-item {
-    flex-wrap: wrap;
-  }
-
-  .oss-item a {
-    min-width: auto;
-  }
-
-  .oss-item .dim {
-    width: 100%;
-    padding-left: 34px;
-    font-size: 11px;
-  }
-
-  .tool-item {
-    flex-wrap: wrap;
-  }
-
-  .tool-item .dim {
-    width: 100%;
-    font-size: 11px;
-  }
+@media (max-width: 700px) {
+  .hero { padding: 6vh 6vw 4vh; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .timeline { padding: 2vh 6vw 6vh; }
+  .newsletter-inline { padding: 2vh 6vw 4vh; }
+  .newsletter-inline-form { flex-direction: column; }
+  .tl-company-note { display: block; margin-top: 2px; }
 }
 </style>
 
-<script>
-(function() {
-  const input = document.getElementById('terminal-input');
-  const response = document.getElementById('terminal-response');
-  const body = document.querySelector('.terminal-body');
+<h1 class="sr-only">Nicolò Boschi — Software Engineer, Distributed Systems, AI Agents</h1>
 
-  const commands = {
-    help: () => [
-      'Available commands:',
-      '  <span class="response-cmd">help</span>        - Show this help message',
-      '  <span class="response-cmd">ls</span>          - List available destinations',
-      '  <span class="response-cmd">cd [path]</span>   - Navigate (posts, github, x, linkedin, paper...)',
-      '  <span class="response-cmd">whoami</span>      - About me',
-      '  <span class="response-cmd">cat [file]</span>  - Show content (papers.bib, opensource.md, talks.md, personal-projects.md)',
-      '  <span class="response-cmd">clear</span>       - Clear terminal output',
-      '  <span class="response-cmd">pwd</span>         - Print working directory'
-    ].join('<br>'),
+<div class="cover-glow"></div>
 
-    ls: () => [
-      '<span class="response-cmd">posts/</span>      - Blog posts',
-      '<span class="response-cmd">github</span>      - GitHub profile',
-      '<span class="response-cmd">x</span>           - X/Twitter',
-      '<span class="response-cmd">linkedin</span>    - LinkedIn',
-      '<span class="response-cmd">paper</span>       - arXiv paper',
-      '<span class="response-cmd">hindsight</span>   - Hindsight repo',
-      '<span class="response-cmd">pg0</span>         - pg0 repo',
-      '<span class="response-cmd">pulsar</span>      - Apache Pulsar',
-      '<span class="response-cmd">langstream</span>  - LangStream repo',
-      '<span class="response-cmd">kaap</span>        - KAAP repo'
-    ].join('<br>'),
+<nav class="side-nav" id="side-nav">
+  <a class="side-nav-item active" data-section="writing" onclick="scrollToSection('writing')"><span class="side-nav-label">Writing</span><span class="side-nav-dot"></span></a>
+  <a class="side-nav-item" data-section="journey" onclick="scrollToSection('journey')"><span class="side-nav-label">Journey</span><span class="side-nav-dot"></span></a>
+  <a class="side-nav-item" data-section="talks" onclick="scrollToSection('talks')"><span class="side-nav-label">Talks</span><span class="side-nav-dot"></span></a>
+  <a class="side-nav-item" data-section="projects" onclick="scrollToSection('projects')"><span class="side-nav-label">Projects</span><span class="side-nav-dot"></span></a>
+</nav>
 
-    pwd: () => '<span class="response-success">~</span> (home)',
+{{- partial "header.html" . -}}
 
-    whoami: () => {
-      const section = document.querySelector('.whoami-section');
-      return section ? section.innerHTML : 'Nicolò Boschi';
-    },
+<div class="hero">
+  <img src="/face.jpeg" alt="Nicolò Boschi" class="hero-face anim-fade">
+  <p class="hero-tagline anim-fade">
+    <strong>Software engineer</strong> building things around
+    distributed systems, AI agents, and developer tools. I like <span class="hero-gsd">getting stuff done</span>.
+  </p>
+</div>
 
-    cat: (args) => {
-      const file = args[0]?.toLowerCase().replace(/\.md$|\.bib$/, '');
-      const sections = {
-        'papers': '.paper-card',
-        'paper': '.paper-card',
-        'opensource': '.oss-section',
-        'talks': '.talks-list',
-        'personal-projects': '.tools-list',
-        'projects': '.tools-list',
-        'posts': '.posts-list',
-        'recent-posts': '.posts-list'
-      };
+<!-- ====== NEWSLETTER ====== -->
+{{ if .Site.Params.newsletter.enabled }}
+<div class="newsletter-inline anim-fade" id="newsletter">
+  <div class="newsletter-inline-text">I write about systems, AI, and tools I build. Subscribe to get new posts by email.</div>
+  <form class="newsletter-inline-form" action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}" method="post" target="popupwindow">
+    <input type="email" name="email" placeholder="you@example.com" aria-label="Email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+{{ end }}
 
-      if (sections[file]) {
-        const el = document.querySelector(sections[file]);
-        return el ? el.innerHTML : `<span class="response-error">cat: ${args[0]}: empty</span>`;
-      }
-      return [
-        `<span class="response-error">cat: ${args[0] || '(none)'}: No such file</span>`,
-        'Try: papers.bib, opensource.md, talks.md, personal-projects.md, posts'
-      ].join('<br>');
-    },
+<!-- ====== WRITING ====== -->
+<section id="writing">
+  <div class="section-label anim-fade" style="display:flex; justify-content:space-between; align-items:baseline;">
+    Writing
+    <a href="/posts/" class="see-all-link" style="margin:0;">See all posts →</a>
+  </div>
+  {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+  <a href="{{ .RelPermalink }}" class="post-item anim-left">
+    <div class="post-item-title">{{ .Title }}</div>
+    <div class="post-item-meta">
+      <span class="post-item-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+    </div>
+    {{ with .Description }}
+    <div class="post-item-desc">{{ . }}</div>
+    {{ end }}
+  </a>
+  {{ end }}
+</section>
 
-    clear: () => {
-      response.innerHTML = '';
-      return null;
-    },
+<!-- ====== JOURNEY TIMELINE ====== -->
+<div class="timeline" id="journey">
+  <div class="section-label anim-fade">Journey</div>
 
-    cd: (args) => {
-      const path = args[0]?.toLowerCase().replace(/^\/|\/$/g, '');
+  <!-- Vectorize -->
+  <div class="tl-row anim-fade">
+    <div class="tl-left">
+      <div class="tl-period">2024 — present</div>
+      <div class="tl-company">Vectorize.io</div>
+      <div class="tl-role">Lead Software Engineer</div>
+      <div class="tl-role">AI agents & memory infrastructure</div>
+    </div>
+    <div class="tl-center">
+      <div class="tl-line"></div>
+      <div class="tl-dot tl-dot--current"></div>
+    </div>
+    <div class="tl-right">
+      <div class="tl-mobile-info">
+        <div class="tl-period">2024 — present</div>
+        <div class="tl-company">Vectorize.io</div>
+        <div class="tl-role">Lead Software Engineer</div>
+        <div class="tl-role">AI agents & memory infrastructure</div>
+      </div>
+      <div class="tl-oss">
+        <a href="https://github.com/vectorize-io/hindsight" target="_blank" class="tl-oss-link">Hindsight <span class="tl-oss-role">— co-creator</span></a>
+        <a href="https://github.com/vectorize-io/pg0" target="_blank" class="tl-oss-link">pg0 <span class="tl-oss-role">— creator</span></a>
+        <a href="https://github.com/vectorize-io/agent-memory-benchmark" target="_blank" class="tl-oss-link">agent-memory-benchmark</a>
+      </div>
+    </div>
+  </div>
 
-      // Internal routes
-      const internal = {
-        'posts': '/posts/',
-        'blog': '/posts/',
-        '~': '/',
-        '': '/',
-        'home': '/'
-      };
+  <!-- DataStax -->
+  <div class="tl-row anim-fade">
+    <div class="tl-left">
+      <div class="tl-period">2021 — 2024</div>
+      <div class="tl-company">DataStax</div>
+      <div class="tl-company-note">acquired by IBM</div>
+      <div class="tl-role">Software Engineer</div>
+      <div class="tl-role">Streaming, GenAI infrastructure</div>
+    </div>
+    <div class="tl-center">
+      <div class="tl-line"></div>
+      <div class="tl-dot tl-dot--past"></div>
+    </div>
+    <div class="tl-right">
+      <div class="tl-mobile-info">
+        <div class="tl-period">2021 — 2024</div>
+        <div class="tl-company">DataStax</div>
+        <div class="tl-company-note">acquired by IBM</div>
+        <div class="tl-role">Software Engineer</div>
+        <div class="tl-role">Streaming, GenAI infrastructure</div>
+      </div>
+      <div class="tl-oss">
+        <a href="https://github.com/LangStream/langstream" target="_blank" class="tl-oss-link">LangStream <span class="tl-oss-role">— co-creator</span></a>
+        <a href="https://github.com/datastax/ragstack-ai" target="_blank" class="tl-oss-link">RAGStack</a>
+        <a href="https://github.com/datastax/kaap" target="_blank" class="tl-oss-link">KAAP <span class="tl-oss-role">— creator</span></a>
+        <a href="https://github.com/apache/pulsar" target="_blank" class="tl-oss-link">Apache Pulsar <span class="tl-oss-role">— PMC member</span></a>
+        <a href="https://github.com/datastax/snowflake-connector" target="_blank" class="tl-oss-link">Snowflake Connector</a>
+        <a href="https://github.com/datastax/cdc-apache-cassandra" target="_blank" class="tl-oss-link">CDC for Cassandra</a>
+      </div>
+    </div>
+  </div>
 
-      // External links
-      const external = {
-        'github': 'https://github.com/nicoloboschi',
-        'gh': 'https://github.com/nicoloboschi',
-        'x': 'https://x.com/nicoloboschi',
-        'twitter': 'https://x.com/nicoloboschi',
-        'linkedin': 'https://www.linkedin.com/in/nicoló-boschi-621a1a158/',
-        'li': 'https://www.linkedin.com/in/nicoló-boschi-621a1a158/',
-        'paper': 'https://arxiv.org/abs/2512.12818',
-        'arxiv': 'https://arxiv.org/abs/2512.12818',
-        'hindsight': 'https://github.com/vectorize-io/hindsight',
-        'pg0': 'https://github.com/vectorize-io/pg0',
-        'pulsar': 'https://github.com/apache/pulsar',
-        'bookkeeper': 'https://github.com/apache/bookkeeper',
-        'langstream': 'https://github.com/LangStream/langstream',
-        'kaap': 'https://github.com/datastax/kaap',
-        'llama-index': 'https://github.com/run-llama/llama_index',
-        'langchain': 'https://github.com/langchain-ai/langchain',
-        'langflow': 'https://github.com/langflow-ai/langflow'
-      };
+  <!-- Diennea -->
+  <div class="tl-row anim-fade">
+    <div class="tl-left">
+      <div class="tl-period">2016 — 2021</div>
+      <div class="tl-company">Diennea</div>
+      <div class="tl-role">Software Engineer</div>
+      <div class="tl-role">Distributed systems & open source</div>
+    </div>
+    <div class="tl-center">
+      <div class="tl-line"></div>
+      <div class="tl-dot tl-dot--past"></div>
+    </div>
+    <div class="tl-right">
+      <div class="tl-mobile-info">
+        <div class="tl-period">2016 — 2021</div>
+        <div class="tl-company">Diennea</div>
+        <div class="tl-role">Software Engineer</div>
+        <div class="tl-role">Distributed systems & open source</div>
+      </div>
+      <div class="tl-oss">
+        <a href="https://github.com/apache/bookkeeper" target="_blank" class="tl-oss-link">Apache BookKeeper <span class="tl-oss-role">— committer</span></a>
+        <a href="https://github.com/diennea/majordodo" target="_blank" class="tl-oss-link">Majordodo</a>
+        <a href="https://github.com/diennea/blazingcache" target="_blank" class="tl-oss-link">BlazingCache</a>
+        <a href="https://github.com/diennea/herddb" target="_blank" class="tl-oss-link">HerdDB</a>
+      </div>
+    </div>
+  </div>
 
-      if (internal.hasOwnProperty(path)) {
-        const url = internal[path];
-        if (url === '/') {
-          return '<span class="response-success">Already at home (~)</span>';
-        }
-        setTimeout(() => window.location.href = url, 300);
-        return `<span class="response-success">Navigating to ${path}...</span>`;
-      }
+  <!-- Community OSS -->
+  <div class="tl-row anim-fade">
+    <div class="tl-left">
+      <div class="tl-period">Ongoing</div>
+      <div class="tl-company" style="font-size:clamp(16px,1.6vw,22px)">Community</div>
+      <div class="tl-role">Open source contributions</div>
+    </div>
+    <div class="tl-center">
+      <div class="tl-line"></div>
+      <div class="tl-dot tl-dot--past"></div>
+    </div>
+    <div class="tl-right">
+      <div class="tl-mobile-info">
+        <div class="tl-period">Ongoing</div>
+        <div class="tl-company" style="font-size:clamp(16px,1.6vw,22px)">Community</div>
+        <div class="tl-role">Open source contributions</div>
+      </div>
+      <div class="tl-oss">
+        <a href="https://github.com/langflow-ai/langflow" target="_blank" class="tl-oss-link">LangFlow</a>
+        <a href="https://github.com/run-llama/llama_index" target="_blank" class="tl-oss-link">Llama Index</a>
+        <a href="https://github.com/langchain-ai/langchain" target="_blank" class="tl-oss-link">LangChain</a>
+        <a href="https://github.com/langchain-ai/langchainjs" target="_blank" class="tl-oss-link">LangChainJS</a>
+      </div>
+    </div>
+  </div>
 
-      if (external[path]) {
-        window.open(external[path], '_blank');
-        return `<span class="response-success">Opening ${path}...</span>`;
-      }
+</div>
 
-      return [
-        `<span class="response-error">cd: no such directory: ${args[0] || '(none)'}</span>`,
-        'Type <span class="response-cmd">ls</span> to see available destinations'
-      ].join('<br>');
-    }
-  };
+<!-- ====== TALKS ====== -->
+<section id="talks">
+  <div class="section-label anim-fade">Talks</div>
 
-  // Easter eggs
-  commands.sudo = () => '<span class="response-error">Nice try.</span>';
-  commands.rm = () => '<span class="response-error">I don\'t think so.</span>';
-  commands.vim = () => '<span class="response-cmd">:q</span> to exit... just kidding, use <span class="response-cmd">cd posts</span>';
-  commands.emacs = () => 'C-x C-c';
-  commands.exit = () => {
-    setTimeout(() => window.location.href = '/posts/', 300);
-    return '<span class="response-success">Goodbye! Redirecting to blog...</span>';
-  };
-  commands.neofetch = () => [
-    '<span class="response-success">nicoloboschi@web</span>',
-    'OS: Internet',
-    'Host: nicoloboschi.com',
-    'Uptime: since 1997',
-    'Shell: custom bash-like',
-    'Theme: Tokyo Night'
-  ].join('<br>');
+  {{ $yt := `<svg class="talk-yt" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>` }}
 
-  function executeCommand(cmd) {
-    const parts = cmd.trim().split(/\s+/);
-    const command = parts[0].toLowerCase();
-    const args = parts.slice(1);
+  <div class="talks-category anim-pop">
+    <div class="talks-category-label">Generative AI</div>
+    <a href="https://www.youtube.com/watch?v=vpqLL-2X21A" target="_blank" class="talk-item">{{ $yt | safeHTML }} How AI Systems Break at Scale and Why Memory Matters</a>
+    <a href="https://youtu.be/aYAgTLlinaE" target="_blank" class="talk-item">{{ $yt | safeHTML }} How Claude is Changing the Game for Private Data</a>
+    <a href="https://www.youtube.com/watch?v=EWdZnb6MXog" target="_blank" class="talk-item">{{ $yt | safeHTML }} RAG Pattern + AWS Suite</a>
+    <a href="https://www.youtube.com/watch?v=EDQjWXzU-Ds" target="_blank" class="talk-item">{{ $yt | safeHTML }} Scaling unstructured data indexing with Pulsar</a>
+  </div>
 
-    if (!command) return null;
+  <div class="talks-category anim-pop">
+    <div class="talks-category-label">Streaming & Apache Pulsar</div>
+    <a href="https://youtu.be/eNaKKui1-cE" target="_blank" class="talk-item">{{ $yt | safeHTML }} Transactions in Pulsar</a>
+    <a href="https://youtu.be/CyZwpvw9F6I" target="_blank" class="talk-item">{{ $yt | safeHTML }} Pulsar + ElasticSearch</a>
+    <a href="https://youtu.be/NPP5ZJ1raek" target="_blank" class="talk-item">{{ $yt | safeHTML }} Pulsar Shell Demo</a>
+  </div>
+</section>
 
-    if (commands[command]) {
-      return commands[command](args);
-    }
+<!-- ====== PERSONAL PROJECTS ====== -->
+<section id="projects">
+  <div class="section-label anim-fade">Personal Projects</div>
+  <a href="https://github.com/nicoloboschi/dockerpyze" target="_blank" class="project-item anim-right">
+    <div class="project-item-name">dockerpyze</div>
+    <div class="project-item-desc">Automatically Dockerize Python apps with zero config</div>
+  </a>
+  <a href="https://github.com/nicoloboschi/local-kubernetes-runner" target="_blank" class="project-item anim-right">
+    <div class="project-item-name">lkr</div>
+    <div class="project-item-desc">Spin up K8s clusters in 10 seconds flat</div>
+  </a>
+  <a href="https://github.com/nicoloboschi/protatoquests" target="_blank" class="project-item anim-right">
+    <div class="project-item-name">protatoquests</div>
+    <div class="project-item-desc">Automatic proxy rotation for anonymous web requests</div>
+  </a>
+  <a href="https://github.com/nicoloboschi/asap" target="_blank" class="project-item anim-right">
+    <div class="project-item-name">asap</div>
+    <div class="project-item-desc">Blazing fast local Maven installs — skip the wait</div>
+  </a>
+</section>
 
-    return [
-      `<span class="response-error">Command not found: ${command}</span>`,
-      'Type <span class="response-cmd">help</span> for available commands'
-    ].join('<br>');
-  }
+{{- partial "footer.html" . -}}
 
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const cmd = input.value;
-      input.value = '';
-
-      if (cmd.trim()) {
-        // Create command block
-        const cmdBlock = document.createElement('div');
-        cmdBlock.className = 'cmd-block';
-
-        // Show the command that was typed
-        const cmdEcho = document.createElement('div');
-        cmdEcho.className = 'cmd-echo';
-        cmdEcho.innerHTML = `<span style="color: #9ece6a;">$</span> <span style="color: #7dcfff;">${cmd}</span>`;
-        cmdBlock.appendChild(cmdEcho);
-
-        // Execute and show result
-        const result = executeCommand(cmd);
-        if (result) {
-          const cmdOutput = document.createElement('div');
-          cmdOutput.className = 'cmd-output';
-          cmdOutput.innerHTML = result;
-          cmdBlock.appendChild(cmdOutput);
-        }
-
-        response.appendChild(cmdBlock);
-
-        // Reset input width and scroll
-        resizeInput();
-        input.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }
-    }
-  });
-
-  // Auto-resize input to fit content
-  function resizeInput() {
-    const temp = document.createElement('span');
-    temp.style.font = getComputedStyle(input).font;
-    temp.style.visibility = 'hidden';
-    temp.style.position = 'absolute';
-    temp.style.whiteSpace = 'pre';
-    temp.textContent = input.value || '';
-    document.body.appendChild(temp);
-    input.style.width = Math.max(10, temp.offsetWidth + 2) + 'px';
-    document.body.removeChild(temp);
-  }
-
-  input.addEventListener('input', resizeInput);
-  input.addEventListener('focus', () => {
-    if (!input.value) resizeInput();
-  });
-  resizeInput();
-
-  // Focus input when clicking anywhere in terminal (but not on newsletter form)
-  document.querySelector('.terminal-window').addEventListener('click', (e) => {
-    if (!e.target.closest('.newsletter-form')) {
-      input.focus();
-    }
-  });
-
-  // Newsletter input auto-resize and focus
-  const newsletterInput = document.getElementById('newsletter-input');
-  if (newsletterInput) {
-    function resizeNewsletterInput() {
-      const temp = document.createElement('span');
-      temp.style.font = getComputedStyle(newsletterInput).font;
-      temp.style.visibility = 'hidden';
-      temp.style.position = 'absolute';
-      temp.style.whiteSpace = 'pre';
-      temp.textContent = newsletterInput.value || '';
-      document.body.appendChild(temp);
-      newsletterInput.style.width = Math.max(10, temp.offsetWidth + 2) + 'px';
-      document.body.removeChild(temp);
-    }
-
-    const newsletterCursor = document.querySelector('.newsletter-cursor');
-
-    function updateNewsletterCursor() {
-      if (newsletterCursor) {
-        newsletterCursor.style.display = newsletterInput.value ? 'none' : 'inline-block';
-      }
-    }
-
-    newsletterInput.addEventListener('input', () => {
-      resizeNewsletterInput();
-      updateNewsletterCursor();
-    });
-    newsletterInput.addEventListener('focus', () => {
-      if (!newsletterInput.value) resizeNewsletterInput();
-    });
-
-    // Focus newsletter input on page load
-    newsletterInput.focus();
-  }
-})();
-</script>
 {{ end }}

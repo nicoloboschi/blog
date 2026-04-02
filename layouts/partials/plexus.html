@@ -1,0 +1,79 @@
+<script>
+// Plexus network background
+(function(){
+  const c=document.getElementById('stars');if(!c)return;const x=c.getContext('2d');
+  let nodes=[],w,h,sY=0,mX=-1e3,mY=-1e3;const CD=180,MD=250,N=80;
+  function resize(){const d=devicePixelRatio||1;w=innerWidth;h=innerHeight;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';x.setTransform(d,0,0,d,0,0);}
+  function init(){resize();nodes=[];for(let i=0;i<N;i++)nodes.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:1+Math.random()});}
+  function prog(){const d=document.documentElement.scrollHeight-innerHeight;return d>0?Math.min(sY/d,1):0;}
+  // Cover gradient colors: cyan, purple, orange
+  function lerpColor(p){
+    // 0→white, 0.3→cyan, 0.6→purple, 1→orange
+    const c=p<.3?[255-p/.3*155, 255-p/.3*55, 255]
+           :p<.6?[100+(p-.3)/.3*100, 200-(p-.3)/.3*100, 255-(p-.3)/.3*155]
+           :[200+(p-.6)/.4*55, 100+(p-.6)/.4*30, 100+(p-.6)/.4*155];
+    return c.map(Math.round);
+  }
+  function draw(){
+    x.clearRect(0,0,w,h);const p=prog(),cd=CD*(.3+p*1.4),cd2=cd*cd,md2=MD*MD;
+    const tint=p>.15?Math.min((p-.15)/.5,1):0; // tint kicks in after 15% scroll
+    const col=lerpColor(tint);
+    const r=Math.round(255-(255-col[0])*tint*.6);
+    const g=Math.round(255-(255-col[1])*tint*.6);
+    const b=Math.round(255-(255-col[2])*tint*.6);
+    for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<-20)n.x=w+20;if(n.x>w+20)n.x=-20;if(n.y<-20)n.y=h+20;if(n.y>h+20)n.y=-20;}
+    x.lineWidth=.5;
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,ds=dx*dx+dy*dy;if(ds<cd2){const d=Math.sqrt(ds),a=(1-d/cd)*.12*(.15+p*.85);x.beginPath();x.moveTo(nodes[i].x,nodes[i].y);x.lineTo(nodes[j].x,nodes[j].y);x.strokeStyle=`rgba(${r},${g},${b},${a})`;x.stroke();}}
+    for(const n of nodes){const dx=n.x-mX,dy=n.y-mY,ds=dx*dx+dy*dy;if(ds<md2){const d=Math.sqrt(ds),prox=1-d/MD;const a=prox*.35;
+      // Mouse-nearby: vivid cover gradient color based on horizontal position
+      const mx=mX/w,cR=Math.round(80+mx*175),cG=Math.round(180-mx*120),cB=Math.round(255-mx*200);
+      x.beginPath();x.moveTo(n.x,n.y);x.lineTo(mX,mY);x.strokeStyle=`rgba(${cR},${cG},${cB},${a})`;x.lineWidth=.7;x.stroke();
+      n._h=Math.max(n._h||0,prox);n._cr=cR;n._cg=cG;n._cb=cB;n.x+=dx*.001;n.y+=dy*.001;}}
+    for(const n of nodes){const hv=n._h||0,a=.2+p*.3+hv*.5;
+      // Blend base→cover color, fully saturated at close proximity
+      const dr=hv>0?(n._cr||r):r, dg=hv>0?(n._cg||g):g, db=hv>0?(n._cb||b):b;
+      const t=Math.min(hv*2,1); // double the blend speed so color shows earlier
+      const fr=Math.round(r+(dr-r)*t), fg=Math.round(g+(dg-g)*t), fb=Math.round(b+(db-b)*t);
+      const fa=Math.min(a+hv*.3,1); // also boost opacity when near cursor
+      x.beginPath();x.arc(n.x,n.y,n.r+hv*2,0,Math.PI*2);x.fillStyle=`rgba(${fr},${fg},${fb},${fa})`;x.fill();n._h=0;}
+    requestAnimationFrame(draw);
+  }
+  init();requestAnimationFrame(draw);
+  addEventListener('scroll',()=>{sY=scrollY},{passive:1});
+  addEventListener('mousemove',e=>{mX=e.clientX;mY=e.clientY},{passive:1});
+  addEventListener('mouseleave',()=>{mX=-1e3;mY=-1e3});
+  addEventListener('resize',()=>{resize();init();});
+})();
+
+// Scroll reveal with stagger
+(function(){
+  const all='.anim-fade,.anim-left,.anim-pop,.anim-blur,.anim-scatter,.anim-right';
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const cls=Array.from(e.target.classList).find(c=>c.startsWith('anim-'));
+      const siblings=e.target.parentElement.querySelectorAll('.'+cls);
+      const idx=Array.from(siblings).indexOf(e.target);
+      setTimeout(()=>e.target.classList.add('vis'),idx*100);
+      obs.unobserve(e.target);
+    });
+  },{threshold:0.05,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll(all).forEach(el=>obs.observe(el));
+})();
+
+// Side nav scroll tracking
+(function(){
+  const nav=document.getElementById('side-nav');
+  if(!nav)return;
+  const items=nav.querySelectorAll('.side-nav-item');
+  const ids=Array.from(items).map(i=>i.dataset.section);
+  function up(){
+    let cur=ids[0];
+    for(const id of ids){const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=innerHeight*.45)cur=id;}
+    items.forEach(i=>i.classList.toggle('active',i.dataset.section===cur));
+  }
+  addEventListener('scroll',up,{passive:1});up();
+  // expose for use
+  window.scrollToSection=function(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});};
+})();
+</script>

@@ -1,585 +1,292 @@
-{{ define "title" }}{{ with .Title }}{{ if gt (len .) 40 }}{{ . }}{{ else }}{{ . }} | {{ $.Site.Title }}{{ end }}{{ else }}{{ .Site.Title }}{{ end }}{{ end }}
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
 {{ define "main" }}
-<article class="posts-container">
-  <div class="terminal-window">
-    <div class="terminal-header">
-      <div class="terminal-buttons">
-        <span class="terminal-btn red"></span>
-        <span class="terminal-btn yellow"></span>
-        <span class="terminal-btn green"></span>
-      </div>
-      <div class="terminal-title">Getting stuff done</div>
-    </div>
-    <div class="terminal-body">
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">cd ~/posts</span>
-        <a href="/posts/" class="exec-link">↵</a>
-      </div>
-
-      {{ if .Site.Params.newsletter.enabled }}
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">subscribe --notify-new-posts</span>
-      </div>
-      <div class="terminal-output newsletter-output">
-        <span class="output-text">Enter your email to get notified when I publish something new:</span>
-      </div>
-      <form
-        action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}"
-        method="post"
-        target="popupwindow"
-        class="newsletter-form"
-      >
-        <div class="terminal-line input-line newsletter-input-line">
-          <span class="prompt">$</span>
-          <div class="input-wrapper">
-            <input type="email" name="email" id="newsletter-input" required class="newsletter-input" autofocus />
-            <span class="cursor newsletter-cursor"></span>
-          </div>
-          <button type="submit" class="newsletter-btn">↵</button>
-        </div>
-      </form>
-      {{ end }}
-
-      <div class="terminal-line">
-        <span class="prompt">$</span> <span class="command">cat {{ .File.Path }}</span>
-      </div>
-      <div class="terminal-output post-content">
-        <div class="post-meta">
-          <time class="post-date" datetime='{{ .Date.Format "2006-01-02" }}'>
-            {{ .Date.Format "January 2, 2006" }}
-          </time>
-          {{ with .Params.tags }}
-          <div class="post-tags">
-            {{ range . }}
-            <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
-            {{ end }}
-          </div>
-          {{ end }}
-        </div>
-
-        <h1 class="post-title">{{ .Title }}</h1>
-
-        <div class="post-body">
-          {{ .Content }}
-        </div>
-
-        {{ $related := .Site.RegularPages.Related . | first 3 }}
-        {{ with $related }}
-        <div class="related-posts">
-          <div class="terminal-line">
-            <span class="prompt">$</span> <span class="command">ls --related</span>
-          </div>
-          <div class="related-list">
-            {{ range . }}
-            <a href="{{ .RelPermalink }}" class="related-item">
-              <span class="related-date">{{ .Date.Format "2006-01-02" }}</span>
-              <span class="related-title">{{ .Title }}</span>
-            </a>
-            {{ end }}
-          </div>
-        </div>
-        {{ end }}
-
-        <nav class="post-nav">
-          {{ with .PrevInSection }}
-          <a href="{{ .RelPermalink }}" class="nav-link nav-prev">
-            <span class="nav-label">← Previous</span>
-            <span class="nav-title">{{ .Title }}</span>
-          </a>
-          {{ end }}
-          {{ with .NextInSection }}
-          <a href="{{ .RelPermalink }}" class="nav-link nav-next">
-            <span class="nav-label">Next →</span>
-            <span class="nav-title">{{ .Title }}</span>
-          </a>
-          {{ end }}
-        </nav>
-
-      </div>
-
-      <div class="terminal-line input-line">
-        <span class="prompt">$</span>
-        <span class="cursor"></span>
-      </div>
-    </div>
-  </div>
-</article>
 
 <style>
-.posts-container {
-  max-width: 900px;
+/* ---- Zen post layout: full width, centered reading column ---- */
+.post-header {
+  max-width: calc(860px + 48px);
   margin: 0 auto;
-  padding: 40px 20px;
-  min-height: 100vh;
-  position: relative;
+  padding: 6vh 24px 0;
 }
 
-.posts-container::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('/cover.jpg') center/cover no-repeat;
-  opacity: 0.08;
-  z-index: -1;
-  pointer-events: none;
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--text-muted); margin-bottom: 48px;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.back-link:hover {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
 }
 
-.terminal-window {
-  background: #1a1b26;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 14px;
+.post-page-title {
+  font-size: 48px; font-weight: 600;
+  line-height: 1.17; letter-spacing: -1.07px; color: #f0f0f0;
 }
 
-.terminal-header {
-  background: #24283b;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.post-meta-line {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  color: var(--text-muted); margin-top: 20px;
 }
 
-.terminal-buttons {
-  display: flex;
-  gap: 8px;
+/* Divider between header and body */
+.post-divider {
+  width: 60px; height: 1px; margin: 48px 0;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  opacity: 0.4;
 }
 
-.terminal-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+/* ---- Reading column: 860px centered (Next.js blog style) ---- */
+.post-reading {
+  max-width: calc(860px + 48px);
+  margin: 0 auto;
+  padding: 0 24px 8vh;
 }
 
-.terminal-btn.red { background: #f7768e; }
-.terminal-btn.yellow { background: #e0af68; }
-.terminal-btn.green { background: #9ece6a; }
+.post-body { color: #ccc; }
 
-.terminal-title {
-  color: #787c99;
-  font-size: 13px;
-  flex: 1;
-  text-align: center;
-}
-
-.terminal-body {
-  padding: 20px 24px;
-  color: #a9b1d6;
-  line-height: 1.6;
-}
-
-.terminal-line {
-  margin-top: 20px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.terminal-line:first-child {
-  margin-top: 0;
-}
-
-.prompt {
-  color: #9ece6a;
-  font-weight: bold;
-}
-
-.command {
-  color: #7dcfff;
-}
-
-.exec-link {
-  color: #565f89;
-  text-decoration: none;
-  margin-left: 8px;
-  transition: color 0.2s;
-}
-
-.exec-link:hover {
-  color: #9ece6a;
-}
-
-.terminal-output {
-  padding-left: 20px;
-  margin-bottom: 8px;
-}
-
-/* Post content */
-.post-meta {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.post-date {
-  font-size: 14px;
-  color: #e0af68;
-}
-
-.post-tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.post-tags .tag {
-  font-size: 12px;
-  color: #7aa2f7;
-  text-decoration: none;
-  padding: 2px 10px;
-  background: #7aa2f722;
-  border-radius: 12px;
-  transition: all 0.2s;
-}
-
-.post-tags .tag:hover {
-  background: #bb9af722;
-  color: #bb9af7;
-}
-
-.post-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.8em;
-  font-weight: 700;
-  color: #c0caf5;
-  margin: 0 0 24px;
-  line-height: 1.2;
-}
-
-.post-body {
-  color: #a9b1d6;
-  line-height: 1.8;
+.post-body p {
+  font-size: 16px;
+  line-height: 1.75;
+  margin-bottom: 1.25em;
 }
 
 .post-body h2 {
-  color: #c0caf5;
-  font-family: 'Space Grotesk', sans-serif;
-  margin-top: 2em;
-  padding-top: 1em;
-  border-top: 1px solid #24283b;
+  font-size: 24px; font-weight: 600;
+  color: #f0f0f0; margin: 3rem 0 1rem; letter-spacing: -0.5px;
+  line-height: 1.33;
 }
-
-.post-body h2:first-child {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: none;
-}
-
 .post-body h3 {
-  color: #7dcfff;
-  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px; font-weight: 600;
+  color: #e8e8e8; margin: 2.5rem 0 0.75rem; letter-spacing: -0.3px;
+  line-height: 1.4;
 }
+.post-body h4 {
+  font-size: 16px; font-weight: 600;
+  color: #e0e0e0; margin: 2rem 0 0.5rem;
+  line-height: 1.5;
+}
+
+.post-body strong { color: #e8e8e8; font-weight: 600; }
 
 .post-body a {
-  color: #7aa2f7;
-  text-decoration: none;
-  border-bottom: 1px solid #7aa2f744;
-  transition: all 0.2s;
+  color: #e8e8e8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255,255,255,0.2);
+  transition: text-decoration-color 0.2s;
+}
+.post-body a:hover { text-decoration-color: rgba(255,255,255,0.5); }
+
+.post-body ul, .post-body ol {
+  margin: 0 0 1.25em 24px;
+  font-size: 16px; line-height: 1.75;
+}
+.post-body li { margin-bottom: 10px; }
+
+.post-body blockquote {
+  border-left: 2px solid rgba(255,255,255,0.12);
+  padding: 4px 28px; margin: 32px 0;
+  color: var(--text-muted); font-style: italic;
 }
 
-.post-body a:hover {
-  color: #bb9af7;
-  border-bottom-color: #bb9af7;
+/* TL;DR blockquote — first blockquote with bold TL;DR */
+.post-body > blockquote:first-child {
+  border-left: 2px solid; border-image: linear-gradient(to bottom, #64c8ff, #c864ff, #ff8250) 1;
+  color: #ccc; font-style: normal;
+  padding: 16px 28px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 0 8px 8px 0;
+}
+.post-body > blockquote:first-child strong { color: #f0f0f0; }
+.post-body > blockquote:first-child li { color: #bbb; }
+
+.post-body img {
+  max-width: 100%; border-radius: 8px; margin: 32px 0;
 }
 
-.post-body strong {
-  color: #c0caf5;
+.post-body table {
+  width: 100%; border-collapse: collapse; margin: 28px 0;
+  font-size: 15px; line-height: 1.6;
+}
+.post-body thead th {
+  text-align: left; font-weight: 600; color: #e8e8e8;
+  padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.post-body tbody td {
+  padding: 10px 16px; color: #ccc;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.post-body tbody tr:hover { background: rgba(255,255,255,0.02); }
+.post-body table code { font-size: 0.85em; }
+
+.post-body hr {
+  border: none; margin: 48px 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
 }
 
 .post-body code {
-  font-family: 'JetBrains Mono', monospace;
-  background: #24283b;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.9em;
-  color: #9ece6a;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.86em;
+  background: rgba(255,255,255,0.05); padding: 2px 7px; border-radius: 4px;
 }
 
 .post-body pre {
-  background: #24283b;
-  border-radius: 8px;
-  padding: 16px;
-  overflow-x: auto;
-  border-left: 3px solid #7aa2f7;
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 32px; margin: 0 0 32px; overflow-x: auto;
 }
-
 .post-body pre code {
-  background: none;
-  padding: 0;
-  color: #a9b1d6;
+  background: none; padding: 0; font-size: 14px; line-height: 1.75; color: var(--text);
 }
 
-.post-body blockquote {
-  border-left: 3px solid #bb9af7;
-  margin: 1.5em 0;
-  padding-left: 1em;
-  color: #787c99;
-  font-style: italic;
+.post-body .highlight { margin-bottom: 32px; }
+.post-body .highlight pre { margin-bottom: 0; }
+.post-body .highlight .lnt { color: var(--text-muted); user-select: none; margin-right: 14px; }
+
+/* ---- Post footer zone ---- */
+.post-footer-zone {
+  max-width: calc(860px + 48px);
+  margin: 0 auto;
+  padding: 0 24px 6vh;
 }
 
-.post-body ul, .post-body ol {
-  padding-left: 1.5em;
+.post-newsletter {
+  padding: 36px; text-align: center;
+  border: 1px solid var(--border); border-radius: 14px;
 }
-
-.post-body li {
-  margin-bottom: 0.5em;
+.post-newsletter-heading { font-size: 17px; font-weight: 400; color: var(--text); margin-bottom: 16px; }
+.post-newsletter-form { display: flex; gap: 10px; max-width: 400px; margin: 0 auto; }
+.post-newsletter-form input {
+  flex: 1; padding: 12px 16px; background: transparent; border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px; outline: none;
+  transition: border-color 0.3s;
 }
-
-.post-body hr {
-  border: none;
-  border-top: 1px solid #24283b;
-  margin: 2em 0;
+.post-newsletter-form input::placeholder { color: var(--text-muted); }
+.post-newsletter-form input:focus { border-color: rgba(255,255,255,0.2); }
+.post-newsletter-form button {
+  padding: 12px 24px; background: rgba(255,255,255,0.08); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px;
+  font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 14px; cursor: pointer;
+  transition: background 0.2s;
 }
+.post-newsletter-form button:hover { background: rgba(255,255,255,0.12); }
 
-/* Related posts */
 .related-posts {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #24283b;
+  margin-top: 48px; padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.related-posts-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;
+}
+.related-post-link {
+  display: block; font-size: 17px; color: var(--text-mid); margin-bottom: 14px;
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.related-post-link:hover {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
 }
 
-.related-posts .terminal-line {
-  margin-top: 0;
-}
-
-.related-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-left: 20px;
-  margin-top: 8px;
-}
-
-.related-item {
-  display: flex;
-  gap: 16px;
-  align-items: baseline;
-  text-decoration: none;
-  padding: 6px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.related-item:hover {
-  background: #24283b;
-  transform: translateX(4px);
-}
-
-.related-date {
-  font-size: 13px;
-  color: #e0af68;
-  min-width: 80px;
-  flex-shrink: 0;
-}
-
-.related-title {
-  color: #7dcfff;
-  flex: 1;
-}
-
-.related-item:hover .related-title {
-  color: #bb9af7;
-}
-
-/* Post navigation */
 .post-nav {
-  display: flex;
-  gap: 16px;
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #24283b;
+  display: flex; justify-content: space-between; gap: 24px;
+  margin-top: 48px; padding-top: 32px;
+  border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.post-nav a {
+  font-size: 15px; color: var(--text-muted);
+  background: linear-gradient(90deg, #64c8ff, #c864ff, #ff8250);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: currentColor; transition: -webkit-text-fill-color 0.3s ease;
+}
+.post-nav a:hover {
+  -webkit-text-fill-color: transparent; animation: sig-shimmer 2s ease infinite;
+}
+.post-nav .next { margin-left: auto; text-align: right; }
+
+/* Reduce plexus noise for reading */
+canvas#stars { opacity: 0.5; }
+
+/* Cover color glow behind post header */
+.post-header-glow {
+  position: fixed; top: -40vh; left: -10vw; right: -10vw;
+  height: 70vh; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 45% at 15% 40%, rgba(100, 200, 255, 0.07), transparent),
+    radial-gradient(ellipse 40% 40% at 50% 25%, rgba(200, 100, 255, 0.05), transparent),
+    radial-gradient(ellipse 50% 45% at 85% 40%, rgba(255, 130, 80, 0.06), transparent);
+  filter: blur(60px);
 }
 
-.nav-link {
-  flex: 1;
-  background: #24283b;
-  border-radius: 8px;
-  padding: 16px;
-  text-decoration: none;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
-
-.nav-link:hover {
-  background: #2a2e42;
-  border-color: #7aa2f7;
-}
-
-.nav-prev {
-  text-align: left;
-}
-
-.nav-next {
-  text-align: right;
-}
-
-.nav-label {
-  display: block;
-  font-size: 12px;
-  color: #565f89;
-  margin-bottom: 4px;
-}
-
-.nav-title {
-  display: block;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
-  color: #7aa2f7;
-  line-height: 1.3;
-}
-
-.nav-link:hover .nav-title {
-  color: #bb9af7;
-}
-
-/* Cursor */
-.input-line {
-  margin-top: 24px;
-}
-
-.cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1.2em;
-  background: #c0caf5;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* Newsletter */
-.newsletter-output {
-  color: #787c99;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.output-text {
-  color: #e0af68;
-}
-
-.newsletter-form {
-  margin: 0;
-}
-
-.newsletter-input-line {
-  margin-top: 8px;
-  margin-bottom: 16px;
-}
-
-.newsletter-form .input-wrapper {
-  display: inline-flex;
-  align-items: center;
-}
-
-.newsletter-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #c0caf5;
-  font-family: inherit;
-  font-size: inherit;
-  caret-color: transparent;
-  width: 10px;
-}
-
-.newsletter-cursor {
-  animation: blink 1s step-end infinite;
-}
-
-
-.newsletter-btn {
-  background: transparent;
-  color: #565f89;
-  border: none;
-  padding: 0 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: inherit;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.newsletter-btn:hover {
-  color: #9ece6a;
-}
-
-/* Mobile responsive */
-@media screen and (max-width: 600px) {
-  .posts-container {
-    padding: 15px 10px;
-  }
-
-  .terminal-window {
-    font-size: 12px;
-    border-radius: 8px;
-  }
-
-  .terminal-body {
-    padding: 16px;
-  }
-
-  .terminal-output {
-    padding-left: 8px;
-  }
-
-  .post-title {
-    font-size: 1.4em;
-  }
-
-  .post-body {
-    font-size: 14px;
-  }
-
-  .post-nav {
-    flex-direction: column;
-  }
-
+@media (max-width: 700px) {
+  .post-header { padding: 4vh 6vw 0; }
+  .post-page-title { font-size: 32px; line-height: 1.15; }
+  .post-reading { padding: 0 6vw 6vh; max-width: 100%; }
+  .post-footer-zone { padding: 0 6vw 4vh; max-width: 100%; }
+  .post-newsletter-form { flex-direction: column; }
 }
 </style>
 
-{{ if .Site.Params.newsletter.enabled }}
-<script>
-(function() {
-  const input = document.querySelector('.newsletter-input');
-  const cursor = document.querySelector('.newsletter-cursor');
-  if (!input) return;
+<div class="post-header-glow"></div>
 
-  function resizeInput() {
-    const temp = document.createElement('span');
-    temp.style.font = getComputedStyle(input).font;
-    temp.style.visibility = 'hidden';
-    temp.style.position = 'absolute';
-    temp.style.whiteSpace = 'pre';
-    temp.textContent = input.value || '';
-    document.body.appendChild(temp);
-    input.style.width = Math.max(10, temp.offsetWidth + 2) + 'px';
-    document.body.removeChild(temp);
-  }
+{{- partial "header.html" . -}}
 
-  function updateCursor() {
-    if (cursor) {
-      cursor.style.display = input.value ? 'none' : 'inline-block';
-    }
-  }
+<div class="post-header">
+  <a href="/posts/" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back
+  </a>
 
-  input.addEventListener('input', () => {
-    resizeInput();
-    updateCursor();
-  });
-  input.addEventListener('focus', () => {
-    if (!input.value) resizeInput();
-  });
-})();
-</script>
-{{ end }}
+  <h1 class="post-page-title">{{ .Title }}</h1>
+
+  <div class="post-meta-line">
+    {{ .Date.Format "January 2, 2006" }} · {{ math.Max 1 (div .WordCount 200) }} min read
+  </div>
+
+</div>
+
+<article class="post-reading">
+  <div class="post-divider"></div>
+
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+</article>
+
+<div class="post-footer-zone">
+  {{ if .Site.Params.newsletter.enabled }}
+  <div class="post-newsletter">
+    <div class="post-newsletter-heading">Enjoyed this? Get notified about new posts</div>
+    <form class="post-newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/{{ .Site.Params.newsletter.buttondownUsername }}" method="post" target="popupwindow">
+      <input type="email" name="email" placeholder="you@example.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+  {{ end }}
+
+  {{ $related := .Site.RegularPages.Related . | first 3 }}
+  {{ with $related }}
+  <div class="related-posts">
+    <div class="related-posts-label">Related posts</div>
+    {{ range . }}
+    <a href="{{ .RelPermalink }}" class="related-post-link">{{ .Title }}</a>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <div class="post-nav">
+    {{ with .PrevInSection }}
+    <a href="{{ .RelPermalink }}">← {{ .Title }}</a>
+    {{ end }}
+    {{ with .NextInSection }}
+    <a href="{{ .RelPermalink }}" class="next">{{ .Title }} →</a>
+    {{ end }}
+  </div>
+</div>
+
+{{- partial "footer.html" . -}}
+
 {{ end }}

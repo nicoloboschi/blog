@@ -1,5 +1,9 @@
-{{ if not .IsHome }}
-<small>
-  © {{ now.Year }} {{ .Site.Params.author.name }}
-</small>
-{{ end }}
+<footer class="site-footer">
+  <div>&copy; {{ now.Year }} {{ .Site.Params.author.name }}</div>
+  <div class="footer-links">
+    <a href="https://github.com/nicoloboschi" target="_blank">GitHub</a>
+    <a href="https://x.com/nicoloboschi" target="_blank">X</a>
+    <a href="https://www.linkedin.com/in/nicoló-boschi-621a1a158/" target="_blank">LinkedIn</a>
+    <a href="mailto:boschi1997@gmail.com">Email</a>
+  </div>
+</footer>
