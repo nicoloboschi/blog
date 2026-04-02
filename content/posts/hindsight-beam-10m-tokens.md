@@ -1,5 +1,5 @@
 +++
-date = '2026-04-02T18:00:00+01:00'
+date = '2026-04-02T08:00:00+01:00'
 draft = false
 title = 'Why 10 million tokens is the only memory benchmark that matters'
 description = "Hindsight is #1 on BEAM at the 10M token tier. At that scale, context-stuffing dies and only real memory architecture survives."
