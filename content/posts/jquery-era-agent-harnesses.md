@@ -1,5 +1,5 @@
 +++
-date = '2026-05-27T10:00:00+01:00'
+date = '2026-05-27T08:00:00+01:00'
 draft = false
 title = "We're in the jQuery era of AI. Who'll be the React of agents?"
 description = "Agent harnesses today look like jQuery in 2006: pragmatic abstractions over a primitive whose surface keeps expanding. Nobody has built the React of agents yet."
