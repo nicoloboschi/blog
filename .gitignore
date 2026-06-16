@@ -3,6 +3,13 @@ public/
 resources/_gen/
 .hugo_build.lock
 
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+
 # OS files
 .DS_Store
 

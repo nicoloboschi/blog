@@ -18,36 +18,36 @@ from pathlib import Path
 class TestGetScheduleTime:
     """Tests for get_schedule_time function."""
 
-    def test_schedules_for_tomorrow_3pm_rome(self):
-        """Should schedule for tomorrow at 3pm Europe/Rome."""
+    def test_schedules_for_today_3pm_if_before(self):
+        """Should schedule for today at 3pm if current time is before 3pm."""
         rome = ZoneInfo("Europe/Rome")
         now = datetime(2024, 6, 15, 10, 30, 0, tzinfo=rome)  # 10:30 AM Rome
 
         result = get_schedule_time(now)
 
-        # Tomorrow 3pm Rome = June 16, 2024 at 15:00 Rome
+        # Today 3pm Rome = June 15, 2024 at 15:00 Rome
         # In summer (CEST), Rome is UTC+2, so 15:00 Rome = 13:00 UTC
-        assert result == "2024-06-16T13:00:00Z"
+        assert result == "2024-06-15T13:00:00Z"
 
-    def test_schedules_for_tomorrow_even_if_past_3pm(self):
-        """Should schedule for tomorrow even if current time is past 3pm."""
+    def test_schedules_for_tomorrow_if_past_3pm(self):
+        """Should schedule for tomorrow if current time is past 3pm."""
         rome = ZoneInfo("Europe/Rome")
         now = datetime(2024, 6, 15, 18, 0, 0, tzinfo=rome)  # 6pm Rome
 
         result = get_schedule_time(now)
 
-        # Still schedules for tomorrow (June 16)
+        # Tomorrow (June 16) since it's past 3pm
         assert result == "2024-06-16T13:00:00Z"
 
-    def test_handles_winter_time(self):
-        """Should handle winter time (CET, UTC+1)."""
+    def test_handles_winter_time_before_3pm(self):
+        """Should handle winter time (CET, UTC+1) and schedule today."""
         rome = ZoneInfo("Europe/Rome")
         now = datetime(2024, 1, 15, 10, 0, 0, tzinfo=rome)  # January, winter time
 
         result = get_schedule_time(now)
 
-        # In winter (CET), Rome is UTC+1, so 15:00 Rome = 14:00 UTC
-        assert result == "2024-01-16T14:00:00Z"
+        # Today 3pm Rome (CET), Rome is UTC+1, so 15:00 Rome = 14:00 UTC
+        assert result == "2024-01-15T14:00:00Z"
 
 
 class TestBuildEmailBody:
@@ -99,33 +99,37 @@ class TestBuildPayload:
 
         assert payload.subject == "Test Post"
         assert payload.status == "scheduled"
-        assert payload.publish_date == "2024-06-16T13:00:00Z"
+        # Before 3pm → today at 3pm Rome (CEST = UTC+2) = 13:00 UTC
+        assert payload.publish_date == "2024-06-15T13:00:00Z"
         assert "Test content" in payload.body
         assert "[Read the full post]" in payload.body
 
-    def test_publish_date_is_tomorrow_3pm_rome_summer(self):
-        """Verify publish_date is exactly tomorrow 3pm Rome in summer (CEST = UTC+2)."""
+    def test_publish_date_is_today_3pm_rome_summer_if_before(self):
+        """Verify publish_date is today 3pm Rome in summer when before 3pm."""
         rome = ZoneInfo("Europe/Rome")
-        # June 15, 2024 at 10:00 Rome (summer time)
         now = datetime(2024, 6, 15, 10, 0, 0, tzinfo=rome)
 
         payload = build_payload("Test", "Body", "https://example.com", now=now)
 
-        # Tomorrow = June 16, 2024
-        # 3pm Rome (CEST) = 15:00 Rome = 13:00 UTC
+        assert payload.publish_date == "2024-06-15T13:00:00Z"
+
+    def test_publish_date_is_tomorrow_3pm_rome_summer_if_after(self):
+        """Verify publish_date is tomorrow 3pm Rome in summer when after 3pm."""
+        rome = ZoneInfo("Europe/Rome")
+        now = datetime(2024, 6, 15, 18, 0, 0, tzinfo=rome)
+
+        payload = build_payload("Test", "Body", "https://example.com", now=now)
+
         assert payload.publish_date == "2024-06-16T13:00:00Z"
 
-    def test_publish_date_is_tomorrow_3pm_rome_winter(self):
-        """Verify publish_date is exactly tomorrow 3pm Rome in winter (CET = UTC+1)."""
+    def test_publish_date_is_today_3pm_rome_winter_if_before(self):
+        """Verify publish_date is today 3pm Rome in winter when before 3pm."""
         rome = ZoneInfo("Europe/Rome")
-        # January 23, 2026 at 10:00 Rome (winter time)
         now = datetime(2026, 1, 23, 10, 0, 0, tzinfo=rome)
 
         payload = build_payload("Test", "Body", "https://example.com", now=now)
 
-        # Tomorrow = January 24, 2026
-        # 3pm Rome (CET) = 15:00 Rome = 14:00 UTC
-        assert payload.publish_date == "2026-01-24T14:00:00Z"
+        assert payload.publish_date == "2026-01-23T14:00:00Z"
 
     def test_to_dict(self):
         """Should convert payload to dict for API."""

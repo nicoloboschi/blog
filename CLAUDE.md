@@ -14,6 +14,7 @@
 - Do not repeat the concept again and again. 
 - In the conclusion keep it simple and short without alluding at anything catastrophic or super insightful thoughts. 
 - Make explicit mention that this is my opinion (not directly, but use the word "In my opinion" or "I think" or similar).
+- No AI slop phrases. Avoid "this isn't just X, it's Y", "not a coincidence — it's Z", "it's not poetic, it's structural", and similar contrast-reveal constructions. Just state what it is.
 
 # After generating or modifying a blog post, we need to generate bites for LinkedIn and Twitter
 - Inside directory 'content_distributions', create a markdown file with the same name as the blog post. There include brainstorming for social media posts on LinkedIn and Twitter.

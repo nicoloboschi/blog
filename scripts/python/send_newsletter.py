@@ -36,16 +36,20 @@ class NewsletterPayload:
 
 
 def get_schedule_time(now: Optional[datetime] = None) -> str:
-    """Get tomorrow at 3pm Europe/Rome timezone, formatted as ISO UTC."""
+    """Get today at 3pm Europe/Rome if before 3pm, otherwise tomorrow. Formatted as ISO UTC."""
     europe = ZoneInfo("Europe/Rome")
     if now is None:
         now = datetime.now(europe)
     elif now.tzinfo is None:
         now = now.replace(tzinfo=europe)
 
-    tomorrow_3pm = (now + timedelta(days=1)).replace(hour=15, minute=0, second=0, microsecond=0)
+    today_3pm = now.replace(hour=15, minute=0, second=0, microsecond=0)
+    if now < today_3pm:
+        target = today_3pm
+    else:
+        target = (now + timedelta(days=1)).replace(hour=15, minute=0, second=0, microsecond=0)
     # Convert to UTC for the API
-    return tomorrow_3pm.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return target.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def get_new_posts() -> list[str]:
