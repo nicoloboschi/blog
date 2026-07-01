@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Send newsletter via Buttondown API when a new post is published.
-Always schedules for the following day at 3pm Europe/Rome timezone.
+Always schedules for the same day at 3pm Europe/Rome timezone.
 """
 
 import json
@@ -12,7 +12,7 @@ import subprocess
 import requests
 import toml
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 from zoneinfo import ZoneInfo
 from dataclasses import dataclass
 from typing import Optional
@@ -36,18 +36,14 @@ class NewsletterPayload:
 
 
 def get_schedule_time(now: Optional[datetime] = None) -> str:
-    """Get today at 3pm Europe/Rome if before 3pm, otherwise tomorrow. Formatted as ISO UTC."""
+    """Get today at 3pm Europe/Rome. Formatted as ISO UTC."""
     europe = ZoneInfo("Europe/Rome")
     if now is None:
         now = datetime.now(europe)
     elif now.tzinfo is None:
         now = now.replace(tzinfo=europe)
 
-    today_3pm = now.replace(hour=15, minute=0, second=0, microsecond=0)
-    if now < today_3pm:
-        target = today_3pm
-    else:
-        target = (now + timedelta(days=1)).replace(hour=15, minute=0, second=0, microsecond=0)
+    target = now.replace(hour=15, minute=0, second=0, microsecond=0)
     # Convert to UTC for the API
     return target.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -133,7 +129,7 @@ def get_sent_emails(api_key: str) -> set[str]:
 def send_newsletter(payload: NewsletterPayload, api_key: str, dry_run: bool = False) -> bool:
     """Send newsletter via Buttondown API."""
 
-    print(f"Scheduling for: {payload.publish_date} (tomorrow 3pm Europe/Rome)")
+    print(f"Scheduling for: {payload.publish_date} (today 3pm Europe/Rome)")
 
     if dry_run:
         print("\n[DRY RUN] Would send payload:")
@@ -159,10 +155,14 @@ def send_newsletter(payload: NewsletterPayload, api_key: str, dry_run: bool = Fa
 
 
 def resolve_path(path: str) -> Path:
-    """Resolve a path relative to REPO_ROOT if set, otherwise relative to cwd."""
+    """Resolve a post path from REPO_ROOT, then the repo root, then cwd."""
     repo_root = os.environ.get("REPO_ROOT", "")
     if repo_root:
         return Path(repo_root) / path
+    # Fall back to the repo root (two levels up from this script)
+    candidate = Path(__file__).parent.parent.parent / path
+    if candidate.exists():
+        return candidate
     return Path(path)
 
 

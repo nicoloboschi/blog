@@ -18,5 +18,12 @@ dev = [
 send-newsletter = "send_newsletter:main"
 publish-post = "publish_post:main"
 
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["send_newsletter", "publish_post"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

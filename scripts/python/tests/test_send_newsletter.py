@@ -29,15 +29,15 @@ class TestGetScheduleTime:
         # In summer (CEST), Rome is UTC+2, so 15:00 Rome = 13:00 UTC
         assert result == "2024-06-15T13:00:00Z"
 
-    def test_schedules_for_tomorrow_if_past_3pm(self):
-        """Should schedule for tomorrow if current time is past 3pm."""
+    def test_schedules_for_same_day_3pm_even_if_past_3pm(self):
+        """Should still schedule for the same day 3pm even if current time is past 3pm."""
         rome = ZoneInfo("Europe/Rome")
         now = datetime(2024, 6, 15, 18, 0, 0, tzinfo=rome)  # 6pm Rome
 
         result = get_schedule_time(now)
 
-        # Tomorrow (June 16) since it's past 3pm
-        assert result == "2024-06-16T13:00:00Z"
+        # Same day (June 15) at 3pm Rome
+        assert result == "2024-06-15T13:00:00Z"
 
     def test_handles_winter_time_before_3pm(self):
         """Should handle winter time (CET, UTC+1) and schedule today."""
@@ -62,15 +62,14 @@ class TestBuildEmailBody:
 
         assert "[Read the full post](https://example.com/posts/123)" in result
 
-    def test_truncates_long_content(self):
-        """Should truncate content longer than max_length."""
+    def test_includes_full_body(self):
+        """Should include the full body without truncation."""
         body = "x" * 2000
         post_url = "https://example.com/posts/123"
 
-        result = build_email_body(body, post_url, max_length=100)
+        result = build_email_body(body, post_url)
 
-        assert result.startswith("x" * 100 + "...")
-        assert len(result.split("---")[0].strip()) == 103  # 100 chars + "..."
+        assert "x" * 2000 in result
 
     def test_no_truncation_for_short_content(self):
         """Should not add ellipsis for short content."""
@@ -113,14 +112,14 @@ class TestBuildPayload:
 
         assert payload.publish_date == "2024-06-15T13:00:00Z"
 
-    def test_publish_date_is_tomorrow_3pm_rome_summer_if_after(self):
-        """Verify publish_date is tomorrow 3pm Rome in summer when after 3pm."""
+    def test_publish_date_is_same_day_3pm_rome_summer_even_if_after(self):
+        """Verify publish_date is same day 3pm Rome in summer even when after 3pm."""
         rome = ZoneInfo("Europe/Rome")
         now = datetime(2024, 6, 15, 18, 0, 0, tzinfo=rome)
 
         payload = build_payload("Test", "Body", "https://example.com", now=now)
 
-        assert payload.publish_date == "2024-06-16T13:00:00Z"
+        assert payload.publish_date == "2024-06-15T13:00:00Z"
 
     def test_publish_date_is_today_3pm_rome_winter_if_before(self):
         """Verify publish_date is today 3pm Rome in winter when before 3pm."""

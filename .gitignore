@@ -16,3 +16,6 @@ __pycache__/
 # IDE files
 .vscode/
 .idea
+
+# Python build artifacts
+*.egg-info/
