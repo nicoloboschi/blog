@@ -39,6 +39,8 @@ Here's the dense 27B against the 35B MoE, side by side on the M3 Max - the speed
   <iframe width="315" height="560" src="https://www.youtube.com/embed/vKrg8YzuYqU" title="Qwen3.5-27B vs Qwen3.6-35B on Apple M3 Max (MLX)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:8px; max-width:100%;"></iframe>
 </div>
 
+<p style="text-align:center; margin-top:-0.5rem;"><a href="https://www.youtube.com/shorts/vKrg8YzuYqU">▶ Watch the comparison on YouTube</a></p>
+
 Playing with the numbers, the boring 80% of agent work looks very runnable locally. But I still haven't moved anything over, and I want to be honest about why: for the parts I actually depend on - the long agentic loops in Hindsight, the coding I do every day - frontier models are still clearly ahead, and the switching cost isn't worth it to save latency I'm not really paying for. So it stays exploration for now.
 
 In my opinion open models got close enough that this is worth watching seriously, and my own little benchmark is just how I keep track of where they stand on my own machine. When a local model is finally good enough for a real slice of Hindsight, I'd rather know it from the numbers than from the hype. Not yet, though.
