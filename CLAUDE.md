@@ -16,6 +16,15 @@
 - Make explicit mention that this is my opinion (not directly, but use the word "In my opinion" or "I think" or similar).
 - No AI slop phrases. Avoid "this isn't just X, it's Y", "not a coincidence — it's Z", "it's not poetic, it's structural", and similar contrast-reveal constructions. Just state what it is.
 
+## Tone and shape (follow the "How I code from anywhere at any time" / vipershell post)
+- Lead with my own experience, in first person. Ground the post in things I actually did or built, not in "the industry" or abstract framing.
+- Keep it short. Most posts should be ~500-800 words. Cut anything that isn't carrying weight.
+- Prefer flowing prose. Use few or no section headings. Don't structure the post like a slide deck.
+- Avoid abstract-framework scaffolding: no "the structural difference is", no paired property bullet lists (e.g. "Thing A: / Thing B:") that read like a comparison slide. State the point in a sentence instead.
+- Plain words, short sentences. Casual and direct, like talking to another engineer.
+- One opinion, stated plainly. Don't hedge it into a survey of every angle.
+- Bullet lists are fine for concrete things (features, examples), not for abstract argument structure.
+
 # After generating or modifying a blog post, we need to generate bites for LinkedIn and Twitter
 - Inside directory 'content_distributions', create a markdown file with the same name as the blog post. There include brainstorming for social media posts on LinkedIn and Twitter.
 - Don’t ask people to click — make the post valuable alone.

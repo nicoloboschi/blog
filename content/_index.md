@@ -7,7 +7,7 @@ Hi, I'm Nicolò (with the accent). Software engineer working on distributed syst
 
 **[Read my blog posts →](/posts/)**
 
-[GitHub](https://github.com/nicoloboschi) · [X](https://x.com/nicoloboschi) · [LinkedIn](https://www.linkedin.com/in/nicoló-boschi-621a1a158/)
+[GitHub](https://github.com/nicoloboschi) · [X](https://x.com/nicoloboschi) · [LinkedIn](https://www.linkedin.com/in/nicoló-boschi-621a1a158/) · [YouTube](https://www.youtube.com/@nicoloboschi-dev)
 
 ---
 
@@ -32,6 +32,8 @@ I'm an active contributor and maintainer in the open source ecosystem:
 
 A few tools I've built:
 
+- [`vipershell`](https://github.com/nicoloboschi/vipershell) – Your machine, anywhere: a full-featured terminal in your browser
+- [`localmaxxing`](https://github.com/nicoloboschi/localmaxxing) – Benchmark open-source LLMs on Apple Silicon (MLX)
 - [`dockerpyze`](https://github.com/nicoloboschi/dockerpyze) – Automatically Dockerize Python apps
 - [`asap`](https://github.com/nicoloboschi/asap) – Blazing fast local Maven installs
 - [`lkr`](https://github.com/nicoloboschi/local-kubernetes-runner) – Spin up K8s clusters in 10 seconds
